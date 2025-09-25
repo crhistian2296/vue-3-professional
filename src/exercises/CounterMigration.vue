@@ -23,18 +23,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 
-const title = ref('Contador Vue 3')
-const counter = ref(0)
+const title = ref('Contador Vue 3');
+const counter = ref(0);
 
 const increment = () => {
-  counter.value++
-}
+  counter.value++;
+};
 
 const reset = () => {
-  counter.value = 0
-}
+  counter.value = 0;
+};
 
-const isEven = computed(() => counter.value % 2 === 0)
+const isEven = computed(() => counter.value % 2 === 0);
 </script>

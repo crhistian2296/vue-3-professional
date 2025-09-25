@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
-import {useRouter} from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import ContentLayout from '@/components/ContentLayout.vue';
-import {courseStructure} from '../data/courseStructure.ts';
-import {Button, Card, CardContent, CardHeader, CardTitle} from '@/components/ui';
+import { courseStructure } from '../data/courseStructure.ts';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import MdxRenderer from '@/components/MdxRenderer.vue';
 
 interface Props {
@@ -14,12 +14,12 @@ const props = defineProps<Props>();
 
 const router = useRouter();
 
-const module = courseStructure.modules.find(m => m.id === props.moduleId);
+const module = courseStructure.modules.find((m) => m.id === props.moduleId);
 const moduleContent = ref<any>(null);
 
 onMounted(async () => {
-      const content = await import(/* @vite-ignore */ module.mdxPath);
-      moduleContent.value = content.default;
+  const content = await import(/* @vite-ignore */ module.mdxPath);
+  moduleContent.value = content.default;
 });
 
 const navigateToSection = (sectionId: string) => {

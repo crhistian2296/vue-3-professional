@@ -47,21 +47,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 // useCounter composable (inline for simplicity)
-const count = ref(0)
-const increment = () => count.value++
-const decrement = () => count.value--
-const reset = () => count.value = 0
+const count = ref(0);
+const increment = () => count.value++;
+const decrement = () => count.value--;
+const reset = () => (count.value = 0);
 
 // useMouse composable (inline for simplicity)
-const x = ref(0)
-const y = ref(0)
+const x = ref(0);
+const y = ref(0);
 
 const updateMouse = (event: MouseEvent) => {
-  const rect = (event.target as HTMLElement).getBoundingClientRect()
-  x.value = Math.round(event.clientX - rect.left)
-  y.value = Math.round(event.clientY - rect.top)
-}
+  const rect = (event.target as HTMLElement).getBoundingClientRect();
+  x.value = Math.round(event.clientX - rect.left);
+  y.value = Math.round(event.clientY - rect.top);
+};
 </script>

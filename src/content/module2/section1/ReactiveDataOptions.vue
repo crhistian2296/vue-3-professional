@@ -50,14 +50,14 @@ export default {
       name: 'Vue Developer',
       user: {
         email: 'developer@vue.js',
-        age: 25
-      }
-    }
+        age: 25,
+      },
+    };
   },
   computed: {
     fullProfile() {
-      return `${this.name} (${this.user.email}) - ${this.user.age} años`
-    }
-  }
-}
+      return `${this.name} (${this.user.email}) - ${this.user.age} años`;
+    },
+  },
+};
 </script>

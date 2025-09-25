@@ -15,17 +15,10 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
-  SidebarMenuSubItem
+  SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { Card, CardContent, Progress } from '@/components/ui';
-import {
-  BookOpen,
-  CheckCircle,
-  Circle,
-  GraduationCap,
-  Home,
-  Play
-} from 'lucide-vue-next';
+import { BookOpen, CheckCircle, Circle, GraduationCap, Home, Play } from 'lucide-vue-next';
 
 const route = useRoute();
 const router = useRouter();

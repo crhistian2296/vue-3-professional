@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { computed, h } from 'vue'
-import { MDXProvider } from '@mdx-js/vue'
-import CodeBlock from '@/components/CodeBlock.vue'
-import MyH1 from '@/components/mdx/MyH1.vue'
+import { computed, h } from 'vue';
+import { MDXProvider } from '@mdx-js/vue';
+import CodeBlock from '@/components/CodeBlock.vue';
+import MyH1 from '@/components/mdx/MyH1.vue';
 
 interface Props {
-  content: any
-  additionalComponents?: Record<string, any>
+  content: any;
+  additionalComponents?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  additionalComponents: () => ({})
-})
+  additionalComponents: () => ({}),
+});
 
 // Default custom component mappings
 const defaultComponents = {
@@ -21,19 +21,19 @@ const defaultComponents = {
   pre: (props: any) => {
     // Handle pre blocks with code highlighting
     if (props.children?.props?.className?.includes('language-')) {
-      const language = props.children.props.className.replace('language-', '')
-      const code = props.children.props.children
-      return h(CodeBlock, { code, language })
+      const language = props.children.props.className.replace('language-', '');
+      const code = props.children.props.children;
+      return h(CodeBlock, { code, language });
     }
-    return h('pre', props)
-  }
-}
+    return h('pre', props);
+  },
+};
 
 // Merge default components with additional ones
 const components = computed(() => ({
   ...defaultComponents,
-  ...props.additionalComponents
-}))
+  ...props.additionalComponents,
+}));
 </script>
 
 <template>

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useExercisesStore } from '@/stores/exercises';
 import { Button, Card, CardContent, Checkbox } from '@/components/ui';
 import { Pencil, Check, Eye, EyeOff } from 'lucide-vue-next';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 interface Props {
   moduleId: string;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showSolution: false
+  showSolution: false,
 });
 
 const exercisesStore = useExercisesStore();
@@ -29,8 +29,8 @@ const toggleCompletion = () => {
 const isCompleted = () => exercisesStore.isExerciseCompleted(props.exerciseId);
 
 const goToExercise = () => {
-    router.push(`/modules/${props.moduleId}/${props.sectionId}/${props.exerciseId}`);
-}
+  router.push(`/modules/${props.moduleId}/${props.sectionId}/${props.exerciseId}`);
+};
 </script>
 
 <template>

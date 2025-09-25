@@ -44,16 +44,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed } from 'vue';
 
-const name = ref('Vue Developer')
+const name = ref('Vue Developer');
 
 const user = reactive({
   email: 'developer@vue.js',
-  age: 25
-})
+  age: 25,
+});
 
 const fullProfile = computed(() => {
-  return `${name.value} (${user.email}) - ${user.age} años`
-})
+  return `${name.value} (${user.email}) - ${user.age} años`;
+});
 </script>

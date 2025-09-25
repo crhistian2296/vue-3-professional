@@ -12,8 +12,8 @@ const ExercisesStateSchema = z.object({
   completedExercises: z.array(z.string()),
 });
 
-type Exercise = z.infer<typeof ExerciseSchema>;
-type ExercisesState = z.infer<typeof ExercisesStateSchema>;
+export type Exercise = z.infer<typeof ExerciseSchema>;
+export type ExercisesState = z.infer<typeof ExercisesStateSchema>;
 
 export const useExercisesStore = defineStore(
   'exercises',
@@ -23,9 +23,12 @@ export const useExercisesStore = defineStore(
     // Calculate total exercises dynamically from course structure
     const totalExercises = computed(() => {
       return courseStructure.modules.reduce((total, module) => {
-        return total + module.sections.reduce((sectionTotal, section) => {
-          return sectionTotal + section.exercises.length;
-        }, 0);
+        return (
+          total +
+          module.sections.reduce((sectionTotal, section) => {
+            return sectionTotal + section.exercises.length;
+          }, 0)
+        );
       }, 0);
     });
 

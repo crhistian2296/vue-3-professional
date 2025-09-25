@@ -1,8 +1,7 @@
 <script setup lang="ts">
-
-import ExerciseComponent from "@/components/ExerciseComponent.vue";
-import Content from "@/content/intro-y-evolucion/principales-diferencias/composition-vs-options/Content.vue";
-import Solution from "@/content/intro-y-evolucion/principales-diferencias/composition-vs-options/Solution.vue";
+import ExerciseComponent from '@/components/ExerciseComponent.vue';
+import Content from '@/content/intro-y-evolucion/principales-diferencias/composition-vs-options/Content.vue';
+import Solution from '@/content/intro-y-evolucion/principales-diferencias/composition-vs-options/Solution.vue';
 </script>
 
 <template>

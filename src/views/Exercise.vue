@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { Play, Check, Eye, EyeOff } from 'lucide-vue-next';
-import {
-  Button,
-  Card,
-  CardContent,
-  Checkbox,
-} from '@/components/ui';
+import { Eye, EyeOff, Play } from 'lucide-vue-next';
+import { Button, Card, CardContent, Checkbox } from '@/components/ui';
 import ContentLayout from '@/components/ContentLayout.vue';
 import { useExercisesStore } from '@/stores/exercises';
 import { courseStructure } from '@/data/courseStructure';

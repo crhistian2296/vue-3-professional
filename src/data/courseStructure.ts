@@ -1,11 +1,12 @@
-import type {CourseStructure} from "../types/course.ts";
+import type { CourseStructure } from '../types/course.ts';
 
 export const courseStructure: CourseStructure = {
   modules: [
     {
       id: 'intro-y-evolucion',
       title: 'Introducción y evolución de Vue',
-      description: 'Aprende las principales diferencias entre Vue 2 y Vue 3, y cómo migrar tu código existente.',
+      description:
+        'Aprende las principales diferencias entre Vue 2 y Vue 3, y cómo migrar tu código existente.',
       mdxPath: '/src/content/intro-y-evolucion/index.mdx',
       sections: [
         {
@@ -18,19 +19,21 @@ export const courseStructure: CourseStructure = {
               title: 'Migración de Contador',
               description: 'Convierte un contador de Vue 2 a Vue 3',
               component: 'CounterMigration',
-              mdxPath: '/src/content/intro-y-evolucion/principales-diferencias/composition-vs-options/index.mdx'
+              mdxPath:
+                '/src/content/intro-y-evolucion/principales-diferencias/composition-vs-options/index.mdx',
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
       id: '2',
       title: 'Composition API y SFC',
-      description: 'Domina la Composition API y las nuevas características de los Single File Components.',
+      description:
+        'Domina la Composition API y las nuevas características de los Single File Components.',
       mdxPath: '/src/content/module2/module2.mdx',
       sections: [],
-      locked: true
-    }
-  ]
+      locked: true,
+    },
+  ],
 };
