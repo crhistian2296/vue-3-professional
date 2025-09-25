@@ -1,4 +1,6 @@
 import VueComparison from '@/components/VueComparison.vue'
+import Vue2Example from '@/components/Vue2Example.vue'
+import Vue3Example from '@/components/Vue3Example.vue'
 import ExerciseComponent from '@/components/ExerciseComponent.vue'
 
 # Principales diferencias entre Vue 2 y Vue 3
@@ -127,7 +129,13 @@ Manejo declarativo de componentes asíncronos:
 
 Veamos cómo estos cambios se reflejan en código real:
 
-<VueComparison />
+<VueComparison leftTitle="Vue 2 - Options API" rightTitle="Vue 3 - Composition API"
+leftLabel="Vue 2 (Options API)"
+rightLabel="Vue 3 (Composition API"
+>
+  <Vue2Example slot="left" />
+  <Vue3Example slot="right" />
+</VueComparison>
 
 ## 🔄 Estrategias de migración
 
@@ -143,13 +151,13 @@ Para migrar eficientemente:
 Vue 3 ha renovado todo el ecosistema:
 
 - **Vite**: Build tool oficial más rápido que webpack
-- **Pinia**: Remplazo oficial de Vuex, más simple y TypeScript-friendly  
+- **Pinia**: Remplazo oficial de Vuex, más simple y TypeScript-friendly
 - **Vue Router 4**: Completamente reescrito para Vue 3
 - **Nuxt 3**: Framework full-stack basado en Vue 3
 
-<ExerciseComponent 
+<ExerciseComponent
   exerciseId="exercise-1"
-  title="Ejercicio 1: De Options API a Composition API" 
+  title="Ejercicio 1: De Options API a Composition API"
   description="Practica la migración de Vue 2 a Vue 3 reescribiendo un componente contador usando la nueva sintaxis <script setup> y Composition API."
 />
 
