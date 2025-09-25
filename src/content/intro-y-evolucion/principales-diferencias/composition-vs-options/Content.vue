@@ -5,7 +5,7 @@
       <p>Reescribe el siguiente componente contador de Vue 2 (Options API) a Vue 3 usando Composition API con <code>&lt;script setup&gt;</code>:</p>
 
       <div class="bg-slate-900 rounded-lg p-4 mt-3 overflow-x-auto">
-        <pre class="text-sm text-slate-100"><code>&lt;template&gt;
+        <pre class="text-sm text-slate-100" v-pre><code>&lt;template&gt;
   &lt;div&gt;
     &lt;h2&gt;{{ title }}&lt;/h2&gt;
     &lt;p&gt;Valor: {{ counter }}&lt;/p&gt;

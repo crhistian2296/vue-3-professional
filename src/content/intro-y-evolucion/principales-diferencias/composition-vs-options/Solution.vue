@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-slate-900 rounded-lg p-4 overflow-x-auto mb-4">
-      <pre class="text-sm text-slate-100"><code>&lt;template&gt;
+      <pre class="text-sm text-slate-100" v-pre><code>&lt;template&gt;
   &lt;div&gt;
     &lt;h2&gt;{{ title }}&lt;/h2&gt;
     &lt;p&gt;Valor: {{ counter }}&lt;/p&gt;

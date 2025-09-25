@@ -15,11 +15,13 @@ const props = defineProps<Props>();
 const router = useRouter();
 
 const module = courseStructure.modules.find((m) => m.id === props.moduleId);
-const moduleContent = ref<any>(null);
+const moduleContent = ref<unknown>(null);
 
 onMounted(async () => {
-  const content = await import(/* @vite-ignore */ module.mdxPath);
-  moduleContent.value = content.default;
+  if (module) {
+    const content = await import(/* @vite-ignore */ module.mdxPath);
+    moduleContent.value = content.default;
+  }
 });
 
 const navigateToSection = (sectionId: string) => {
@@ -53,11 +55,8 @@ const navigateToSection = (sectionId: string) => {
             </CardHeader>
             <CardContent>
               <div class="flex items-center justify-between">
-              <span class="text-sm text-gray-500">
-                {{ section.exercises.length }} ejercicio{{ section.exercises.length !== 1 ? 's' : '' }}
-              </span>
                 <Button>
-                  Comenzar sección →
+                  Comenzar →
                 </Button>
               </div>
             </CardContent>

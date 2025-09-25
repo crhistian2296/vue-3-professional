@@ -21,7 +21,7 @@ const openWebsite = () => {
 };
 
 const goToModules = () => {
-  router.push('/modules/1/section-1');
+  router.push('/modules/intro-y-evolucion');
 };
 
 const openVueDocs = () => {

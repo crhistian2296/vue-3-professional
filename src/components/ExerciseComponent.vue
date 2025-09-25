@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useExercisesStore } from '@/stores/exercises';
 import { Button, Card, CardContent, Checkbox } from '@/components/ui';
-import { Pencil, Check, Eye, EyeOff } from 'lucide-vue-next';
+import { Pencil } from 'lucide-vue-next';
 import { useRouter } from 'vue-router';
 
 interface Props {

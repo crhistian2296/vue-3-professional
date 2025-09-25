@@ -38,7 +38,7 @@ onMounted(async () => {
     const leftGlobPath = getGlobPath(props.leftComponent);
 
     if (componentModules[leftGlobPath]) {
-      const leftModule = await componentModules[leftGlobPath]();
+      const leftModule = await componentModules[leftGlobPath]() as any;
       LeftComponent.value = leftModule.default;
     } else {
       console.error('Left component not found:', leftGlobPath);
@@ -47,7 +47,7 @@ onMounted(async () => {
     }
 
     if (componentRawModules[leftGlobPath]) {
-      const leftRaw = await componentRawModules[leftGlobPath]();
+      const leftRaw = await componentRawModules[leftGlobPath]() as any;
       leftCode.value = leftRaw.default;
     } else {
       console.error('Left component raw not found:', leftGlobPath);
@@ -60,7 +60,7 @@ onMounted(async () => {
     const rightGlobPath = getGlobPath(props.rightComponent);
 
     if (componentModules[rightGlobPath]) {
-      const rightModule = await componentModules[rightGlobPath]();
+      const rightModule = await componentModules[rightGlobPath]() as any;
       RightComponent.value = rightModule.default;
     } else {
       console.error('Right component not found:', rightGlobPath);
@@ -69,7 +69,7 @@ onMounted(async () => {
     }
 
     if (componentRawModules[rightGlobPath]) {
-      const rightRaw = await componentRawModules[rightGlobPath]();
+      const rightRaw = await componentRawModules[rightGlobPath]() as any;
       rightCode.value = rightRaw.default;
     } else {
       console.error('Right component raw not found:', rightGlobPath);

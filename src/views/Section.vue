@@ -11,7 +11,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const SectionContent = ref<any>(null);
+const SectionContent = ref<unknown>(null);
 
 const module = computed(() => {
   return courseStructure.modules.find((m) => m.id === props.moduleId);
@@ -26,8 +26,10 @@ const sectionTitle = computed(() => {
 });
 
 onMounted(async () => {
-  const content = await import(/* @vite-ignore */ section.value.mdxPath);
-  SectionContent.value = content.default;
+  if (section.value) {
+    const content = await import(/* @vite-ignore */ section.value.mdxPath);
+    SectionContent.value = content.default;
+  }
 });
 </script>
 
