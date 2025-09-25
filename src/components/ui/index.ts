@@ -15,3 +15,4 @@ export { default as DialogTrigger } from './dialog/DialogTrigger.vue';
 export { default as DialogClose } from './dialog/DialogClose.vue';
 export { default as DialogScrollContent } from './dialog/DialogScrollContent.vue';
 export { default as DialogOverlay } from './dialog/DialogOverlay.vue';
+export * from './breadcrumb'
