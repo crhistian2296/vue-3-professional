@@ -3,8 +3,11 @@ import { ref } from 'vue';
 import { useExercisesStore } from '@/stores/exercises';
 import { Button, Card, CardContent, Checkbox } from '@/components/ui';
 import { Pencil, Check, Eye, EyeOff } from 'lucide-vue-next';
+import {useRouter} from "vue-router";
 
 interface Props {
+  moduleId: string;
+  sectionId: string;
   exerciseId: string;
   title: string;
   description: string;
@@ -16,6 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const exercisesStore = useExercisesStore();
+const router = useRouter();
 const showSolutionVisible = ref(false);
 
 const toggleCompletion = () => {
@@ -24,9 +28,9 @@ const toggleCompletion = () => {
 
 const isCompleted = () => exercisesStore.isExerciseCompleted(props.exerciseId);
 
-const toggleSolutionVisibility = () => {
-  showSolutionVisible.value = !showSolutionVisible.value;
-};
+const goToExercise = () => {
+    router.push(`/modules/${props.moduleId}/${props.sectionId}/${props.exerciseId}`);
+}
 </script>
 
 <template>
@@ -63,6 +67,14 @@ const toggleSolutionVisibility = () => {
           </div>
 
           <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <Button
+                  @click="goToExercise"
+              >
+                Ir al ejercicio →
+              </Button>
+            </div>
+
             <div class="flex items-center space-x-3">
               <Checkbox
                   :checked="isCompleted()"
@@ -71,30 +83,6 @@ const toggleSolutionVisibility = () => {
               <span :class="['font-medium', isCompleted() ? 'text-green-700' : 'text-muted-foreground']">
                 {{ isCompleted() ? '✅ Completado' : 'Marcar como completado' }}
               </span>
-            </div>
-
-            <div class="flex items-center space-x-2">
-              <Button
-                  v-if="isCompleted()"
-                  @click="toggleSolutionVisibility"
-                  variant="outline"
-                  class="bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-300"
-                  size="small"
-              >
-                <Eye v-if="!showSolutionVisible" class="w-4 h-4 mr-2" />
-                <EyeOff v-else class="w-4 h-4 mr-2" />
-                {{ showSolutionVisible ? 'Ocultar solución' : 'Ver solución' }}
-              </Button>
-
-              <Button
-                  v-if="isCompleted()"
-                  variant="outline"
-                  class="bg-green-100 text-green-700 hover:bg-green-200 border-green-300"
-                  size="small"
-              >
-                <Check class="w-4 h-4 mr-2" />
-                ¡Bien hecho!
-              </Button>
             </div>
           </div>
         </div>

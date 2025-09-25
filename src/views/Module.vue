@@ -3,7 +3,7 @@ import {onMounted, ref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import ContentLayout from '@/components/ContentLayout.vue';
 import {courseStructure} from '../data/courseStructure.ts';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui';
+import {Button, Card, CardContent, CardHeader, CardTitle} from '@/components/ui';
 
 interface Props {
   moduleId: string;
@@ -58,9 +58,9 @@ const navigateToSection = (sectionId: string) => {
               <span class="text-sm text-gray-500">
                 {{ section.exercises.length }} ejercicio{{ section.exercises.length !== 1 ? 's' : '' }}
               </span>
-                <button class="text-blue-600 hover:text-blue-800 font-medium">
+                <Button>
                   Comenzar sección →
-                </button>
+                </Button>
               </div>
             </CardContent>
           </Card>
