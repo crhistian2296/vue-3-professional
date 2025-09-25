@@ -10,6 +10,7 @@ import VueComparison from "@/components/VueComparison.vue";
       right-label="Vue 3 (Composition API)"
       left-component="Vue2Example"
       right-component="Vue3Example"
+      base-path="intro-y-evolucion/principales-diferencias"
   >
   </VueComparison>
 </template>
