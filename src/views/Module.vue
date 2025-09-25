@@ -1,113 +1,90 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { Home, ChevronRight, BookOpen, Play, Lock } from 'lucide-vue-next';
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { courseStructure } from '@/data/courseStructure';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui';
 
-interface Props {
-  moduleId: string;
-}
-
-const props = defineProps<Props>();
+const route = useRoute();
 const router = useRouter();
 
-const ModuleContent = ref<any>(null);
-
-const module = computed(() => {
-  return courseStructure.modules.find(m => m.id === props.moduleId);
-});
-
-const goToHome = () => {
-  router.push('/');
-};
-
-const goToSection = (sectionId: string) => {
-  router.push(`/modules/${props.moduleId}/section-${sectionId}`);
-};
+const moduleId = parseInt(route.params.moduleId as string);
+const module = courseStructure.modules.find(m => m.id === moduleId);
+const moduleContent = ref<any>(null);
 
 onMounted(async () => {
-  if (!module.value) return;
-
-  try {
-    const mdxModule = await import(/* @vite-ignore */ module.value.mdxPath);
-    ModuleContent.value = mdxModule.default;
-  } catch (error) {
-    console.error('Error loading module content:', error);
+  if (module?.mdxPath) {
+    try {
+      const content = await import(/* @vite-ignore */ module.mdxPath);
+      moduleContent.value = content.default;
+    } catch (error) {
+      console.error('Error loading module content:', error);
+    }
   }
 });
+
+const navigateToSection = (sectionId: string) => {
+  router.push(`/modules/${moduleId}/${sectionId}`);
+};
 </script>
 
 <template>
-  <div class="bg-card rounded-lg shadow-sm border">
-    <div class="p-8">
-      <!-- Breadcrumb -->
-      <div class="flex items-center text-sm text-muted-foreground mb-6">
-        <button @click="goToHome" class="flex items-center hover:text-foreground transition-colors">
-          <Home class="w-4 h-4 mr-2" />
-          Inicio
-        </button>
-        <ChevronRight class="w-4 h-4 mx-2" />
-        <span>Módulo {{ moduleId }}</span>
-      </div>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+      <button @click="router.push('/')" class="hover:text-blue-600 transition-colors">
+        Home
+      </button>
+      <span>/</span>
+      <span class="text-gray-900 font-medium">{{ module?.title }}</span>
+    </nav>
 
+    <div v-if="module" class="space-y-8">
       <!-- Module Header -->
-      <div class="mb-8">
-        <div class="flex items-center space-x-3 mb-4">
-          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-            <BookOpen class="w-6 h-6 text-blue-600" />
-          </div>
-          <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ module?.title }}</h1>
-            <p class="text-muted-foreground">{{ module?.description }}</p>
-          </div>
-        </div>
+      <div class="text-center space-y-4">
+        <h1 class="text-4xl font-bold text-gray-900">{{ module.title }}</h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">{{ module.description }}</p>
       </div>
 
       <!-- Module Content -->
-      <article class="prose prose-lg max-w-none mb-12">
-        <component :is="ModuleContent" v-if="ModuleContent" />
-        <div v-else class="text-muted-foreground">
-          Cargando contenido del módulo...
-        </div>
-      </article>
+      <div v-if="moduleContent" class="prose prose-lg max-w-4xl mx-auto">
+        <component :is="moduleContent" />
+      </div>
 
       <!-- Sections Grid -->
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card 
-          v-for="section in module?.sections" 
+          v-for="section in module.sections" 
           :key="section.id"
-          class="hover:shadow-lg transition-shadow duration-200 cursor-pointer"
-          @click="goToSection(section.id)"
+          class="cursor-pointer hover:shadow-lg transition-shadow"
+          @click="navigateToSection(section.id)"
         >
           <CardHeader>
-            <CardTitle class="flex items-center justify-between">
-              <span>{{ section.title }}</span>
-              <div class="flex items-center space-x-2">
-                <span class="text-sm text-muted-foreground">
-                  {{ section.exercises.length }} ejercicios
-                </span>
-                <Play class="w-4 h-4 text-blue-600" />
-              </div>
-            </CardTitle>
+            <CardTitle class="text-xl">{{ section.title }}</CardTitle>
+            <CardDescription>{{ section.description }}</CardDescription>
           </CardHeader>
           <CardContent>
-            <div class="space-y-2">
-              <div 
-                v-for="exercise in section.exercises.slice(0, 3)" 
-                :key="exercise.id"
-                class="text-sm text-muted-foreground flex items-center"
-              >
-                <div class="w-2 h-2 bg-orange-400 rounded-full mr-2"></div>
-                {{ exercise.title }}
-              </div>
-              <div v-if="section.exercises.length > 3" class="text-sm text-muted-foreground">
-                +{{ section.exercises.length - 3 }} más...
-              </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-500">
+                {{ section.exercises.length }} exercise{{ section.exercises.length !== 1 ? 's' : '' }}
+              </span>
+              <button class="text-blue-600 hover:text-blue-800 font-medium">
+                Start Section →
+              </button>
             </div>
           </CardContent>
         </Card>
       </div>
+    </div>
+
+    <div v-else class="text-center py-12">
+      <h1 class="text-2xl font-bold text-gray-900 mb-4">Module Not Found</h1>
+      <p class="text-gray-600 mb-6">The requested module could not be found.</p>
+      <button 
+        @click="router.push('/')"
+        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+      >
+        Return Home
+      </button>
     </div>
   </div>
 </template>

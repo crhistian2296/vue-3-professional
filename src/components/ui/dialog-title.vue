@@ -13,4 +13,3 @@ const props = defineProps<Props>();
     <slot />
   </h2>
 </template>
-</template>
