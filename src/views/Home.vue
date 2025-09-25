@@ -30,13 +30,13 @@ const openVueDocs = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-background to-indigo-50">
+  <div class="min-h-screen bg-gradient-to-br from-green-50 via-background to-emerald-50">
     <!-- Navigation -->
     <nav class="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
               <GraduationCap class="w-4 h-4 text-white" />
             </div>
             <span class="text-xl font-bold text-foreground">Vue 3 Pro</span>
@@ -49,12 +49,12 @@ const openVueDocs = () => {
     <section class="py-20 px-4 sm:px-6 lg:px-8">
       <div class="max-w-4xl mx-auto text-center">
         <div class="mb-8">
-          <div class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
+          <div class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium mb-6">
             <Star class="w-4 h-4 mr-2 fill-current" />
             Curso Profesional
           </div>
           <h1 class="text-5xl sm:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Formación <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Vue 3</span> Profesional
+            Formación <span class="bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">Vue 3</span> Profesional
           </h1>
           <p class="text-xl text-muted-foreground mb-4 leading-relaxed">
             Domina el Framework y Diseña Software Escalable
@@ -93,7 +93,7 @@ const openVueDocs = () => {
           <CardContent class="p-6">
             <div class="text-center">
               <div class="mb-4">
-                <ChartLine class="w-10 h-10 text-blue-600 mb-4 mx-auto" />
+                <ChartLine class="w-10 h-10 text-green-600 mb-4 mx-auto" />
                 <h3 class="text-xl font-bold text-foreground mb-2">Tu Progreso</h3>
               </div>
               <div class="space-y-4">
@@ -107,7 +107,7 @@ const openVueDocs = () => {
                   :value="exercisesStore.progressPercentage"
                   class="h-3"
                 />
-                <div class="text-2xl font-bold text-blue-600">
+                <div class="text-2xl font-bold text-green-600">
                   {{ exercisesStore.progressPercentage }}%
                 </div>
               </div>
@@ -130,7 +130,7 @@ const openVueDocs = () => {
             <!-- Module Card -->
             <Card
               class="hover:shadow-lg transition-all duration-200 cursor-pointer border-l-4"
-              :class="module.locked ? 'border-l-gray-300 opacity-60' : 'border-l-blue-500'"
+              :class="module.locked ? 'border-l-gray-300 opacity-60' : 'border-l-green-500'"
               @click="!module.locked && $router.push(`/modules/${module.id}`)"
             >
             <CardContent class="p-6">
@@ -138,11 +138,11 @@ const openVueDocs = () => {
                 <div class="flex-shrink-0">
                   <div :class="[
                     'w-12 h-12 rounded-full flex items-center justify-center',
-                    module.locked ? 'bg-gray-100' : 'bg-blue-100'
+                    module.locked ? 'bg-gray-100' : 'bg-green-100'
                   ]">
                     <GraduationCap :class="[
                       'w-6 h-6',
-                      module.locked ? 'text-gray-500' : 'text-blue-600'
+                      module.locked ? 'text-gray-500' : 'text-green-600'
                     ]" />
                   </div>
                 </div>
@@ -160,7 +160,7 @@ const openVueDocs = () => {
                     <div v-for="section in module.sections" :key="section.id" class="border-l-2 border-gray-200 pl-4">
                       <div class="flex items-center justify-between mb-2">
                         <h4
-                          class="font-medium text-foreground hover:text-blue-600 cursor-pointer transition-colors"
+                          class="font-medium text-foreground hover:text-green-600 cursor-pointer transition-colors"
                           @click.stop="$router.push(`/modules/${module.id}/section-${section.id}`)"
                         >
                           {{ section.title }}
@@ -219,7 +219,7 @@ const openVueDocs = () => {
                 alt="César Alberca"
                 class="w-80 h-80 rounded-2xl shadow-2xl mx-auto lg:mx-0 object-cover"
               />
-              <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+              <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
                 <GraduationCap class="w-12 h-12 text-white" />
               </div>
             </div>
@@ -229,7 +229,7 @@ const openVueDocs = () => {
           <div class="space-y-6">
             <div>
               <h3 class="text-3xl font-bold text-foreground mb-4">César Alberca</h3>
-              <p class="text-xl text-blue-600 font-semibold mb-4">
+              <p class="text-xl text-green-600 font-semibold mb-4">
                 Senior Frontend Architect & Software Crafter
               </p>
               <p class="text-lg text-muted-foreground leading-relaxed">
@@ -243,8 +243,8 @@ const openVueDocs = () => {
 
             <div class="space-y-4">
               <div class="flex items-start space-x-3">
-                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <span class="text-blue-600 text-sm font-bold">🏗️</span>
+                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span class="text-green-600 text-sm font-bold">🏗️</span>
                 </div>
                 <div>
                   <h4 class="font-semibold text-foreground">Especialización Técnica</h4>
@@ -288,7 +288,7 @@ const openVueDocs = () => {
             <!-- Stats -->
             <div class="grid grid-cols-2 gap-6 pt-6 border-t border-border">
               <div class="text-center">
-                <div class="text-3xl font-bold text-blue-600">10+</div>
+                <div class="text-3xl font-bold text-green-600">10+</div>
                 <div class="text-sm text-muted-foreground">Años de Experiencia</div>
               </div>
               <div class="text-center">
@@ -313,7 +313,7 @@ const openVueDocs = () => {
 
         <!-- Additional Info -->
         <div class="mt-16 text-center">
-          <Card class="max-w-4xl mx-auto bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          <Card class="max-w-4xl mx-auto bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
             <CardContent class="p-8">
               <h4 class="text-2xl font-bold text-foreground mb-4">¿Por qué este curso es especial?</h4>
               <p class="text-lg text-muted-foreground leading-relaxed mb-6">
@@ -323,7 +323,7 @@ const openVueDocs = () => {
                 diariamente como arquitecto frontend.
               </p>
               <div class="flex flex-wrap justify-center gap-3">
-                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
                   Experiencia Real
                 </span>
                 <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">

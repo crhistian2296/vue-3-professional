@@ -1,13 +1,13 @@
 <template>
   <div class="reactive-demo p-4 border rounded-lg bg-white">
     <h2 class="text-xl font-bold mb-4">Datos Reactivos - Composition API</h2>
-    
+
     <div class="space-y-6">
       <!-- Ref Example -->
-      <div class="border-l-4 border-blue-500 pl-4">
-        <h3 class="font-semibold text-blue-700 mb-2">ref() - Valores primitivos</h3>
+      <div class="border-l-4 border-green-500 pl-4">
+        <h3 class="font-semibold text-green-700 mb-2">ref() - Valores primitivos</h3>
         <p>Nombre: <span class="font-mono">{{ name }}</span></p>
-        <input 
+        <input
           v-model="name"
           class="mt-2 px-3 py-1 border rounded"
           placeholder="Escribe tu nombre"
@@ -20,12 +20,12 @@
         <p>Email: <span class="font-mono">{{ user.email }}</span></p>
         <p>Edad: <span class="font-mono">{{ user.age }}</span></p>
         <div class="mt-2 space-y-2">
-          <input 
+          <input
             v-model="user.email"
             class="block px-3 py-1 border rounded"
             placeholder="Email"
           />
-          <input 
+          <input
             v-model.number="user.age"
             type="number"
             class="block px-3 py-1 border rounded"

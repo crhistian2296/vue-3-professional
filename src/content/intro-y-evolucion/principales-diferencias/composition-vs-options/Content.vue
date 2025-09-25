@@ -40,9 +40,9 @@ export default {
 &lt;/script&gt;</code></pre>
       </div>
 
-      <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-        <p class="text-sm text-blue-800 mb-2"><strong>💡 Pistas:</strong></p>
-        <ul class="text-sm text-blue-700 space-y-1">
+      <div class="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+        <p class="text-sm text-green-800 mb-2"><strong>💡 Pistas:</strong></p>
+        <ul class="text-sm text-green-700 space-y-1">
           <li>Usa <code>ref()</code> para datos reactivos</li>
           <li>Usa <code>computed()</code> para propiedades calculadas</li>
           <li>Las funciones se declaran directamente en el script</li>

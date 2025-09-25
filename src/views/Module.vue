@@ -69,7 +69,7 @@ const navigateToSection = (sectionId: string) => {
         <p class="text-gray-600 mb-6">El módulo no pudo ser encontrado.</p>
         <button
             @click="router.push('/')"
-            class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
         >
           Volver al inicio
         </button>

@@ -55,7 +55,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
   <Sidebar>
     <SidebarHeader>
       <div class="flex items-center space-x-3 px-2 py-2">
-        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+        <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
           <GraduationCap class="w-4 h-4 text-white" />
         </div>
         <span class="text-lg font-bold text-sidebar-foreground">Vue 3 Pro</span>
@@ -90,7 +90,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
                 :value="exercisesStore.progressPercentage"
                 class="h-2"
               />
-              <div class="text-sm font-bold text-blue-600">
+              <div class="text-sm font-bold text-green-600">
                 {{ exercisesStore.progressPercentage }}%
               </div>
             </div>
