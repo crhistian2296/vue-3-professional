@@ -5,7 +5,13 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'node:path';
 
 export default defineConfig({
-  plugins: [vue(), mdx(), tailwindcss()],
+  plugins: [
+    vue(),
+    mdx({
+      jsxImportSource: 'vue',
+    }),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

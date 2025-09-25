@@ -47,12 +47,12 @@ onMounted(async () => {
         </h1>
       </div>
 
-      <div class="prose prose-lg max-w-none">
+      <article class="prose prose-lg max-w-none">
         <component :is="SectionContent" v-if="SectionContent" />
         <div v-else class="text-muted-foreground">
           Cargando contenido...
         </div>
-      </div>
+      </article>
     </div>
   </div>
 </template>
