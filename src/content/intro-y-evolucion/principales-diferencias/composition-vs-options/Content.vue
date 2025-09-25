@@ -53,6 +53,4 @@ export default {
   </div>
 </template>
 
-<script setup lang="ts">
-// No props needed for this static content component
-</script>
+<script setup lang="ts"></script>

@@ -48,8 +48,8 @@ const openVueDocs = () => {
             Domina el Framework y Diseña Software Escalable
           </p>
           <div class="flex items-center justify-center space-x-2 text-muted-foreground mb-8">
-            <img src="https://images.pexels.com/photos/1121796/pexels-photo-1121796.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2" 
-                 alt="César Alberca" 
+            <img src="https://images.pexels.com/photos/1121796/pexels-photo-1121796.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2"
+                 alt="César Alberca"
                  class="w-8 h-8 rounded-full object-cover">
             <span class="text-sm">por <strong>César Alberca</strong></span>
             <span class="text-muted-foreground/50">•</span>
@@ -59,14 +59,14 @@ const openVueDocs = () => {
 
         <!-- Action Buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <Button 
+          <Button
             @click="goToModules"
             class="px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1"
           >
             <Play class="w-5 h-5 mr-3" />
             Ir a los módulos
           </Button>
-          <Button 
+          <Button
             @click="openVueDocs"
             variant="outlined"
             class="px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-200 transform hover:-translate-y-1"
@@ -91,8 +91,8 @@ const openVueDocs = () => {
                     {{ exercisesStore.completedCount }} / {{ exercisesStore.totalExercises }}
                   </span>
                 </div>
-                <Progress 
-                  :value="exercisesStore.progressPercentage" 
+                <Progress
+                  :value="exercisesStore.progressPercentage"
                   class="h-3"
                 />
                 <div class="text-2xl font-bold text-blue-600">
@@ -106,17 +106,17 @@ const openVueDocs = () => {
     </section>
 
     <!-- Course Overview -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-background/50 ml-80">
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-background/50">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-foreground mb-4">Estructura del Curso</h2>
           <p class="text-muted-foreground text-lg">Explora los módulos, secciones y ejercicios del curso</p>
         </div>
-        
+
         <div class="space-y-8">
           <div v-for="module in courseStructure.modules" :key="module.id" class="space-y-4">
             <!-- Module Card -->
-            <Card 
+            <Card
               class="hover:shadow-lg transition-all duration-200 cursor-pointer border-l-4"
               :class="module.locked ? 'border-l-gray-300 opacity-60' : 'border-l-blue-500'"
               @click="!module.locked && $router.push(`/modules/${module.id}`)"
@@ -142,12 +142,12 @@ const openVueDocs = () => {
                     </span>
                   </div>
                   <p class="text-muted-foreground mb-4">{{ module.description }}</p>
-                  
+
                   <!-- Sections -->
                   <div v-if="!module.locked && module.sections.length > 0" class="space-y-3">
                     <div v-for="section in module.sections" :key="section.id" class="border-l-2 border-gray-200 pl-4">
                       <div class="flex items-center justify-between mb-2">
-                        <h4 
+                        <h4
                           class="font-medium text-foreground hover:text-blue-600 cursor-pointer transition-colors"
                           @click.stop="$router.push(`/modules/${module.id}/section-${section.id}`)"
                         >
@@ -157,11 +157,11 @@ const openVueDocs = () => {
                           {{ section.exercises.length }} ejercicio{{ section.exercises.length !== 1 ? 's' : '' }}
                         </span>
                       </div>
-                      
+
                       <!-- Exercises -->
                       <div v-if="section.exercises.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <div 
-                          v-for="exercise in section.exercises" 
+                        <div
+                          v-for="exercise in section.exercises"
                           :key="exercise.id"
                           class="flex items-center space-x-2 p-2 rounded-md hover:bg-accent/50 cursor-pointer transition-colors"
                           @click.stop="$router.push(`/modules/${module.id}/section-${section.id}/exercise-${exercise.id}`)"

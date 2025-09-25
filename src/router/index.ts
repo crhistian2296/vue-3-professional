@@ -13,19 +13,19 @@ const routes: RouteRecordRaw[] = [
     component: ModuleLayout,
     children: [
       {
-        path: 'module-:moduleId',
+        path: ':moduleId',
         name: 'Module',
         component: () => import('@/views/Module.vue'),
         props: true,
       },
       {
-        path: ':moduleId/section-:sectionId',
+        path: ':moduleId/:sectionId',
         name: 'Section',
         component: () => import('@/views/Section.vue'),
         props: true,
       },
       {
-        path: ':moduleId/section-:sectionId/exercise-:exerciseId',
+        path: ':moduleId/:sectionId/:exerciseId',
         name: 'Exercise',
         component: () => import('@/views/Exercise.vue'),
         props: true,

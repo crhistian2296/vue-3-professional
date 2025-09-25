@@ -13,11 +13,11 @@ const props = defineProps<Props>();
 const SectionContent = ref<any>(null);
 
 const module = computed(() => {
-  return courseStructure.modules.find(m => m.id === props.moduleId);
+  return courseStructure.modules.find((m) => m.id === props.moduleId);
 });
 
 const section = computed(() => {
-  return module.value?.sections.find(s => s.id === props.sectionId);
+  return module.value?.sections.find((s) => s.id === props.sectionId);
 });
 
 const sectionTitle = computed(() => {
@@ -25,14 +25,8 @@ const sectionTitle = computed(() => {
 });
 
 onMounted(async () => {
-  try {
-    if (props.moduleId === '1' && props.sectionId === '1') {
-      const module = await import('@/content/module1/section1/section1.mdx');
-      SectionContent.value = module.default;
-    }
-  } catch (error) {
-    console.error('Error loading section content:', error);
-  }
+  const content = await import(/* @vite-ignore */ section.value.mdxPath);
+  SectionContent.value = content.default;
 });
 </script>
 

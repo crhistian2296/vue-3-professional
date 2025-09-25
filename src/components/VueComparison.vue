@@ -41,16 +41,8 @@ const activeTab = ref<'left' | 'right'>('left');
       </CardHeader>
       <CardContent>
         <div class="comparison-content">
-          <slot v-if="activeTab === 'left'" name="left">
-            <div class="text-gray-500 p-4 text-center">
-              No content provided for left comparison
-            </div>
-          </slot>
-          <slot v-else name="right">
-            <div class="text-gray-500 p-4 text-center">
-              No content provided for right comparison
-            </div>
-          </slot>
+          <slot v-if="activeTab === 'left'" name="left"></slot>
+          <slot v-else name="right"></slot>
         </div>
       </CardContent>
     </Card>

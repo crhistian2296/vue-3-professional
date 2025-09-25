@@ -1,9 +1,7 @@
-import VueComparison from '@/components/VueComparison.vue'
-import Vue2Example from '@/components/Vue2Example.vue'
-import Vue3Example from '@/components/Vue3Example.vue'
 import ExerciseComponent from '@/components/ExerciseComponent.vue'
-import Exercise1Content from '@/content/module1/section1/exercise1/Exercise1Content.vue'
-import Exercise1Solution from '@/content/module1/section1/exercise1/Exercise1Solution.vue'
+import Content from '@/content/intro-y-evolucion/principales-diferencias/composition-vs-options/Content.vue'
+import Solution from '@/content/intro-y-evolucion/principales-diferencias/composition-vs-options/Solution.vue'
+import Vue2Vue3Comparison from "@/content/intro-y-evolucion/principales-diferencias/Vue2Vue3Comparison.vue";
 
 # Principales diferencias entre Vue 2 y Vue 3
 
@@ -131,13 +129,7 @@ Manejo declarativo de componentes asíncronos:
 
 Veamos cómo estos cambios se reflejan en código real:
 
-<VueComparison leftTitle="Vue 2 - Options API" rightTitle="Vue 3 - Composition API"
-leftLabel="Vue 2 (Options API)"
-rightLabel="Vue 3 (Composition API"
->
-  <Vue2Example slot="left" />
-  <Vue3Example slot="right" />
-</VueComparison>
+<Vue2Vue3Comparison/>
 
 ## 🔄 Estrategias de migración
 
@@ -162,8 +154,8 @@ Vue 3 ha renovado todo el ecosistema:
   title="Ejercicio 1: De Options API a Composition API"
   description="Practica la migración de Vue 2 a Vue 3 reescribiendo un componente contador usando la nueva sintaxis <script setup> y Composition API."
 >
-  <Exercise1Content slot="content" />
-  <Exercise1Solution slot="solution" />
+  <Content slot="content" />
+  <Solution slot="solution" />
 </ExerciseComponent>
 
 ---

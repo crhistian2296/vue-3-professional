@@ -2,29 +2,29 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useExercisesStore } from '@/stores/exercises';
 import { courseStructure } from '@/data/courseStructure';
-import { 
-  Sidebar, 
-  SidebarContent, 
-  SidebarFooter, 
-  SidebarGroup, 
-  SidebarGroupContent, 
-  SidebarGroupLabel, 
-  SidebarHeader, 
-  SidebarMenu, 
-  SidebarMenuButton, 
-  SidebarMenuItem, 
-  SidebarMenuSub, 
-  SidebarMenuSubButton, 
-  SidebarMenuSubItem 
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem
 } from '@/components/ui/sidebar';
 import { Card, CardContent, Progress } from '@/components/ui';
-import { 
-  BookOpen, 
-  CheckCircle, 
-  Circle, 
-  GraduationCap, 
-  Home, 
-  Play 
+import {
+  BookOpen,
+  CheckCircle,
+  Circle,
+  GraduationCap,
+  Home,
+  Play
 } from 'lucide-vue-next';
 
 const route = useRoute();
@@ -50,11 +50,11 @@ const goToModule = (moduleId: string) => {
 };
 
 const goToSection = (moduleId: string, sectionId: string) => {
-  router.push(`/modules/${moduleId}/section-${sectionId}`);
+  router.push(`/modules/${moduleId}/${sectionId}`);
 };
 
 const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) => {
-  router.push(`/modules/${moduleId}/section-${sectionId}/exercise-${exerciseId}`);
+  router.push(`/modules/${moduleId}/${sectionId}/${exerciseId}`);
 };
 </script>
 
@@ -67,10 +67,10 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
         </div>
         <span class="text-lg font-bold text-sidebar-foreground">Vue 3 Pro</span>
       </div>
-      
+
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton 
+          <SidebarMenuButton
             @click="goToHome"
             :is-active="route.path === '/'"
             class="w-full"
@@ -112,7 +112,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="module in courseStructure.modules" :key="module.id">
-              <SidebarMenuButton 
+              <SidebarMenuButton
                 @click="goToModule(module.id)"
                 :is-active="isCurrentRoute(module.id)"
                 :disabled="module.locked"
@@ -127,7 +127,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
               <!-- Sections -->
               <SidebarMenuSub v-if="!module.locked && module.sections.length > 0">
                 <SidebarMenuSubItem v-for="section in module.sections" :key="section.id">
-                  <SidebarMenuSubButton 
+                  <SidebarMenuSubButton
                     @click="goToSection(module.id, section.id)"
                     :is-active="isCurrentRoute(module.id, section.id)"
                   >
@@ -138,7 +138,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
                   <!-- Exercises -->
                   <SidebarMenuSub v-if="section.exercises.length > 0" class="ml-4">
                     <SidebarMenuSubItem v-for="exercise in section.exercises" :key="exercise.id">
-                      <SidebarMenuSubButton 
+                      <SidebarMenuSubButton
                         @click="goToExercise(module.id, section.id, exercise.id)"
                         :is-active="isCurrentRoute(module.id, section.id, exercise.id)"
                         size="sm"

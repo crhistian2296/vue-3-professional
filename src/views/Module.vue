@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {useRoute, useRouter} from 'vue-router';
 import ContentLayout from '@/components/ContentLayout.vue';
-import { courseStructure } from '../data/courseStructure.ts';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui';
+import {courseStructure} from '../data/courseStructure.ts';
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui';
 
-const route = useRoute();
+interface Props {
+  moduleId: string;
+}
+
+const props = defineProps<Props>();
+
 const router = useRouter();
 
-const moduleId = route.params.moduleId;
-const module = courseStructure.modules.find(m => m.id === moduleId);
-console.warn({module, moduleId})
+const module = courseStructure.modules.find(m => m.id === props.moduleId);
 const moduleContent = ref<any>(null);
 
 onMounted(async () => {
@@ -19,7 +22,7 @@ onMounted(async () => {
 });
 
 const navigateToSection = (sectionId: string) => {
-  router.push(`/modules/${moduleId}/${sectionId}`);
+  router.push(`/modules/${props.moduleId}/${sectionId}`);
 };
 </script>
 
