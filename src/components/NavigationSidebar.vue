@@ -1,66 +1,62 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { Button, Card, CardContent, Progress } from '@/components/ui'
-import { useExercisesStore } from '@/stores/exercises'
-import { 
-  Home, 
-  BookOpen, 
-  CheckCircle, 
-  Circle,
-  ChevronRight,
-  GraduationCap
-} from 'lucide-vue-next'
+import {useRoute, useRouter} from 'vue-router';
+import {Button, Card, CardContent, Progress} from '@/components/ui';
+import {useExercisesStore} from '@/stores/exercises';
+import {BookOpen, CheckCircle, ChevronRight, Circle, GraduationCap, Home} from 'lucide-vue-next';
 
-const route = useRoute()
-const router = useRouter()
-const exercisesStore = useExercisesStore()
+const route = useRoute();
+const router = useRouter();
+const exercisesStore = useExercisesStore();
 
 const modules = [
   {
     id: 1,
     title: 'Introducción y evolución de Vue',
     sections: [
-      { id: 1, title: 'Principales diferencias entre Vue 2 y Vue 3', route: '/modules/1/section-1' }
-    ]
+      {
+        id: 1,
+        title: 'Principales diferencias entre Vue 2 y Vue 3',
+        route: '/modules/1/section-1',
+      },
+    ],
   },
   {
     id: 2,
     title: 'Composition API y SFC',
     sections: [],
-    locked: true
+    locked: true,
   },
   {
     id: 3,
     title: 'Gestión de rutas y estado',
     sections: [],
-    locked: true
+    locked: true,
   },
   {
     id: 4,
     title: 'Buenas prácticas y herramientas',
     sections: [],
-    locked: true
+    locked: true,
   },
   {
     id: 5,
     title: 'Vue + TypeScript',
     sections: [],
-    locked: true
-  }
-]
+    locked: true,
+  },
+];
 
 const isCurrentRoute = (routePath: string) => {
-  return route.path === routePath
-}
+  return route.path === routePath;
+};
 
 const goToHome = () => {
-  router.push('/')
-}
+  router.push('/');
+};
 
 const goToSection = (routePath: string) => {
-  router.push(routePath)
-}
+  router.push(routePath);
+};
 </script>
 
 <template>
@@ -73,11 +69,11 @@ const goToSection = (routePath: string) => {
         </div>
         <span class="text-lg font-bold text-foreground">Vue 3 Pro</span>
       </div>
-      
+
       <!-- Home Button -->
-      <Button 
+      <Button
         @click="goToHome"
-        variant="ghost" 
+        variant="ghost"
         class="w-full justify-start mb-4"
         :class="{ 'bg-accent': route.path === '/' }"
       >
@@ -97,8 +93,8 @@ const goToSection = (routePath: string) => {
                   {{ exercisesStore.completedCount }} / {{ exercisesStore.totalExercises }}
                 </span>
               </div>
-              <Progress 
-                :value="exercisesStore.progressPercentage" 
+              <Progress
+                :value="exercisesStore.progressPercentage"
                 class="h-2"
               />
               <div class="text-sm font-bold text-blue-600">
@@ -113,7 +109,7 @@ const goToSection = (routePath: string) => {
     <!-- Navigation -->
     <div class="p-4">
       <h2 class="text-sm font-semibold text-muted-foreground mb-4 px-2">MÓDULOS DEL CURSO</h2>
-      
+
       <div class="space-y-2">
         <div v-for="module in modules" :key="module.id" class="space-y-1">
           <!-- Module Header -->
@@ -124,7 +120,7 @@ const goToSection = (routePath: string) => {
               Próximamente
             </span>
           </div>
-          
+
           <!-- Sections -->
           <div v-if="!module.locked && module.sections.length > 0" class="ml-6 space-y-1">
             <button
@@ -137,18 +133,18 @@ const goToSection = (routePath: string) => {
                 'text-muted-foreground hover:text-foreground': !isCurrentRoute(section.route)
               }"
             >
-              <CheckCircle 
+              <CheckCircle
                 v-if="exercisesStore.isExerciseCompleted(`module-${module.id}-section-${section.id}`)"
-                class="w-4 h-4 mr-2 text-green-600" 
+                class="w-4 h-4 mr-2 text-green-600"
               />
-              <Circle 
+              <Circle
                 v-else
-                class="w-4 h-4 mr-2 text-muted-foreground" 
+                class="w-4 h-4 mr-2 text-muted-foreground"
               />
               <span class="flex-1">{{ section.title }}</span>
-              <ChevronRight 
+              <ChevronRight
                 v-if="isCurrentRoute(section.route)"
-                class="w-3 h-3 text-muted-foreground" 
+                class="w-3 h-3 text-muted-foreground"
               />
             </button>
           </div>

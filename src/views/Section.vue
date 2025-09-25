@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { Home, ChevronRight } from 'lucide-vue-next'
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { Home, ChevronRight } from 'lucide-vue-next';
 
 interface Props {
-  moduleId: string
-  sectionId: string
+  moduleId: string;
+  sectionId: string;
 }
 
-const props = defineProps<Props>()
-const route = useRoute()
+const props = defineProps<Props>();
+const route = useRoute();
 
-const SectionContent = ref<any>(null)
+const SectionContent = ref<any>(null);
 
 const sectionTitle = computed(() => {
   if (props.moduleId === '1' && props.sectionId === '1') {
-    return 'Principales diferencias entre Vue 2 y Vue 3'
+    return 'Principales diferencias entre Vue 2 y Vue 3';
   }
-  return `Módulo ${props.moduleId} - Sección ${props.sectionId}`
-})
+  return `Módulo ${props.moduleId} - Sección ${props.sectionId}`;
+});
 
 onMounted(async () => {
   try {
     if (props.moduleId === '1' && props.sectionId === '1') {
-      const module = await import('@/content/module1/section1.mdx')
-      SectionContent.value = module.default
+      const module = await import('@/content/module1/section1.mdx');
+      SectionContent.value = module.default;
     }
   } catch (error) {
-    console.error('Error loading section content:', error)
+    console.error('Error loading section content:', error);
   }
-})
+});
 </script>
 
 <template>

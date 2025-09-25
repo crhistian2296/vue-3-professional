@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { Check } from 'lucide-vue-next'
-import { cn } from '@/lib/utils'
+import { computed } from 'vue';
+import { Check } from 'lucide-vue-next';
+import { cn } from '@/lib/utils';
 
 interface Props {
-  checked?: boolean
-  disabled?: boolean
-  class?: string
+  checked?: boolean;
+  disabled?: boolean;
+  class?: string;
 }
 
 interface Emits {
-  (e: 'update:checked', value: boolean): void
+  (e: 'update:checked', value: boolean): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   checked: false,
-  disabled: false
-})
+  disabled: false,
+});
 
-const emit = defineEmits<Emits>()
+const emit = defineEmits<Emits>();
 
 const handleClick = () => {
   if (!props.disabled) {
-    emit('update:checked', !props.checked)
+    emit('update:checked', !props.checked);
   }
-}
+};
 
 const checkboxClass = computed(() => {
   return cn(
@@ -32,8 +32,8 @@ const checkboxClass = computed(() => {
     props.checked ? 'bg-primary text-primary-foreground' : 'bg-background',
     props.disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
     props.class
-  )
-})
+  );
+});
 </script>
 
 <template>

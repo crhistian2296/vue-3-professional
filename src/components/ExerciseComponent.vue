@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { useExercisesStore } from '@/stores/exercises'
-import { Button, Card, CardContent, Checkbox } from '@/components/ui'
-import { Pencil, Check } from 'lucide-vue-next'
+import { useExercisesStore } from '@/stores/exercises';
+import { Button, Card, CardContent, Checkbox } from '@/components/ui';
+import { Pencil, Check } from 'lucide-vue-next';
 
 interface Props {
-  exerciseId: string
-  title: string
-  description: string
+  exerciseId: string;
+  title: string;
+  description: string;
 }
 
-const props = defineProps<Props>()
-const exercisesStore = useExercisesStore()
+const props = defineProps<Props>();
+const exercisesStore = useExercisesStore();
 
 const toggleCompletion = () => {
-  exercisesStore.toggleExercise(props.exerciseId)
-}
+  exercisesStore.toggleExercise(props.exerciseId);
+};
 
-const isCompleted = () => exercisesStore.isExerciseCompleted(props.exerciseId)
+const isCompleted = () => exercisesStore.isExerciseCompleted(props.exerciseId);
 </script>
 
 <template>

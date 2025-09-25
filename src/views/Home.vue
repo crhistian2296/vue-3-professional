@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { useExercisesStore } from '@/stores/exercises'
-import { Button, Card, CardContent, Progress } from '@/components/ui'
-import { GraduationCap, Play, ExternalLink, Star, ChartLine } from 'lucide-vue-next'
+import { useRouter } from 'vue-router';
+import { useExercisesStore } from '@/stores/exercises';
+import { Button, Card, CardContent, Progress } from '@/components/ui';
+import { GraduationCap, Play, ExternalLink, Star, ChartLine } from 'lucide-vue-next';
 
-const router = useRouter()
-const exercisesStore = useExercisesStore()
+const router = useRouter();
+const exercisesStore = useExercisesStore();
 
 const goToModules = () => {
-  router.push('/modules/1/section-1')
-}
+  router.push('/modules/1/section-1');
+};
 
 const openVueDocs = () => {
-  window.open('https://vuejs.org/', '_blank')
-}
+  window.open('https://vuejs.org/', '_blank');
+};
 </script>
 
 <template>

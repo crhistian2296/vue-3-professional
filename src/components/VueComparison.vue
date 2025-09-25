@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
-import { Button } from '@/components/ui'
+import { ref } from 'vue';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
+import { Button } from '@/components/ui';
 
-const activeTab = ref<'vue2' | 'vue3'>('vue2')
+const activeTab = ref<'vue2' | 'vue3'>('vue2');
 
 const vue2Code = `<template>
   <div class="counter">
@@ -37,7 +37,7 @@ export default {
     }
   }
 }
-</scr' + 'ipt>`
+</scr' + 'ipt>`;
 
 const vue3Code = `<template>
   <div class="counter">
@@ -64,7 +64,7 @@ const increment = () => {
 const decrement = () => {
   count.value--
 }
-</scr' + 'ipt>`
+</scr' + 'ipt>`;
 </script>
 
 <template>

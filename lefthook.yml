@@ -1,7 +1,6 @@
 pre-commit:
-  parallel: true
   commands:
-    typecheck:
-      run: npm run typecheck
-    lint:
-      run: npm run lint
+    check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,vue,jsx,tsx,json,jsonc}"
+      run: npx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      stage_fixed: true

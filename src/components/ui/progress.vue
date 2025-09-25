@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { cn } from '@/lib/utils'
+import { computed } from 'vue';
+import { cn } from '@/lib/utils';
 
 interface Props {
-  value?: number
-  max?: number
-  class?: string
+  value?: number;
+  max?: number;
+  class?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   value: 0,
-  max: 100
-})
+  max: 100,
+});
 
 const progressValue = computed(() => {
-  return Math.min(Math.max(props.value, 0), props.max)
-})
+  return Math.min(Math.max(props.value, 0), props.max);
+});
 
 const progressPercentage = computed(() => {
-  return (progressValue.value / props.max) * 100
-})
+  return (progressValue.value / props.max) * 100;
+});
 </script>
 
 <template>
