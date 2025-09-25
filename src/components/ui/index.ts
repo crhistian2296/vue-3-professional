@@ -12,3 +12,4 @@ export * from './sidebar';
 export * from './tooltip';
 export * from './tabs';
 export * from './avatar';
+export * from './dropdown-menu';

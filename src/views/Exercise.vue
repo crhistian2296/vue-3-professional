@@ -17,8 +17,8 @@ interface Props {
 const props = defineProps<Props>();
 const exercisesStore = useExercisesStore();
 
-const ExerciseContent = ref<any>(null);
-const ExerciseComponent = ref<any>(null);
+const ExerciseContent = ref<string>('');
+const ExerciseComponent = ref<string>('');
 const showSolution = ref(false);
 const componentCode = ref('');
 

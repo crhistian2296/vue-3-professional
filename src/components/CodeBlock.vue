@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import Prism from 'prismjs';
-import 'prismjs/themes/prism-tomorrow.css';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-markup-templating';
-import 'prismjs/components/prism-markup';
+import highlightjs from '@highlightjs/vue-plugin';
+import 'highlight.js/styles/atom-one-dark.css';
 
 interface Props {
   code: string;
@@ -17,36 +12,24 @@ const props = withDefaults(defineProps<Props>(), {
   language: 'javascript',
 });
 
-const codeRef = ref<HTMLElement>();
-
-onMounted(() => {
-  if (codeRef.value) {
-    Prism.highlightElement(codeRef.value);
-  }
-});
+const { component: HighlightCode } = highlightjs;
 </script>
 
 <template>
   <div class="relative">
-    <pre :class="['rounded-lg overflow-x-auto', props.class]"><code 
-      ref="codeRef" 
-      :class="`language-${language}`"
-      v-text="code"
-    /></pre>
+    <HighlightCode
+      :language="language"
+      :code="code"
+      :class="['rounded-lg overflow-x-auto', props.class]"
+    />
   </div>
 </template>
 
 <style>
-/* Override Prism theme for better integration */
-pre[class*="language-"] {
-  background: #1a1a1a !important;
+/* Custom styles for highlight.js integration */
+.hljs {
   padding: 1rem !important;
-  margin: 0 !important;
   border-radius: 0.5rem !important;
-}
-
-code[class*="language-"] {
-  color: #f8f8f2 !important;
   font-family: 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace !important;
   font-size: 0.875rem !important;
   line-height: 1.5 !important;
