@@ -61,7 +61,8 @@ const breadcrumbs = computed(() => {
 <template>
   <div :class="[
     'bg-card rounded-lg shadow-sm border',
-    fullWidth ? 'w-full' : 'max-w-4xl mx-auto'
+    fullWidth ? 'w-full' : 'max-w-4xl mx-auto',
+    'min-h-[calc(100vh-4rem)]'
   ]">
     <div class="p-8">
       <!-- Breadcrumbs -->
