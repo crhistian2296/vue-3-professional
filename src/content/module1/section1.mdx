@@ -1,0 +1,158 @@
+import VueComparison from '@/components/VueComparison.vue'
+import ExerciseComponent from '@/components/ExerciseComponent.vue'
+
+# Principales diferencias entre Vue 2 y Vue 3
+
+Vue 3 representa un salto evolutivo significativo desde Vue 2, introduciendo mejoras fundamentales en arquitectura, rendimiento y experiencia de desarrollo. En esta sección exploraremos los cambios más importantes que debes conocer para migrar exitosamente tus proyectos.
+
+## 🏗️ Arquitectura interna renovada
+
+Vue 3 fue reescrito desde cero con una arquitectura modular que ofrece:
+
+- **Proxy-based reactivity**: Reemplaza `Object.defineProperty` por `Proxy`, eliminando limitaciones de Vue 2
+- **Tree-shaking mejorado**: Importa solo las funciones que necesitas, reduciendo el bundle size
+- **TypeScript nativo**: Escrito en TypeScript desde el principio, mejor soporte de tipos
+
+## ⚡ Mejoras de rendimiento
+
+Las optimizaciones de Vue 3 ofrecen beneficios tangibles:
+
+- **41% menor bundle size** del runtime
+- **55% más rápido** en actualizaciones de componentes
+- **133% más rápido** en montaje de componentes
+- **56% menos consumo de memoria**
+
+## 🎯 Nuevas funcionalidades clave
+
+### Composition API
+
+La API más importante de Vue 3, que permite:
+
+- **Mejor organización del código** por lógica de negocio
+- **Reutilización de lógica** entre componentes
+- **Mejor soporte para TypeScript**
+- **Más flexibilidad** en componentes complejos
+
+### `<script setup>`
+
+Sintaxis simplificada que reduce el boilerplate:
+
+- Importaciones automáticas de funciones de Vue
+- Props y emits con menos código
+- Mejor rendimiento de compilación
+
+### Teleport
+
+Renderiza contenido en cualquier parte del DOM:
+
+```vue
+<Teleport to="body">
+  <div class="modal">Modal content</div>
+</Teleport>
+```
+
+### Fragments
+
+Múltiples elementos raíz sin wrapper innecesario:
+
+```vue
+<template>
+  <header>Header</header>
+  <main>Main content</main>
+  <footer>Footer</footer>
+</template>
+```
+
+### Emits Option
+
+Declaración explícita de eventos emitidos:
+
+```vue
+<script setup>
+const emit = defineEmits(['update', 'close'])
+</script>
+```
+
+### CSS Variables con v-bind
+
+Vincula variables de JavaScript directamente a CSS:
+
+```vue
+<template>
+  <div class="text">Hello Vue 3!</div>
+</template>
+
+<script setup>
+const color = ref('blue')
+</script>
+
+<style>
+.text {
+  color: v-bind(color);
+}
+</style>
+```
+
+### Scoped Styles Avanzados
+
+Nuevos selectores CSS para mayor control:
+
+```css
+/* Afecta elementos hijo profundos */
+:deep(.child-component) { }
+
+/* Afecta slots */
+:slotted(.slot-content) { }
+
+/* Afecta elementos globales desde componente */
+:global(.global-class) { }
+```
+
+### Suspense
+
+Manejo declarativo de componentes asíncronos:
+
+```vue
+<Suspense>
+  <template #default>
+    <AsyncComponent />
+  </template>
+  <template #fallback>
+    <div>Loading...</div>
+  </template>
+</Suspense>
+```
+
+## 📊 Comparativa práctica
+
+Veamos cómo estos cambios se reflejan en código real:
+
+<VueComparison />
+
+## 🔄 Estrategias de migración
+
+Para migrar eficientemente:
+
+1. **Migration Build**: Usa la versión de compatibilidad de Vue 3
+2. **Incremental**: Migra componente por componente
+3. **Composition API**: Adopta gradualmente, compatible con Options API
+4. **Herramientas**: Usa el CLI de migración oficial
+
+## 📈 Impacto en el ecosistema
+
+Vue 3 ha renovado todo el ecosistema:
+
+- **Vite**: Build tool oficial más rápido que webpack
+- **Pinia**: Remplazo oficial de Vuex, más simple y TypeScript-friendly  
+- **Vue Router 4**: Completamente reescrito para Vue 3
+- **Nuxt 3**: Framework full-stack basado en Vue 3
+
+<ExerciseComponent 
+  exerciseId="exercise-1"
+  title="Ejercicio 1: De Options API a Composition API" 
+  description="Practica la migración de Vue 2 a Vue 3 reescribiendo un componente contador usando la nueva sintaxis <script setup> y Composition API."
+/>
+
+---
+
+¡Has completado la primera sección! Los cambios en Vue 3 representan una evolución natural que mantiene la esencia de Vue mientras ofrece herramientas más potentes para construir aplicaciones modernas. En las próximas secciones profundizaremos en cada una de estas funcionalidades.
