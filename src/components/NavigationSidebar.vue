@@ -34,7 +34,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
 </script>
 
 <template>
-  <div class="w-80 bg-background border-r border-border h-screen overflow-y-auto">
+  <div class="fixed left-0 top-0 w-80 bg-background border-r border-border h-screen overflow-y-auto z-10">
     <!-- Header -->
     <div class="p-6 border-b border-border">
       <div class="flex items-center space-x-3 mb-4">
@@ -48,7 +48,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
       <Button
         @click="goToHome"
         variant="ghost"
-        class="w-full justify-start mb-4"
+        class="w-full justify-start mb-4 hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer"
         :class="{ 'bg-accent': route.path === '/' }"
       >
         <Home class="w-4 h-4 mr-2" />
@@ -87,7 +87,10 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
       <div class="space-y-2">
         <div v-for="module in courseStructure.modules" :key="module.id" class="space-y-1">
           <!-- Module Header -->
-          <button @click="goToModule(module.id)" class="flex items-center px-2 py-2 text-sm font-medium text-foreground">
+          <button 
+            @click="goToModule(module.id)" 
+            class="flex items-center px-2 py-2 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer rounded-md w-full"
+          >
             <BookOpen class="w-4 h-4 mr-2 text-muted-foreground" />
             <span class="flex-1">{{ module.title }}</span>
             <span v-if="module.locked" class="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
@@ -101,7 +104,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
               <!-- Section Header -->
               <button
                 @click="goToSection(module.id, section.id)"
-                class="w-full flex items-center px-2 py-2 text-sm text-left rounded-md transition-colors hover:bg-accent"
+                class="w-full flex items-center px-2 py-2 text-sm text-left rounded-md transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
                 :class="{
                   'bg-accent text-accent-foreground': isCurrentRoute(module.id, section.id),
                   'text-muted-foreground hover:text-foreground': !isCurrentRoute(module.id, section.id)
@@ -121,7 +124,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
                   v-for="exercise in section.exercises"
                   :key="exercise.id"
                   @click="goToExercise(module.id, section.id, exercise.id)"
-                  class="w-full flex items-center px-2 py-1 text-xs text-left rounded-md transition-colors hover:bg-accent/50"
+                  class="w-full flex items-center px-2 py-1 text-xs text-left rounded-md transition-colors hover:bg-accent/70 hover:text-accent-foreground cursor-pointer"
                   :class="{
                     'bg-accent/70 text-accent-foreground': isCurrentRoute(module.id, section.id, exercise.id),
                     'text-muted-foreground hover:text-foreground': !isCurrentRoute(module.id, section.id, exercise.id)

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { useExercisesStore } from '@/stores/exercises';
+import { courseStructure } from '@/data/courseStructure';
 import { Button, Card, CardContent, Progress } from '@/components/ui';
-import { GraduationCap, Play, ExternalLink, Star, ChartLine } from 'lucide-vue-next';
+import { GraduationCap, Play, ExternalLink, Star, ChartLine, CheckCircle } from 'lucide-vue-next';
 
 const router = useRouter();
 const exercisesStore = useExercisesStore();
@@ -105,83 +106,86 @@ const openVueDocs = () => {
     </section>
 
     <!-- Course Overview -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-background/50">
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-background/50 ml-80">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-foreground mb-4">Módulos del Curso</h2>
-          <p class="text-muted-foreground text-lg">Actualiza tus conocimientos desde Vue 2 a Vue 3 con foco en prácticas modernas</p>
+          <h2 class="text-3xl font-bold text-foreground mb-4">Estructura del Curso</h2>
+          <p class="text-muted-foreground text-lg">Explora los módulos, secciones y ejercicios del curso</p>
         </div>
         
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card class="hover:shadow-lg transition-shadow duration-200">
+        <div class="space-y-8">
+          <div v-for="module in courseStructure.modules" :key="module.id" class="space-y-4">
+            <!-- Module Card -->
+            <Card 
+              class="hover:shadow-lg transition-all duration-200 cursor-pointer border-l-4"
+              :class="module.locked ? 'border-l-gray-300 opacity-60' : 'border-l-blue-500'"
+              @click="!module.locked && $router.push(`/modules/${module.id}`)"
+            >
             <CardContent class="p-6">
-              <div class="text-center">
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                  <div :class="[
+                    'w-12 h-12 rounded-full flex items-center justify-center',
+                    module.locked ? 'bg-gray-100' : 'bg-blue-100'
+                  ]">
+                    <GraduationCap :class="[
+                      'w-6 h-6',
+                      module.locked ? 'text-gray-500' : 'text-blue-600'
+                    ]" />
+                  </div>
                 </div>
-                <h3 class="font-semibold text-foreground mb-2">Módulo 1</h3>
-                <p class="text-muted-foreground text-sm">Introducción y evolución de Vue</p>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-xl font-bold text-foreground">{{ module.title }}</h3>
+                    <span v-if="module.locked" class="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
+                      Próximamente
+                    </span>
+                  </div>
+                  <p class="text-muted-foreground mb-4">{{ module.description }}</p>
+                  
+                  <!-- Sections -->
+                  <div v-if="!module.locked && module.sections.length > 0" class="space-y-3">
+                    <div v-for="section in module.sections" :key="section.id" class="border-l-2 border-gray-200 pl-4">
+                      <div class="flex items-center justify-between mb-2">
+                        <h4 
+                          class="font-medium text-foreground hover:text-blue-600 cursor-pointer transition-colors"
+                          @click.stop="$router.push(`/modules/${module.id}/section-${section.id}`)"
+                        >
+                          {{ section.title }}
+                        </h4>
+                        <span class="text-xs text-muted-foreground">
+                          {{ section.exercises.length }} ejercicio{{ section.exercises.length !== 1 ? 's' : '' }}
+                        </span>
+                      </div>
+                      
+                      <!-- Exercises -->
+                      <div v-if="section.exercises.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div 
+                          v-for="exercise in section.exercises" 
+                          :key="exercise.id"
+                          class="flex items-center space-x-2 p-2 rounded-md hover:bg-accent/50 cursor-pointer transition-colors"
+                          @click.stop="$router.push(`/modules/${module.id}/section-${section.id}/exercise-${exercise.id}`)"
+                        >
+                          <CheckCircle
+                            v-if="exercisesStore.isExerciseCompleted(exercise.id)"
+                            class="w-4 h-4 text-green-600 flex-shrink-0"
+                          />
+                          <Play
+                            v-else
+                            class="w-4 h-4 text-orange-500 flex-shrink-0"
+                          />
+                          <span class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                            {{ exercise.title }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
-          
-          <Card class="hover:shadow-lg transition-shadow duration-200 opacity-60">
-            <CardContent class="p-6">
-              <div class="text-center">
-                <div class="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg class="w-6 h-6 text-muted-foreground" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <h3 class="font-semibold text-foreground mb-2">Módulo 2</h3>
-                <p class="text-muted-foreground text-sm">Composition API y SFC</p>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card class="hover:shadow-lg transition-shadow duration-200 opacity-60">
-            <CardContent class="p-6">
-              <div class="text-center">
-                <div class="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg class="w-6 h-6 text-muted-foreground" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <h3 class="font-semibold text-foreground mb-2">Módulo 3</h3>
-                <p class="text-muted-foreground text-sm">Gestión de rutas y estado</p>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card class="hover:shadow-lg transition-shadow duration-200 opacity-60">
-            <CardContent class="p-6">
-              <div class="text-center">
-                <div class="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg class="w-6 h-6 text-muted-foreground" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <h3 class="font-semibold text-foreground mb-2">Módulo 4</h3>
-                <p class="text-muted-foreground text-sm">Buenas prácticas y herramientas</p>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card class="hover:shadow-lg transition-shadow duration-200 opacity-60">
-            <CardContent class="p-6">
-              <div class="text-center">
-                <div class="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg class="w-6 h-6 text-muted-foreground" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <h3 class="font-semibold text-foreground mb-2">Módulo 5</h3>
-                <p class="text-muted-foreground text-sm">Vue + TypeScript</p>
-              </div>
-            </CardContent>
-          </Card>
+          </div>
         </div>
       </div>
     </section>

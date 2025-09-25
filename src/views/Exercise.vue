@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { Home, ChevronRight, Play, Check, Eye, EyeOff } from 'lucide-vue-next';
+import { Play, Check, Eye, EyeOff } from 'lucide-vue-next';
 import {
   Button,
   Card,
   CardContent,
   Checkbox,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
 } from '@/components/ui';
+import ContentLayout from '@/components/ContentLayout.vue';
 import { useExercisesStore } from '@/stores/exercises';
 import { courseStructure } from '@/data/courseStructure';
 import CodeBlock from '@/components/CodeBlock.vue';
@@ -23,7 +19,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const router = useRouter();
 const exercisesStore = useExercisesStore();
 
 const ExerciseContent = ref<any>(null);
@@ -53,18 +48,6 @@ const toggleSolution = () => {
   showSolution.value = !showSolution.value;
 };
 
-const goToHome = () => {
-  router.push('/');
-};
-
-const goToModule = () => {
-  router.push(`/modules/${props.moduleId}`);
-};
-
-const goToSection = () => {
-  router.push(`/modules/${props.moduleId}/section-${props.sectionId}`);
-};
-
 onMounted(async () => {
   if (!exercise.value) return;
 
@@ -87,26 +70,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-card rounded-lg shadow-sm border">
-    <div class="p-8">
-      <!-- Breadcrumb -->
-      <div class="flex items-center text-sm text-muted-foreground mb-6 space-x-1">
-        <button @click="goToHome" class="flex items-center hover:text-foreground transition-colors">
-          <Home class="w-4 h-4 mr-2" />
-          Inicio
-        </button>
-        <ChevronRight class="w-4 h-4 mx-2" />
-        <button @click="goToModule" class="hover:text-foreground transition-colors">
-          {{ module?.title }}
-        </button>
-        <ChevronRight class="w-4 h-4 mx-2" />
-        <button @click="goToSection" class="hover:text-foreground transition-colors">
-          {{ section?.title }}
-        </button>
-        <ChevronRight class="w-4 h-4 mx-2" />
-        <span>{{ exercise?.title }}</span>
-      </div>
-
+  <ContentLayout :full-width="true">
       <!-- Exercise Header -->
       <div class="mb-8">
         <div class="flex items-center space-x-3 mb-4">
@@ -184,14 +148,19 @@ onMounted(async () => {
           </Card>
         </div>
       </div>
-    </div>
 
     <!-- Solution Modal -->
-    <Dialog v-model:open="showSolution">
-      <DialogContent class="max-w-4xl">
-        <DialogHeader>
-          <DialogTitle class="text-green-800">✅ Solución: {{ exercise?.title }}</DialogTitle>
-        </DialogHeader>
+    <div v-if="showSolution" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" @click="showSolution = false">
+      <div class="bg-background rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto" @click.stop>
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-green-800">✅ Solución: {{ exercise?.title }}</h3>
+            <button @click="showSolution = false" class="text-muted-foreground hover:text-foreground">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         <div class="space-y-4">
           <div class="bg-green-50 p-4 rounded-lg border border-green-200">
             <p class="text-green-800 text-sm">
@@ -200,7 +169,8 @@ onMounted(async () => {
           </div>
           <CodeBlock :code="componentCode" language="vue" />
         </div>
-      </DialogContent>
-    </Dialog>
-  </div>
+        </div>
+      </div>
+    </div>
+  </ContentLayout>
 </template>

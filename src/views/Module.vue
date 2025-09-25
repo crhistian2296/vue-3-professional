@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import ContentLayout from '@/components/ContentLayout.vue';
 import { courseStructure } from '../data/courseStructure.ts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui';
 
@@ -23,14 +24,12 @@ const navigateToSection = (sectionId: string) => {
 </script>
 
 <template>
-  <div class="bg-card max-w-4xl mx-auto rounded-lg shadow-sm border">
-
-    <div class="p-8">
+  <ContentLayout>
       <div v-if="module" class="space-y-8">
         <!-- Module Header -->
         <div class="text-center space-y-4">
-          <h1 class="text-4xl font-bold text-gray-900">{{ module.title }}</h1>
-          <p class="text-xl text-gray-600 max-w-3xl mx-auto">{{ module.description }}</p>
+          <h1 class="text-4xl font-bold text-foreground">{{ module.title }}</h1>
+          <p class="text-xl text-muted-foreground max-w-3xl mx-auto">{{ module.description }}</p>
         </div>
 
         <article class="prose prose-lg max-w-none">
@@ -75,6 +74,5 @@ const navigateToSection = (sectionId: string) => {
           Volver al inicio
         </button>
       </div>
-    </div>
-  </div>
+  </ContentLayout>
 </template>
