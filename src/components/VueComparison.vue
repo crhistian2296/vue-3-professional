@@ -26,24 +26,59 @@ const rightCode = ref('');
 const LeftComponent = ref<any>(null);
 const RightComponent = ref<any>(null);
 
+// Use import.meta.glob to get all Vue components (using relative paths that Vite can resolve)
+const componentModules = import.meta.glob('/src/content/**/*.vue', { eager: false });
+const componentRawModules = import.meta.glob('/src/content/**/*.vue', { eager: false, query: '?raw' });
+
+// Helper function to convert component path to glob path
+const getGlobPath = (componentPath: string) => {
+  // Convert 'intro-y-evolucion/principales-diferencias/Vue2Example.vue'
+  // to '/src/content/intro-y-evolucion/principales-diferencias/Vue2Example.vue'
+  return `/src/content/${componentPath}`;
+};
+
 onMounted(async () => {
   // Load left component and its raw code
   try {
-    const leftModule = await import(/* @vite-ignore */ `@/content/${props.leftComponent}`);
-    LeftComponent.value = leftModule.default;
+    const leftGlobPath = getGlobPath(props.leftComponent);
 
-    const leftRaw = await import(/* @vite-ignore */ `@/content/${props.leftComponent}?raw`);
-    leftCode.value = leftRaw.default;
+    if (componentModules[leftGlobPath]) {
+      const leftModule = await componentModules[leftGlobPath]();
+      LeftComponent.value = leftModule.default;
+    } else {
+      console.error('Left component not found:', leftGlobPath);
+      console.log('Available components:', Object.keys(componentModules));
+      console.log('Looking for:', props.leftComponent);
+    }
+
+    if (componentRawModules[leftGlobPath]) {
+      const leftRaw = await componentRawModules[leftGlobPath]();
+      leftCode.value = leftRaw.default;
+    } else {
+      console.error('Left component raw not found:', leftGlobPath);
+    }
   } catch (error) {
     console.error('Error loading left component:', error);
   }
 
   try {
-    const rightModule = await import(/* @vite-ignore */ `@/content/${props.rightComponent}`);
-    RightComponent.value = rightModule.default;
+    const rightGlobPath = getGlobPath(props.rightComponent);
 
-    const rightRaw = await import(/* @vite-ignore */ `@/content/${props.rightComponent}?raw`);
-    rightCode.value = rightRaw.default;
+    if (componentModules[rightGlobPath]) {
+      const rightModule = await componentModules[rightGlobPath]();
+      RightComponent.value = rightModule.default;
+    } else {
+      console.error('Right component not found:', rightGlobPath);
+      console.log('Available components:', Object.keys(componentModules));
+      console.log('Looking for:', props.rightComponent);
+    }
+
+    if (componentRawModules[rightGlobPath]) {
+      const rightRaw = await componentRawModules[rightGlobPath]();
+      rightCode.value = rightRaw.default;
+    } else {
+      console.error('Right component raw not found:', rightGlobPath);
+    }
   } catch (error) {
     console.error('Error loading right component:', error);
   }
