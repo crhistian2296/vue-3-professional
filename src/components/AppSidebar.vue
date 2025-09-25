@@ -1,165 +1,198 @@
-<script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
-import { useExercisesStore } from '@/stores/exercises';
-import { courseStructure } from '@/data/courseStructure';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-} from '@/components/ui/sidebar';
-import { Card, CardContent, Progress } from '@/components/ui';
-import { BookOpen, CheckCircle, Circle, GraduationCap, Home, Play } from 'lucide-vue-next';
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-const route = useRoute();
-const router = useRouter();
-const exercisesStore = useExercisesStore();
+@custom-variant dark (&:is(.dark *));
 
-const isCurrentRoute = (moduleId: string, sectionId?: string, exerciseId?: string) => {
-  if (exerciseId && sectionId) {
-    return route.path === `/modules/${moduleId}/section-${sectionId}/exercise-${exerciseId}`;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 210 11% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 11% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 11% 15%;
+    --primary: 153 47% 49%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 210 11% 15%;
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 98%;
+    --accent-foreground: 210 11% 15%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 153 47% 49%;
+    --radius: 0.5rem;
+    --background: 222 84% 5%;
   }
-  if (sectionId) {
-    return route.path === `/modules/${moduleId}/section-${sectionId}`;
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222 84% 5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 84% 5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 153 47% 49%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217 33% 18%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 18%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 18%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 153 47% 49%;
   }
-  return route.path === `/modules/${moduleId}`;
-};
+}
 
-const goToHome = () => {
-  router.push('/');
-};
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
 
-const goToModule = (moduleId: string) => {
-  router.push(`/modules/${moduleId}`);
-};
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2 0.013 213.69);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.013 213.69);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.013 213.69);
+  --primary: oklch(0.65 0.15 153);
+  --primary-foreground: oklch(0.985 0.001 106.423);
+  --secondary: oklch(0.9 0.02 213);
+  --secondary-foreground: oklch(0.147 0.004 49.25);
+  --muted: oklch(0.97 0.001 106.424);
+  --muted-foreground: oklch(0.553 0.013 58.071);
+  --accent: oklch(0.97 0.001 106.424);
+  --accent-foreground: oklch(0.147 0.004 49.25);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.923 0.003 48.717);
+  --input: oklch(0.923 0.003 48.717);
+  --ring: oklch(0.65 0.15 153);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0.001 106.423);
+  --sidebar-foreground: oklch(0.147 0.004 49.25);
+  --sidebar-primary: oklch(0.216 0.006 56.043);
+  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
+  --sidebar-accent: oklch(0.97 0.001 106.424);
+  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
+  --sidebar-border: oklch(0.923 0.003 48.717);
+  --sidebar-ring: oklch(0.709 0.01 56.259);
+}
 
-const goToSection = (moduleId: string, sectionId: string) => {
-  router.push(`/modules/${moduleId}/${sectionId}`);
-};
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
 
-const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) => {
-  router.push(`/modules/${moduleId}/${sectionId}/${exerciseId}`);
-};
-</script>
+* {
+  box-sizing: border-box;
+}
 
-<template>
-  <Sidebar>
-    <SidebarHeader>
-      <div class="flex items-center space-x-3 px-2 py-2">
-        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-          <GraduationCap class="w-4 h-4 text-white" />
-        </div>
-        <span class="text-lg font-bold text-sidebar-foreground">Vue 3 Pro</span>
-      </div>
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
 
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <SidebarMenuButton
-            @click="goToHome"
-            :is-active="route.path === '/'"
-            class="w-full"
-          >
-            <Home class="w-4 h-4" />
-            <span>Inicio</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      </SidebarMenu>
+.dark {
+  --background: oklch(0.147 0.004 49.25);
+  --foreground: oklch(0.985 0.001 106.423);
+  --card: oklch(0.147 0.004 49.25);
+  --card-foreground: oklch(0.985 0.001 106.423);
+  --popover: oklch(0.147 0.004 49.25);
+  --popover-foreground: oklch(0.985 0.001 106.423);
+  --primary: oklch(0.65 0.15 153);
+  --primary-foreground: oklch(0.985 0.001 106.423);
+  --secondary: oklch(0.268 0.007 34.298);
+  --secondary-foreground: oklch(0.985 0.001 106.423);
+  --muted: oklch(0.268 0.007 34.298);
+  --muted-foreground: oklch(0.709 0.01 56.259);
+  --accent: oklch(0.268 0.007 34.298);
+  --accent-foreground: oklch(0.985 0.001 106.423);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.268 0.007 34.298);
+  --input: oklch(0.268 0.007 34.298);
+  --ring: oklch(0.65 0.15 153);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.216 0.006 56.043);
+  --sidebar-foreground: oklch(0.985 0.001 106.423);
+  --sidebar-primary: oklch(0.65 0.15 153);
+  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
+  --sidebar-accent: oklch(0.268 0.007 34.298);
+  --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
+  --sidebar-border: oklch(0.268 0.007 34.298);
+  --sidebar-ring: oklch(0.65 0.15 153);
+}
 
-      <!-- Progress Card -->
-      <Card class="mx-2 mt-4">
-        <CardContent class="p-4">
-          <div class="text-center">
-            <h3 class="text-sm font-semibold text-foreground mb-2">Progreso Global</h3>
-            <div class="space-y-2">
-              <div class="flex justify-between items-center text-xs">
-                <span class="text-muted-foreground">Completado:</span>
-                <span class="font-medium text-foreground">
-                  {{ exercisesStore.completedCount }} / {{ exercisesStore.totalExercises }}
-                </span>
-              </div>
-              <Progress
-                :value="exercisesStore.progressPercentage"
-                class="h-2"
-              />
-              <div class="text-sm font-bold text-blue-600">
-                {{ exercisesStore.progressPercentage }}%
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </SidebarHeader>
-
-    <SidebarContent>
-      <SidebarGroup>
-        <SidebarGroupLabel>Módulos del Curso</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <SidebarMenu>
-            <SidebarMenuItem v-for="module in courseStructure.modules" :key="module.id">
-              <SidebarMenuButton
-                @click="goToModule(module.id)"
-                :is-active="isCurrentRoute(module.id)"
-                :disabled="module.locked"
-              >
-                <BookOpen class="w-4 h-4" />
-                <span>{{ module.title }}</span>
-                <span v-if="module.locked" class="ml-auto text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
-                  Próximamente
-                </span>
-              </SidebarMenuButton>
-
-              <!-- Sections -->
-              <SidebarMenuSub v-if="!module.locked && module.sections.length > 0">
-                <SidebarMenuSubItem v-for="section in module.sections" :key="section.id">
-                  <SidebarMenuSubButton
-                    @click="goToSection(module.id, section.id)"
-                    :is-active="isCurrentRoute(module.id, section.id)"
-                  >
-                    <Circle class="w-3 h-3" />
-                    <span>{{ section.title }}</span>
-                  </SidebarMenuSubButton>
-
-                  <!-- Exercises -->
-                  <SidebarMenuSub v-if="section.exercises.length > 0" class="ml-4">
-                    <SidebarMenuSubItem v-for="exercise in section.exercises" :key="exercise.id">
-                      <SidebarMenuSubButton
-                        @click="goToExercise(module.id, section.id, exercise.id)"
-                        :is-active="isCurrentRoute(module.id, section.id, exercise.id)"
-                        size="sm"
-                      >
-                        <CheckCircle
-                          v-if="exercisesStore.isExerciseCompleted(exercise.id)"
-                          class="w-3 h-3 text-green-600"
-                        />
-                        <Play
-                          v-else
-                          class="w-3 h-3 text-orange-500"
-                        />
-                        <span class="text-xs">{{ exercise.title }}</span>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  </SidebarMenuSub>
-                </SidebarMenuSubItem>
-              </SidebarMenuSub>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
-    </SidebarContent>
-
-    <SidebarFooter>
-      <div class="text-xs text-muted-foreground text-center p-2">
-        Vue 3 Professional Course
-      </div>
-    </SidebarFooter>
-  </Sidebar>
-</template>
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
