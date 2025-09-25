@@ -22,4 +22,4 @@ const props = defineProps<Props>();
   >
     <slot />
   </button>
-</template></script>
+</template>

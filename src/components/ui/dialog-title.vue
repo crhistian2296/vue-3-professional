@@ -12,4 +12,3 @@ const props = defineProps<Props>();
   <h2 :class="cn('text-lg font-semibold leading-none tracking-tight', props.class)">
     <slot />
   </h2>
-</template>
