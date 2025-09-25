@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { Home, ChevronRight, Play, Check, Eye, EyeOff } from 'lucide-vue-next';
-import { Button, Card, CardContent, Checkbox } from '@/components/ui';
+import { 
+  Button, 
+  Card, 
+  CardContent, 
+  Checkbox, 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle 
+} from '@/components/ui';
 import { useExercisesStore } from '@/stores/exercises';
 import { courseStructure } from '@/data/courseStructure';
 import CodeBlock from '@/components/CodeBlock.vue';
@@ -14,7 +23,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const route = useRoute();
+const router = useRouter();
 const exercisesStore = useExercisesStore();
 
 const ExerciseContent = ref<any>(null);
@@ -22,10 +31,16 @@ const ExerciseComponent = ref<any>(null);
 const showSolution = ref(false);
 const componentCode = ref('');
 
+const module = computed(() => {
+  return courseStructure.modules.find(m => m.id === props.moduleId);
+});
+
+const section = computed(() => {
+  return module.value?.sections.find(s => s.id === props.sectionId);
+});
+
 const exercise = computed(() => {
-  const module = courseStructure.modules.find(m => m.id === props.moduleId);
-  const section = module?.sections.find(s => s.id === props.sectionId);
-  return section?.exercises.find(e => e.id === props.exerciseId);
+  return section.value?.exercises.find(e => e.id === props.exerciseId);
 });
 
 const isCompleted = computed(() => exercisesStore.isExerciseCompleted(props.exerciseId));
@@ -36,6 +51,18 @@ const toggleCompletion = () => {
 
 const toggleSolution = () => {
   showSolution.value = !showSolution.value;
+};
+
+const goToHome = () => {
+  router.push('/');
+};
+
+const goToModule = () => {
+  router.push(`/modules/${props.moduleId}`);
+};
+
+const goToSection = () => {
+  router.push(`/modules/${props.moduleId}/section-${props.sectionId}`);
 };
 
 onMounted(async () => {
@@ -63,11 +90,19 @@ onMounted(async () => {
   <div class="bg-card rounded-lg shadow-sm border">
     <div class="p-8">
       <!-- Breadcrumb -->
-      <div class="flex items-center text-sm text-muted-foreground mb-6">
-        <Home class="w-4 h-4 mr-2" />
-        <span>Módulo {{ moduleId }}</span>
+      <div class="flex items-center text-sm text-muted-foreground mb-6 space-x-1">
+        <button @click="goToHome" class="flex items-center hover:text-foreground transition-colors">
+          <Home class="w-4 h-4 mr-2" />
+          Inicio
+        </button>
         <ChevronRight class="w-4 h-4 mx-2" />
-        <span>Sección {{ sectionId }}</span>
+        <button @click="goToModule" class="hover:text-foreground transition-colors">
+          {{ module?.title }}
+        </button>
+        <ChevronRight class="w-4 h-4 mx-2" />
+        <button @click="goToSection" class="hover:text-foreground transition-colors">
+          {{ section?.title }}
+        </button>
         <ChevronRight class="w-4 h-4 mx-2" />
         <span>{{ exercise?.title }}</span>
       </div>
@@ -125,13 +160,6 @@ onMounted(async () => {
             </CardContent>
           </Card>
 
-          <!-- Solution (when completed and visible) -->
-          <Card v-if="isCompleted && showSolution" class="border-green-200 bg-green-50">
-            <CardContent class="p-6">
-              <h3 class="text-lg font-semibold text-green-800 mb-4">✅ Código de la Solución</h3>
-              <CodeBlock :code="componentCode" language="vue" />
-            </CardContent>
-          </Card>
         </div>
 
         <!-- Live Preview -->
@@ -157,5 +185,22 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+
+    <!-- Solution Modal -->
+    <Dialog v-model:open="showSolution">
+      <DialogContent class="max-w-4xl">
+        <DialogHeader>
+          <DialogTitle class="text-green-800">✅ Solución: {{ exercise?.title }}</DialogTitle>
+        </DialogHeader>
+        <div class="space-y-4">
+          <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+            <p class="text-green-800 text-sm">
+              Esta es la implementación completa del ejercicio. Estudia el código y compáralo con tu solución.
+            </p>
+          </div>
+          <CodeBlock :code="componentCode" language="vue" />
+        </div>
+      </DialogContent>
+    </Dialog>
   </div>
 </template>

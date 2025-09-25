@@ -15,6 +15,8 @@ export interface Section {
 export interface Module {
   id: string;
   title: string;
+  description: string;
+  mdxPath: string;
   sections: Section[];
   locked?: boolean;
 }

@@ -13,6 +13,12 @@ const routes: RouteRecordRaw[] = [
     component: ModuleLayout,
     children: [
       {
+        path: ':moduleId',
+        name: 'Module',
+        component: () => import('@/views/Module.vue'),
+        props: true,
+      },
+      {
         path: ':moduleId/section-:sectionId',
         name: 'Section',
         component: () => import('@/views/Section.vue'),

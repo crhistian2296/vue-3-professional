@@ -5,6 +5,8 @@ export const courseStructure: CourseStructure = {
     {
       id: '1',
       title: 'Introducción y evolución de Vue',
+      description: 'Aprende las principales diferencias entre Vue 2 y Vue 3, y cómo migrar tu código existente.',
+      mdxPath: '/src/content/module1/module1.mdx',
       sections: [
         {
           id: '1',
@@ -31,6 +33,8 @@ export const courseStructure: CourseStructure = {
     {
       id: '2',
       title: 'Composition API y SFC',
+      description: 'Domina la Composition API y las nuevas características de los Single File Components.',
+      mdxPath: '/src/content/module2/module2.mdx',
       sections: [
         {
           id: '1',

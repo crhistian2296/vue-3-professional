@@ -7,3 +7,8 @@ export { default as CardContent } from './card-content.vue';
 export { default as CardFooter } from './card-footer.vue';
 export { default as Progress } from './progress.vue';
 export { default as Checkbox } from './checkbox.vue';
+export { default as Dialog } from './dialog.vue';
+export { default as DialogContent } from './dialog-content.vue';
+export { default as DialogHeader } from './dialog-header.vue';
+export { default as DialogTitle } from './dialog-title.vue';
+export { default as DialogTrigger } from './dialog-trigger.vue';
