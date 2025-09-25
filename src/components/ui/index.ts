@@ -1,18 +1,12 @@
-export { default as Button } from './button/Button.vue';
-export { default as Card } from './card/Card.vue';
-export { default as CardHeader } from './card/CardHeader.vue';
-export { default as CardTitle } from './card/CardTitle.vue';
-export { default as CardDescription } from './card/CardDescription.vue';
-export { default as CardContent } from './card/CardContent.vue';
-export { default as CardFooter } from './card/CardFooter.vue';
-export { default as Progress } from './progress/Progress.vue';
-export { default as Checkbox } from './checkbox/Checkbox.vue';
-export { default as Dialog } from './dialog/Dialog.vue';
-export { default as DialogContent } from './dialog/DialogContent.vue';
-export { default as DialogHeader } from './dialog/DialogHeader.vue';
-export { default as DialogTitle } from './dialog/DialogTitle.vue';
-export { default as DialogTrigger } from './dialog/DialogTrigger.vue';
-export { default as DialogClose } from './dialog/DialogClose.vue';
-export { default as DialogScrollContent } from './dialog/DialogScrollContent.vue';
-export { default as DialogOverlay } from './dialog/DialogOverlay.vue';
 export * from './breadcrumb'
+export * from './button'
+export * from './card'
+export * from './checkbox'
+export * from './dialog'
+export * from './input'
+export * from './progress'
+export * from './separator'
+export * from './sheet'
+export * from './skeleton'
+export * from './sidebar'
+export * from './tooltip'
