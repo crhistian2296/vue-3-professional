@@ -23,7 +23,7 @@ const sectionTitle = computed(() => {
 onMounted(async () => {
   try {
     if (props.moduleId === '1' && props.sectionId === '1') {
-      const module = await import('@/content/module1/section1.mdx');
+      const module = await import('@/content/module1/section1/section1.mdx');
       SectionContent.value = module.default;
     }
   } catch (error) {

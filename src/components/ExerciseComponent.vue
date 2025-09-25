@@ -1,22 +1,32 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useExercisesStore } from '@/stores/exercises';
 import { Button, Card, CardContent, Checkbox } from '@/components/ui';
-import { Pencil, Check } from 'lucide-vue-next';
+import { Pencil, Check, Eye, EyeOff } from 'lucide-vue-next';
 
 interface Props {
   exerciseId: string;
   title: string;
   description: string;
+  showSolution?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  showSolution: false
+});
+
 const exercisesStore = useExercisesStore();
+const showSolutionVisible = ref(false);
 
 const toggleCompletion = () => {
   exercisesStore.toggleExercise(props.exerciseId);
 };
 
 const isCompleted = () => exercisesStore.isExerciseCompleted(props.exerciseId);
+
+const toggleSolutionVisibility = () => {
+  showSolutionVisible.value = !showSolutionVisible.value;
+};
 </script>
 
 <template>
@@ -32,55 +42,23 @@ const isCompleted = () => exercisesStore.isExerciseCompleted(props.exerciseId);
           <h3 class="text-xl font-bold text-foreground mb-2">{{ title }}</h3>
           <p class="text-muted-foreground mb-4">{{ description }}</p>
 
+          <!-- Exercise Content Slot -->
           <div class="bg-background p-4 rounded-lg border border-orange-200 mb-4">
-            <h4 class="font-semibold text-foreground mb-3">📝 Tarea:</h4>
-            <div class="prose prose-sm max-w-none text-muted-foreground">
-              <p>Reescribe el siguiente componente contador de Vue 2 (Options API) a Vue 3 usando Composition API con <code>&lt;script setup&gt;</code>:</p>
-
-              <div class="bg-slate-900 rounded-lg p-4 mt-3 overflow-x-auto">
-                <pre class="text-sm text-slate-100"><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;h2&gt;{{ title }}&lt;/h2&gt;
-    &lt;p&gt;Valor: {{ counter }}&lt;/p&gt;
-    &lt;button @click="increment"&gt;Incrementar&lt;/button&gt;
-    &lt;button @click="reset"&gt;Reset&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default {
-  data() {
-    return {
-      title: 'Contador Vue 2',
-      counter: 0
-    }
-  },
-  methods: {
-    increment() {
-      this.counter++
-    },
-    reset() {
-      this.counter = 0
-    }
-  },
-  computed: {
-    isEven() {
-      return this.counter % 2 === 0
-    }
-  }
-}
-&lt;/script&gt;</code></pre>
+            <slot name="content">
+              <h4 class="font-semibold text-foreground mb-3">📝 Tarea:</h4>
+              <div class="prose prose-sm max-w-none text-muted-foreground">
+                <p>Contenido del ejercicio no proporcionado. Usa el slot "content" para añadir el contenido del ejercicio.</p>
               </div>
+            </slot>
+          </div>
 
-              <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                <p class="text-sm text-blue-800 mb-2"><strong>Pistas:</strong></p>
-                <ul class="text-sm text-blue-700 space-y-1">
-                  <li>Usa <code>ref()</code> para datos reactivos</li>
-                  <li>Usa <code>computed()</code> para propiedades calculadas</li>
-                  <li>Las funciones se declaran directamente en el script</li>
-                  <li>No olvides el <code>.value</code> en las refs</li>
-                </ul>
-              </div>
+          <!-- Solution Section -->
+          <div v-if="isCompleted() && (showSolutionVisible || props.showSolution)" class="bg-green-50 p-4 rounded-lg border border-green-200 mb-4">
+            <h4 class="font-semibold text-green-800 mb-3">✅ Solución:</h4>
+            <div class="prose prose-sm max-w-none text-green-700">
+              <slot name="solution">
+                <p>Solución no proporcionada. Usa el slot "solution" para añadir la solución del ejercicio.</p>
+              </slot>
             </div>
           </div>
 
@@ -95,15 +73,29 @@ export default {
               </span>
             </div>
 
-            <Button
-                v-if="isCompleted()"
-                variant="outline"
-                class="bg-green-100 text-green-700 hover:bg-green-200 border-green-300"
-                size="small"
-            >
-              <Check class="w-4 h-4 mr-2" />
-              ¡Bien hecho!
-            </Button>
+            <div class="flex items-center space-x-2">
+              <Button
+                  v-if="isCompleted()"
+                  @click="toggleSolutionVisibility"
+                  variant="outline"
+                  class="bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-300"
+                  size="small"
+              >
+                <Eye v-if="!showSolutionVisible" class="w-4 h-4 mr-2" />
+                <EyeOff v-else class="w-4 h-4 mr-2" />
+                {{ showSolutionVisible ? 'Ocultar solución' : 'Ver solución' }}
+              </Button>
+
+              <Button
+                  v-if="isCompleted()"
+                  variant="outline"
+                  class="bg-green-100 text-green-700 hover:bg-green-200 border-green-300"
+                  size="small"
+              >
+                <Check class="w-4 h-4 mr-2" />
+                ¡Bien hecho!
+              </Button>
+            </div>
           </div>
         </div>
       </div>

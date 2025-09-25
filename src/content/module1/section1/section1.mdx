@@ -2,6 +2,8 @@ import VueComparison from '@/components/VueComparison.vue'
 import Vue2Example from '@/components/Vue2Example.vue'
 import Vue3Example from '@/components/Vue3Example.vue'
 import ExerciseComponent from '@/components/ExerciseComponent.vue'
+import Exercise1Content from '@/content/module1/section1/exercise1/Exercise1Content.vue'
+import Exercise1Solution from '@/content/module1/section1/exercise1/Exercise1Solution.vue'
 
 # Principales diferencias entre Vue 2 y Vue 3
 
@@ -159,7 +161,10 @@ Vue 3 ha renovado todo el ecosistema:
   exerciseId="exercise-1"
   title="Ejercicio 1: De Options API a Composition API"
   description="Practica la migración de Vue 2 a Vue 3 reescribiendo un componente contador usando la nueva sintaxis <script setup> y Composition API."
-/>
+>
+  <Exercise1Content slot="content" />
+  <Exercise1Solution slot="solution" />
+</ExerciseComponent>
 
 ---
 
