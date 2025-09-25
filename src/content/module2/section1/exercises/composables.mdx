@@ -1,0 +1,59 @@
+# Creando Composables
+
+## Objetivo
+
+Aprende a crear y usar composables para reutilizar lógica entre componentes.
+
+## ¿Qué son los Composables?
+
+Los composables son funciones que encapsulan lógica reactiva reutilizable. Siguen la convención de nomenclatura `use*` (como `useState`, `useEffect` en React).
+
+## Beneficios
+
+- **Reutilización**: Comparte lógica entre componentes
+- **Organización**: Separa concerns por funcionalidad
+- **Testabilidad**: Fácil de probar de forma aislada
+- **Composición**: Combina múltiples composables
+
+## Ejemplos en el Componente
+
+### useCounter
+```typescript
+function useCounter(initialValue = 0) {
+  const count = ref(initialValue)
+  
+  const increment = () => count.value++
+  const decrement = () => count.value--
+  const reset = () => count.value = initialValue
+  
+  return { count, increment, decrement, reset }
+}
+```
+
+### useMouse
+```typescript
+function useMouse() {
+  const x = ref(0)
+  const y = ref(0)
+  
+  const update = (event: MouseEvent) => {
+    x.value = event.clientX
+    y.value = event.clientY
+  }
+  
+  return { x, y, update }
+}
+```
+
+## Tareas
+
+1. **Interactúa con el contador**: Usa los botones para ver la reactividad
+2. **Mueve el mouse**: Observa cómo se actualiza la posición
+3. **Piensa en reutilización**: ¿Dónde más podrías usar estos composables?
+
+## Mejores Prácticas
+
+- Usa nombres descriptivos con prefijo `use`
+- Retorna objetos con propiedades nombradas
+- Mantén los composables pequeños y enfocados
+- Documenta los parámetros y valores de retorno

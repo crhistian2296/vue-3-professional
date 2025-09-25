@@ -18,6 +18,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/Section.vue'),
         props: true,
       },
+      {
+        path: ':moduleId/section-:sectionId/exercise-:exerciseId',
+        name: 'Exercise',
+        component: () => import('@/views/Exercise.vue'),
+        props: true,
+      },
     ],
   },
 ];

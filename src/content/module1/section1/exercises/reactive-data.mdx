@@ -1,0 +1,59 @@
+# Datos Reactivos: ref() vs reactive()
+
+## Objetivo
+
+Aprende las diferencias entre `ref()` y `reactive()` y cuándo usar cada uno.
+
+## Conceptos
+
+### `ref()`
+- Para **valores primitivos** (string, number, boolean)
+- Crea un objeto con propiedad `.value`
+- Requiere `.value` en JavaScript, no en templates
+
+### `reactive()`
+- Para **objetos y arrays**
+- Mantiene la reactividad en propiedades anidadas
+- No requiere `.value`
+
+### `computed()`
+- Para **valores derivados** de otros datos reactivos
+- Se recalcula automáticamente cuando cambian sus dependencias
+- Es de solo lectura por defecto
+
+## Tareas
+
+1. **Experimenta con `ref()`**: Modifica el nombre y observa la reactividad
+2. **Experimenta con `reactive()`**: Cambia email y edad del usuario
+3. **Observa `computed()`**: Ve cómo se actualiza automáticamente el perfil completo
+
+## Buenas Prácticas
+
+- Usa `ref()` para primitivos
+- Usa `reactive()` para objetos complejos
+- Usa `computed()` para valores derivados
+- Evita mezclar `ref()` y `reactive()` innecesariamente
+
+## Ejemplo de Uso
+
+```typescript
+import { ref, reactive, computed } from 'vue'
+
+// Primitivos con ref()
+const name = ref('Juan')
+const age = ref(25)
+
+// Objetos con reactive()
+const user = reactive({
+  email: 'juan@example.com',
+  preferences: {
+    theme: 'dark',
+    language: 'es'
+  }
+})
+
+// Valores calculados con computed()
+const displayName = computed(() => {
+  return `${name.value} (${age.value} años)`
+})
+```

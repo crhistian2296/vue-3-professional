@@ -1,0 +1,65 @@
+# Migración de Contador: Vue 2 a Vue 3
+
+## Objetivo
+
+Convierte este componente contador de Vue 2 (Options API) a Vue 3 usando Composition API con `<script setup>`.
+
+## Código Original (Vue 2)
+
+```vue
+<template>
+  <div>
+    <h2>{{ title }}</h2>
+    <p>Valor: {{ counter }}</p>
+    <button @click="increment">Incrementar</button>
+    <button @click="reset">Reset</button>
+    <p v-if="isEven">El número es par</p>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      title: 'Contador Vue 2',
+      counter: 0
+    }
+  },
+  methods: {
+    increment() {
+      this.counter++
+    },
+    reset() {
+      this.counter = 0
+    }
+  },
+  computed: {
+    isEven() {
+      return this.counter % 2 === 0
+    }
+  }
+}
+</script>
+```
+
+## Tareas
+
+1. **Convierte `data()` a `ref()`**: Usa `ref()` para crear variables reactivas
+2. **Convierte `methods` a funciones**: Declara las funciones directamente en el script
+3. **Convierte `computed` a `computed()`**: Usa la función `computed()` importada de Vue
+4. **Usa `<script setup>`**: Simplifica la sintaxis del componente
+5. **Agrega TypeScript**: Incluye tipado básico
+
+## Conceptos Clave
+
+- **`ref()`**: Para valores primitivos reactivos
+- **`computed()`**: Para propiedades calculadas
+- **`<script setup>`**: Sintaxis simplificada de Vue 3
+- **`.value`**: Acceso a valores de ref en JavaScript (no en template)
+
+## Pistas
+
+- Importa `ref` y `computed` desde 'vue'
+- Recuerda usar `.value` para acceder a refs en JavaScript
+- En el template no necesitas `.value`
+- Las funciones se declaran como `const functionName = () => {}`

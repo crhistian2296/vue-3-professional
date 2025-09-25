@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { z } from 'zod';
+import { courseStructure } from '@/data/courseStructure';
 
 const ExerciseSchema = z.object({
   id: z.string(),
@@ -19,8 +20,14 @@ export const useExercisesStore = defineStore(
   () => {
     const completedExercises = ref<string[]>([]);
 
-    // Total exercises in the course
-    const totalExercises = ref(1); // Starting with 1 exercise
+    // Calculate total exercises dynamically from course structure
+    const totalExercises = computed(() => {
+      return courseStructure.modules.reduce((total, module) => {
+        return total + module.sections.reduce((sectionTotal, section) => {
+          return sectionTotal + section.exercises.length;
+        }, 0);
+      }, 0);
+    });
 
     const completedCount = computed(() => completedExercises.value.length);
 
