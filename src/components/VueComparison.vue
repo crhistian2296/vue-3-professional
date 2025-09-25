@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { Button } from '@/components/ui';
+import CodeBlock from '@/components/CodeBlock.vue';
 
 const activeTab = ref<'vue2' | 'vue3'>('vue2');
 
@@ -93,9 +94,10 @@ const decrement = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div class="bg-slate-900 rounded-lg p-4 overflow-x-auto">
-          <pre class="text-sm text-slate-100"><code>{{ activeTab === 'vue2' ? vue2Code : vue3Code }}</code></pre>
-        </div>
+        <CodeBlock 
+          :code="activeTab === 'vue2' ? vue2Code : vue3Code"
+          language="javascript"
+        />
         
         <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
           <h4 class="font-semibold text-blue-800 mb-2">
