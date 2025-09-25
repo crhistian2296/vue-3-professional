@@ -11,6 +11,7 @@ import ContentLayout from '@/components/ContentLayout.vue';
 import { useExercisesStore } from '@/stores/exercises';
 import { courseStructure } from '@/data/courseStructure';
 import CodeBlock from '@/components/CodeBlock.vue';
+import MdxRenderer from '@/components/MdxRenderer.vue';
 
 interface Props {
   moduleId: string;
@@ -116,10 +117,7 @@ onMounted(async () => {
             <CardContent class="p-6">
               <h3 class="text-lg font-semibold mb-4">📝 Instrucciones</h3>
               <article class="prose prose-sm max-w-none">
-                <component :is="ExerciseContent" v-if="ExerciseContent" />
-                <div v-else class="text-muted-foreground">
-                  Cargando instrucciones...
-                </div>
+                <MdxRenderer :content="ExerciseContent" />
               </article>
             </CardContent>
           </Card>

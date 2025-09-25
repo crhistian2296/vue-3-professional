@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import ContentLayout from '@/components/ContentLayout.vue';
 import { courseStructure } from '@/data/courseStructure';
+import MdxRenderer from '@/components/MdxRenderer.vue';
 
 interface Props {
   moduleId: string;
@@ -39,10 +40,7 @@ onMounted(async () => {
     </div>
 
     <article class="prose prose-lg max-w-none">
-      <component :is="SectionContent" v-if="SectionContent" />
-      <div v-else class="text-muted-foreground">
-        Cargando contenido...
-      </div>
+      <MdxRenderer :content="SectionContent" />
     </article>
   </ContentLayout>
 </template>

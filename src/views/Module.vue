@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {useRoute, useRouter} from 'vue-router';
+import {useRouter} from 'vue-router';
 import ContentLayout from '@/components/ContentLayout.vue';
 import {courseStructure} from '../data/courseStructure.ts';
 import {Button, Card, CardContent, CardHeader, CardTitle} from '@/components/ui';
+import MdxRenderer from '@/components/MdxRenderer.vue';
 
 interface Props {
   moduleId: string;
@@ -36,10 +37,7 @@ const navigateToSection = (sectionId: string) => {
         </div>
 
         <article class="prose prose-lg max-w-none">
-          <component :is="moduleContent" v-if="moduleContent"/>
-          <div v-else class="text-muted-foreground">
-            Cargando contenido...
-          </div>
+          <MdxRenderer :content="moduleContent" />
         </article>
 
         <!-- Sections Grid -->

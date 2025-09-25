@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
+import {onMounted, ref} from 'vue';
+import {Card, CardContent, CardHeader, CardTitle, Tabs, TabsList, TabsTrigger} from '@/components/ui';
 import CodeBlock from '@/components/CodeBlock.vue';
 
 interface Props {
@@ -27,7 +26,7 @@ onMounted(async () => {
     try {
       const leftModule = await import(`@/content/intro-y-evolucion/principales-diferencias/${props.leftComponent}.vue`);
       LeftComponent.value = leftModule.default;
-      
+
       const leftRaw = await import(`@/content/intro-y-evolucion/principales-diferencias/${props.leftComponent}.vue?raw`);
       leftCode.value = leftRaw.default;
     } catch (error) {
@@ -40,7 +39,7 @@ onMounted(async () => {
     try {
       const rightModule = await import(`@/content/intro-y-evolucion/principales-diferencias/${props.rightComponent}.vue`);
       RightComponent.value = rightModule.default;
-      
+
       const rightRaw = await import(`@/content/intro-y-evolucion/principales-diferencias/${props.rightComponent}.vue?raw`);
       rightCode.value = rightRaw.default;
     } catch (error) {
@@ -88,10 +87,10 @@ onMounted(async () => {
             <div class="space-y-3">
               <h4 class="text-lg font-semibold text-foreground">💻 Código Fuente</h4>
               <div class="max-h-[400px] overflow-y-auto">
-                <CodeBlock 
-                  v-if="leftCode" 
-                  :code="leftCode" 
-                  language="vue" 
+                <CodeBlock
+                  v-if="leftCode"
+                  :code="leftCode"
+                  language="vue"
                 />
                 <div v-else class="text-muted-foreground p-4 border rounded">
                   Cargando código...
@@ -119,10 +118,10 @@ onMounted(async () => {
             <div class="space-y-3">
               <h4 class="text-lg font-semibold text-foreground">💻 Código Fuente</h4>
               <div class="max-h-[400px] overflow-y-auto">
-                <CodeBlock 
-                  v-if="rightCode" 
-                  :code="rightCode" 
-                  language="vue" 
+                <CodeBlock
+                  v-if="rightCode"
+                  :code="rightCode"
+                  language="vue"
                 />
                 <div v-else class="text-muted-foreground p-4 border rounded">
                   Cargando código...
