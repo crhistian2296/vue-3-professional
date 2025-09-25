@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
+import { onMounted, ref } from 'vue';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui';
 import CodeBlock from '@/components/CodeBlock.vue';
 
 interface Props {
   leftTitle: string;
   rightTitle: string;
-  leftLabel: string;
-  rightLabel: string;
-  leftComponent?: string;
-  rightComponent?: string;
-  basePath?: string;
+  leftComponent: string;
+  rightComponent: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  basePath: ''
-});
+const props = defineProps<Props>();
 
 const activeTab = ref<'left' | 'right'>('left');
 const leftCode = ref('');
@@ -26,37 +28,24 @@ const RightComponent = ref<any>(null);
 
 onMounted(async () => {
   // Load left component and its raw code
-  if (props.leftComponent) {
-    try {
-      const leftPath = props.basePath
-        ? `@/content/${props.basePath}/${props.leftComponent}.vue`
-        : `@/content/${props.leftComponent}.vue`;
+  try {
+    const leftModule = await import(/* @vite-ignore */ `@/content/${props.leftComponent}`);
+    LeftComponent.value = leftModule.default;
 
-      const leftModule = await import(/* @vite-ignore */ leftPath);
-      LeftComponent.value = leftModule.default;
-
-      const leftRaw = await import(/* @vite-ignore */ `${leftPath}?raw`);
-      leftCode.value = leftRaw.default;
-    } catch (error) {
-      console.error('Error loading left component:', error);
-    }
+    const leftRaw = await import(/* @vite-ignore */ `@/content/${props.leftComponent}?raw`);
+    leftCode.value = leftRaw.default;
+  } catch (error) {
+    console.error('Error loading left component:', error);
   }
 
-  // Load right component and its raw code
-  if (props.rightComponent) {
-    try {
-      const rightPath = props.basePath
-        ? `@/content/${props.basePath}/${props.rightComponent}.vue`
-        : `@/content/${props.rightComponent}.vue`;
+  try {
+    const rightModule = await import(/* @vite-ignore */ `@/content/${props.rightComponent}`);
+    RightComponent.value = rightModule.default;
 
-      const rightModule = await import(/* @vite-ignore */ rightPath);
-      RightComponent.value = rightModule.default;
-
-      const rightRaw = await import(/* @vite-ignore */ `${rightPath}?raw`);
-      rightCode.value = rightRaw.default;
-    } catch (error) {
-      console.error('Error loading right component:', error);
-    }
+    const rightRaw = await import(/* @vite-ignore */ `@/content/${props.rightComponent}?raw`);
+    rightCode.value = rightRaw.default;
+  } catch (error) {
+    console.error('Error loading right component:', error);
   }
 });
 </script>
@@ -67,19 +56,14 @@ onMounted(async () => {
     <div class="flex justify-center">
       <Tabs v-model="activeTab" class="w-full max-w-md">
         <TabsList class="grid w-full grid-cols-2">
-          <TabsTrigger value="left">{{ props.leftLabel }}</TabsTrigger>
-          <TabsTrigger value="right">{{ props.rightLabel }}</TabsTrigger>
+          <TabsTrigger value="left">{{ props.leftTitle }}</TabsTrigger>
+          <TabsTrigger value="right">{{ props.rightTitle }}</TabsTrigger>
         </TabsList>
       </Tabs>
     </div>
 
     <!-- Content Display -->
     <Card>
-      <CardHeader>
-        <CardTitle class="text-center">
-          {{ activeTab === 'left' ? props.leftTitle : props.rightTitle }}
-        </CardTitle>
-      </CardHeader>
       <CardContent>
         <!-- Left Content -->
         <div v-if="activeTab === 'left'" class="space-y-6">
