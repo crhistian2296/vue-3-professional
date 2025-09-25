@@ -105,11 +105,155 @@ const openVueDocs = () => {
       </div>
     </section>
 
+    <!-- Instructor Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-background/80">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-foreground mb-4">Sobre el Instructor</h2>
+          <p class="text-xl text-muted-foreground">Conoce a César Alberca, tu guía en este viaje hacia el dominio de Vue 3</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Instructor Photo -->
+          <div class="text-center lg:text-left">
+            <div class="relative inline-block">
+              <img 
+                src="/src/assets/me-squared.png"
+                alt="César Alberca"
+                class="w-80 h-80 rounded-2xl shadow-2xl mx-auto lg:mx-0 object-cover"
+              />
+              <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+                <GraduationCap class="w-12 h-12 text-white" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Instructor Info -->
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-3xl font-bold text-foreground mb-4">César Alberca</h3>
+              <p class="text-xl text-blue-600 font-semibold mb-4">
+                Senior Frontend Architect & Software Crafter
+              </p>
+              <p class="text-lg text-muted-foreground leading-relaxed">
+                Con más de <strong>10 años de experiencia</strong> como desarrollador frontend, soy un 
+                <strong>Freelance Frontend Architect</strong> especializado en crear aplicaciones web 
+                escalables y mantenibles. Mi pasión por las <strong>mejores prácticas</strong>, la 
+                <strong>arquitectura de software</strong> y el <strong>testing</strong> me ha llevado 
+                a trabajar con equipos de todo el mundo como <strong>nómada digital</strong>.
+              </p>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span class="text-blue-600 text-sm font-bold">🏗️</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-foreground">Especialización Técnica</h4>
+                  <p class="text-muted-foreground">
+                    Experto en <strong>React</strong>, <strong>Angular</strong> y <strong>Vue</strong>, 
+                    con enfoque en <strong>DDD</strong>, <strong>Arquitectura Hexagonal</strong> y 
+                    <strong>sistemas de diseño modulares</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span class="text-green-600 text-sm font-bold">🎤</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-foreground">Speaker Internacional</h4>
+                  <p class="text-muted-foreground">
+                    <strong>Miembro del comité</strong> y <strong>embajador de Codemotion</strong>, 
+                    comparto conocimiento a través de charlas, workshops y contribuciones open-source 
+                    en conferencias internacionales.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span class="text-purple-600 text-sm font-bold">✨</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-foreground">Filosofía de Código</h4>
+                  <p class="text-muted-foreground">
+                    Para mí, el código no es solo una herramienta—es un <strong>arte</strong>. 
+                    Me apasiona empoderar equipos y elevar el nivel de la industria a través 
+                    de la educación y el <strong>software craftsmanship</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 gap-6 pt-6 border-t border-border">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-blue-600">10+</div>
+                <div class="text-sm text-muted-foreground">Años de Experiencia</div>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl font-bold text-green-600">∞</div>
+                <div class="text-sm text-muted-foreground">Pasión por Enseñar</div>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="pt-6">
+              <Button
+                @click="openWebsite"
+                variant="outline"
+                class="w-full sm:w-auto"
+              >
+                <ExternalLink class="w-4 h-4 mr-2" />
+                Visita cesalberca.com
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="mt-16 text-center">
+          <Card class="max-w-4xl mx-auto bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+            <CardContent class="p-8">
+              <h4 class="text-2xl font-bold text-foreground mb-4">¿Por qué este curso es especial?</h4>
+              <p class="text-lg text-muted-foreground leading-relaxed mb-6">
+                Este curso representa años de experiencia práctica trabajando con Vue en proyectos reales. 
+                No solo aprenderás la sintaxis—dominarás los <strong>patrones arquitectónicos</strong>, 
+                las <strong>mejores prácticas</strong> y las <strong>técnicas avanzadas</strong> que uso 
+                diariamente como arquitecto frontend.
+              </p>
+              <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                  Experiencia Real
+                </span>
+                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                  Casos Prácticos
+                </span>
+                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                  Arquitectura Escalable
+                </span>
+                <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
+                  Mejores Prácticas
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+
     <!-- Course Overview -->
     <section class="py-16 px-4 sm:px-6 lg:px-8 bg-background/50">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-foreground mb-4">Estructura del Curso</h2>
+
+const openWebsite = () => {
+  window.open('https://cesalberca.com/', '_blank');
+};
           <p class="text-muted-foreground text-lg">Explora los módulos, secciones y ejercicios del curso</p>
         </div>
 
