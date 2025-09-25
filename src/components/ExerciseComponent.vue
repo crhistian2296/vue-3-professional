@@ -2,6 +2,7 @@
 import { useExercisesStore } from '@/stores/exercises';
 import { Button, Card, CardContent, Checkbox } from '@/components/ui';
 import { Pencil, Check } from 'lucide-vue-next';
+import CodeBlock from '@/components/CodeBlock.vue';
 
 interface Props {
   exerciseId: string;
@@ -37,8 +38,10 @@ const isCompleted = () => exercisesStore.isExerciseCompleted(props.exerciseId);
             <div class="prose prose-sm max-w-none text-muted-foreground">
               <p>Reescribe el siguiente componente contador de Vue 2 (Options API) a Vue 3 usando Composition API con <code>&lt;script setup&gt;</code>:</p>
               
-              <div class="bg-slate-900 rounded-lg p-4 mt-3 overflow-x-auto">
-                <pre class="text-sm text-slate-100"><code>&lt;template&gt;
+              <div class="mt-3">
+                <CodeBlock 
+                  language="javascript"
+                  :code="`&lt;template&gt;
   &lt;div&gt;
     &lt;h2&gt;{{ title }}&lt;/h2&gt;
     &lt;p&gt;Valor: {{ counter }}&lt;/p&gt;
@@ -69,7 +72,8 @@ export default {
     }
   }
 }
-&lt;/script&gt;</code></pre>
+&lt;/scr' + 'ipt&gt;`"
+                />
               </div>
 
               <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
