@@ -2,15 +2,15 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Home, ChevronRight, Play, Check, Eye, EyeOff } from 'lucide-vue-next';
-import { 
-  Button, 
-  Card, 
-  CardContent, 
-  Checkbox, 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle 
+import {
+  Button,
+  Card,
+  CardContent,
+  Checkbox,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
 } from '@/components/ui';
 import { useExercisesStore } from '@/stores/exercises';
 import { courseStructure } from '@/data/courseStructure';
@@ -32,15 +32,15 @@ const showSolution = ref(false);
 const componentCode = ref('');
 
 const module = computed(() => {
-  return courseStructure.modules.find(m => m.id === props.moduleId);
+  return courseStructure.modules.find((m) => m.id === props.moduleId);
 });
 
 const section = computed(() => {
-  return module.value?.sections.find(s => s.id === props.sectionId);
+  return module.value?.sections.find((s) => s.id === props.sectionId);
 });
 
 const exercise = computed(() => {
-  return section.value?.exercises.find(e => e.id === props.exerciseId);
+  return section.value?.exercises.find((e) => e.id === props.exerciseId);
 });
 
 const isCompleted = computed(() => exercisesStore.isExerciseCompleted(props.exerciseId));
@@ -78,8 +78,8 @@ onMounted(async () => {
     ExerciseComponent.value = componentModule.default;
 
     // Get component source code
-    const response = await fetch(`/src/exercises/${exercise.value.component}.vue`);
-    componentCode.value = await response.text();
+    const response = await import(`@/exercises/${exercise.value.component}.vue?raw`);
+    componentCode.value = await response.default;
   } catch (error) {
     console.error('Error loading exercise:', error);
   }

@@ -20,6 +20,10 @@ const goToHome = () => {
   router.push('/');
 };
 
+const goToModule = (moduleId: string) => {
+  router.push(`/modules/module-${moduleId}`);
+};
+
 const goToSection = (moduleId: string, sectionId: string) => {
   router.push(`/modules/${moduleId}/section-${sectionId}`);
 };
@@ -83,13 +87,13 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
       <div class="space-y-2">
         <div v-for="module in courseStructure.modules" :key="module.id" class="space-y-1">
           <!-- Module Header -->
-          <div class="flex items-center px-2 py-2 text-sm font-medium text-foreground">
+          <button @click="goToModule(module.id)" class="flex items-center px-2 py-2 text-sm font-medium text-foreground">
             <BookOpen class="w-4 h-4 mr-2 text-muted-foreground" />
             <span class="flex-1">{{ module.title }}</span>
             <span v-if="module.locked" class="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
               Próximamente
             </span>
-          </div>
+          </button>
 
           <!-- Sections -->
           <div v-if="!module.locked && module.sections.length > 0" class="ml-6 space-y-1">

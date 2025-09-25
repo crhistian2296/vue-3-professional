@@ -1,4 +1,4 @@
-import type { CourseStructure } from '@/types/course';
+import type {CourseStructure} from "../types/course.ts";
 
 export const courseStructure: CourseStructure = {
   modules: [
@@ -11,6 +11,7 @@ export const courseStructure: CourseStructure = {
         {
           id: '1',
           title: 'Principales diferencias entre Vue 2 y Vue 3',
+          mdxPath: '/src/content/module1/section1/section1.mdx',
           exercises: [
             {
               id: 'counter-migration',

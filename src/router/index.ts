@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     component: ModuleLayout,
     children: [
       {
-        path: ':moduleId',
+        path: 'module-:moduleId',
         name: 'Module',
         component: () => import('@/views/Module.vue'),
         props: true,

@@ -9,6 +9,7 @@ export interface Exercise {
 export interface Section {
   id: string;
   title: string;
+  mdxPath: string;
   exercises: Exercise[];
 }
 

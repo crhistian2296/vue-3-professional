@@ -47,7 +47,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-card rounded-lg shadow-sm border">
+  <div class="bg-card max-w-4xl mx-auto rounded-lg shadow-sm border">
     <div class="p-8">
       <div class="mb-8">
         <div class="flex items-center text-sm text-muted-foreground mb-4 space-x-1">
