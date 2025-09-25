@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui';
+import { onMounted, ref, shallowRef } from 'vue';
+import { Card, CardContent, Tabs, TabsList, TabsTrigger } from '@/components/ui';
 import CodeBlock from '@/components/CodeBlock.vue';
 
 interface Props {
@@ -23,12 +15,15 @@ const props = defineProps<Props>();
 const activeTab = ref<'left' | 'right'>('left');
 const leftCode = ref('');
 const rightCode = ref('');
-const LeftComponent = ref<any>(null);
-const RightComponent = ref<any>(null);
+const LeftComponent = shallowRef<any>(null);
+const RightComponent = shallowRef<any>(null);
 
 // Use import.meta.glob to get all Vue components (using relative paths that Vite can resolve)
 const componentModules = import.meta.glob('/src/content/**/*.vue', { eager: false });
-const componentRawModules = import.meta.glob('/src/content/**/*.vue', { eager: false, query: '?raw' });
+const componentRawModules = import.meta.glob('/src/content/**/*.vue', {
+  eager: false,
+  query: '?raw',
+});
 
 // Helper function to convert component path to glob path
 const getGlobPath = (componentPath: string) => {
