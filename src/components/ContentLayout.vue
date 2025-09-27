@@ -9,8 +9,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui';
-import { courseStructure } from '@/data/courseStructure';
+} from './ui';
+import { courseStructure } from '../data/courseStructure.ts';
 
 interface Props {
   fullWidth?: boolean;

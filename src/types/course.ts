@@ -2,7 +2,6 @@ export interface Exercise {
   id: string;
   title: string;
   description: string;
-  component: string;
   mdxPath: string;
 }
 

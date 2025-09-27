@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { Eye, EyeOff, Play } from 'lucide-vue-next';
-import { Button, Card, CardContent, Checkbox } from '@/components/ui';
-import ContentLayout from '@/components/ContentLayout.vue';
-import { useExercisesStore } from '@/stores/exercises';
-import { courseStructure } from '@/data/courseStructure';
-import CodeBlock from '@/components/CodeBlock.vue';
-import MdxRenderer from '@/components/MdxRenderer.vue';
+import { Button, Card, CardContent, Checkbox } from '../components/ui';
+import ContentLayout from '../components/ContentLayout.vue';
+import { useExercisesStore } from '../stores/exercises.ts';
+import { courseStructure } from '../data/courseStructure.ts';
+import CodeBlock from '../components/CodeBlock.vue';
+import MdxRenderer from '../components/MdxRenderer.vue';
 
 interface Props {
   moduleId: string;
@@ -23,16 +23,18 @@ const showSolution = ref(false);
 const componentCode = ref('');
 
 const module = computed(() => {
-  return courseStructure.modules.find((m) => m.id === props.moduleId);
+  return courseStructure.modules.find((m) => m.id === props.moduleId)!;
 });
 
 const section = computed(() => {
-  return module.value?.sections.find((s) => s.id === props.sectionId);
+  return module.value?.sections.find((s) => s.id === props.sectionId)!;
 });
 
 const exercise = computed(() => {
-  return section.value?.exercises.find((e) => e.id === props.exerciseId);
+  return section.value?.exercises.find((e) => e.id === props.exerciseId)!;
 });
+
+console.log({exerciseId: props.exerciseId, exercise: exercise.value})
 
 const isCompleted = computed(() => exercisesStore.isExerciseCompleted(props.exerciseId));
 
@@ -44,6 +46,10 @@ const toggleSolution = () => {
   showSolution.value = !showSolution.value;
 };
 
+const url = computed(() => {
+  return `../content/${module.value.id}/${section.value.id}/${exercise.value.id}/Exercise.vue`
+});
+
 onMounted(async () => {
   if (!exercise.value) return;
 
@@ -53,11 +59,14 @@ onMounted(async () => {
     ExerciseContent.value = mdxModule.default;
 
     // Load exercise component
-    const componentModule = await import(`@/exercises/${exercise.value.component}.vue`);
+
+    console.log()
+
+    const componentModule = await import(url.value);
     ExerciseComponent.value = componentModule.default;
 
     // Get component source code
-    const response = await import(`@/exercises/${exercise.value.component}.vue?raw`);
+    const response = await import(`${url.value}?raw`);
     componentCode.value = await response.default;
   } catch (error) {
     console.error('Error loading exercise:', error);

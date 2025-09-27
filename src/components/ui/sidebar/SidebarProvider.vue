@@ -3,7 +3,7 @@ import type { HTMLAttributes, Ref } from 'vue';
 import { defaultDocument, useEventListener, useMediaQuery, useVModel } from '@vueuse/core';
 import { TooltipProvider } from 'reka-ui';
 import { computed, ref } from 'vue';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils.ts';
 import {
   provideSidebarContext,
   SIDEBAR_COOKIE_MAX_AGE,

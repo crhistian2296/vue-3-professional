@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import { useExercisesStore } from '@/stores/exercises';
-import { courseStructure } from '@/data/courseStructure';
+import { useExercisesStore } from '../stores/exercises';
+import { courseStructure } from '../data/courseStructure';
 import {
   Sidebar,
   SidebarContent,
@@ -16,8 +16,8 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '@/components/ui/sidebar';
-import { Card, CardContent, Progress } from '@/components/ui';
+} from './ui/sidebar';
+import { Card, CardContent, Progress } from './ui';
 import { BookOpen, CheckCircle, Circle, GraduationCap, Home, Play } from 'lucide-vue-next';
 
 const route = useRoute();

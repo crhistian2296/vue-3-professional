@@ -3,7 +3,7 @@ import type { ProgressRootProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import { ProgressIndicator, ProgressRoot } from 'reka-ui';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils.ts';
 
 const props = withDefaults(defineProps<ProgressRootProps & { class?: HTMLAttributes['class'] }>(), {
   modelValue: 0,

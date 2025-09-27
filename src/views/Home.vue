@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useExercisesStore } from '@/stores/exercises';
-import { courseStructure } from '@/data/courseStructure';
+import { useExercisesStore } from '../stores/exercises';
+import { courseStructure } from '../data/courseStructure';
 import {
   Button,
   Card,
@@ -10,7 +10,7 @@ import {
   Avatar,
   AvatarImage,
   AvatarFallback,
-} from '@/components/ui';
+} from '../components/ui';
 import { GraduationCap, Play, ExternalLink, Star, ChartLine, CheckCircle } from 'lucide-vue-next';
 
 const router = useRouter();

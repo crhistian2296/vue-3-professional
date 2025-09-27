@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import ContentLayout from '@/components/ContentLayout.vue';
+import ContentLayout from '../components/ContentLayout.vue';
 import { courseStructure } from '../data/courseStructure.ts';
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
-import MdxRenderer from '@/components/MdxRenderer.vue';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '../components/ui';
+import MdxRenderer from '../components/MdxRenderer.vue';
 
 interface Props {
   moduleId: string;

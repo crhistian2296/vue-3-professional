@@ -15,10 +15,9 @@ export const courseStructure: CourseStructure = {
           mdxPath: '/src/content/intro-y-evolucion/principales-diferencias/index.mdx',
           exercises: [
             {
-              id: 'counter-migration',
-              title: 'Migración de Contador',
-              description: 'Convierte un contador de Vue 2 a Vue 3',
-              component: 'CounterMigration',
+              id: 'composition-vs-options',
+              title: 'Composition API vs Options API',
+              description: 'Migra un componente de Vue 2 a Vue 3',
               mdxPath:
                 '/src/content/intro-y-evolucion/principales-diferencias/composition-vs-options/index.mdx',
             },

@@ -1,0 +1,42 @@
+```vue
+<template>
+  <div>
+    <h2>{{ title }}</h2>
+    <p>Valor: {{ counter }}</p>
+    <button @click="increment">Incrementar</button>
+    <button @click="reset">Reset</button>
+    <p v-if="isEven">El número es par</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+
+const title = ref('Contador Vue 3')
+const counter = ref(0)
+
+const increment = () => {
+  counter.value++
+}
+
+const reset = () => {
+  counter.value = 0
+}
+
+const isEven = computed(() => counter.value % 2 === 0)
+</script>
+```
+
+## Explicación de la solución
+* ref() para datos reactivos: reemplaza data() del Options API
+* computed() para propiedades calculadas: misma función con nueva sintaxis
+* Funciones directas: los métodos ahora son funciones constantes
+* .value para refs: necesario para leer y escribir
+* Imports explícitos: importa desde vue lo que uses
+
+## Beneficios de esta migración
+* Mejor tree-shaking
+*	Código más conciso con <script setup>
+*	Mejor soporte TypeScript
+*	Lógica más organizada y reutilizable
+

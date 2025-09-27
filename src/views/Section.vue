@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import ContentLayout from '@/components/ContentLayout.vue';
-import { courseStructure } from '@/data/courseStructure';
-import MdxRenderer from '@/components/MdxRenderer.vue';
+import ContentLayout from '../components/ContentLayout.vue';
+import { courseStructure } from '../data/courseStructure.ts';
+import MdxRenderer from '../components/MdxRenderer.vue';
 
 interface Props {
   moduleId: string;

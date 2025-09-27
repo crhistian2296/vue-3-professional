@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useExercisesStore } from '@/stores/exercises';
-import { Button, Card, CardContent, Checkbox } from '@/components/ui';
+import { useExercisesStore } from '../stores/exercises.ts';
+import { Button, Card, CardContent, Checkbox } from './ui';
 import { Pencil } from 'lucide-vue-next';
 import { useRouter } from 'vue-router';
 

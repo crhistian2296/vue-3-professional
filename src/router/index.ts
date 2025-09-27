@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import Home from '@/views/Home.vue';
-import ModuleLayout from '@/layouts/ModuleLayout.vue';
+import Home from '../views/Home.vue';
+import ModuleLayout from '../layouts/ModuleLayout.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -15,19 +15,19 @@ const routes: RouteRecordRaw[] = [
       {
         path: ':moduleId',
         name: 'Module',
-        component: () => import('@/views/Module.vue'),
+        component: () => import('../views/Module.vue'),
         props: true,
       },
       {
         path: ':moduleId/:sectionId',
         name: 'Section',
-        component: () => import('@/views/Section.vue'),
+        component: () => import('../views/Section.vue'),
         props: true,
       },
       {
         path: ':moduleId/:sectionId/:exerciseId',
         name: 'Exercise',
-        component: () => import('@/views/Exercise.vue'),
+        component: () => import('../views/Exercise.vue'),
         props: true,
       },
     ],

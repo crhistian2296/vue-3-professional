@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, shallowRef } from 'vue';
-import { Card, CardContent, Tabs, TabsList, TabsTrigger } from '@/components/ui';
-import CodeBlock from '@/components/CodeBlock.vue';
+import { Card, CardContent, Tabs, TabsList, TabsTrigger } from './ui';
+import CodeBlock from './CodeBlock.vue';
 
 interface Props {
   leftTitle: string;
