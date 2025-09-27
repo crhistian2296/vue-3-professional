@@ -49,6 +49,13 @@ export const courseStructure: CourseStructure = {
               mdxPath:
                 '/src/content/intro-y-evolucion/principales-diferencias/ciclo-de-vida/index.mdx',
             },
+            {
+              id: 'conceptos-combinados',
+              title: 'Conceptos Combinados',
+              description: 'Migración completa: filters, template refs, watchers, emits y v-bind CSS',
+              mdxPath:
+                '/src/content/intro-y-evolucion/principales-diferencias/conceptos-combinados/index.mdx',
+            },
           ],
         },
       ],

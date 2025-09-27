@@ -1,0 +1,160 @@
+# Conceptos Combinados - Migración Completa a Vue 3
+
+Convierte este componente completo de Vue 2 a Vue 3 usando la Composition API. Este ejercicio combina múltiples conceptos de migración en un solo componente real.
+
+## Conceptos que Aprenderás
+
+- **Migración de Filters** → Computed properties o funciones
+- **Class y Style Bindings** → v-bind con CSS variables
+- **Template Refs** → ref() y acceso al DOM
+- **Watchers** → watch() y watchEffect()
+- **Events** → defineEmits()
+
+## El Componente Original
+
+El componente es un **formateador de mensajes** con las siguientes características:
+
+### Funcionalidades Vue 2 que debes migrar:
+
+1. **Filters**: `capitalize` y `addPrefix` para formatear texto
+2. **Template Refs**: `$refs.messageInput` para enfocar el input
+3. **Watchers**: Observa cambios en `message`, `isDarkMode`, y `fontSize`
+4. **Class/Style Bindings**: Manejo manual de clases y estilos
+5. **Events**: `$emit('message-sent', data)` para comunicación padre-hijo
+
+## Tareas de Migración
+
+### 1. **Script Setup y TypeScript**
+```typescript
+<script setup lang="ts">
+// Convierte el componente a script setup con TypeScript
+</script>
+```
+
+### 2. **Props y Emits**
+```typescript
+// Convierte props usando defineProps<T>()
+const props = defineProps<{
+  title?: string
+}>()
+
+// Convierte $emit usando defineEmits<T>()
+const emit = defineEmits<{
+  'message-sent': [payload: { original: string; formatted: string; timestamp: string }]
+}>()
+```
+
+### 3. **Reactividad (ref y reactive)**
+```typescript
+// Convierte data() a ref() para valores primitivos
+const message = ref('')
+const isDarkMode = ref(false)
+// ... etc
+```
+
+### 4. **Computed Properties**
+```typescript
+// Mantén las computed properties pero actualiza la sintaxis
+const containerClass = computed(() => ({
+  'dark-mode': isDarkMode.value,
+  'light-mode': !isDarkMode.value
+}))
+```
+
+### 5. **Watchers**
+```typescript
+// Convierte watchers usando watch()
+watch(message, (newMessage) => {
+  console.log('💬 Message changed:', newMessage)
+  // ... lógica del watcher
+})
+```
+
+### 6. **Template Refs**
+```typescript
+// Convierte $refs usando ref()
+const messageInput = ref<HTMLInputElement>()
+
+const focusInput = () => {
+  messageInput.value?.focus()
+}
+```
+
+### 7. **Migración de Filters**
+Los filters no existen en Vue 3, tienes dos opciones:
+
+**Opción A: Computed Properties**
+```typescript
+const formattedMessage = computed(() => {
+  if (!message.value) return ''
+  return `📝 ${capitalize(message.value)}`
+})
+```
+
+**Opción B: Funciones Helper**
+```typescript
+const capitalize = (value: string): string => {
+  if (!value) return ''
+  return value.charAt(0).toUpperCase() + value.slice(1)
+}
+```
+
+### 8. **v-bind en CSS (Bonus)**
+Puedes usar v-bind para pasar valores reactivos al CSS:
+
+```vue
+<style scoped>
+.container {
+  font-size: v-bind(fontSizeValue);
+  color: v-bind(textColor);
+}
+</style>
+```
+
+### 9. **Methods**
+```typescript
+// Convierte methods a funciones normales
+const sendMessage = () => {
+  if (message.value.trim()) {
+    const payload = {
+      original: message.value,
+      formatted: formatMessage(message.value),
+      timestamp: new Date().toISOString()
+    }
+
+    emit('message-sent', payload)
+    message.value = ''
+  }
+}
+```
+
+## Pistas Importantes
+
+### Imports Necesarios
+```typescript
+import { ref, computed, watch, onMounted } from 'vue'
+```
+
+### Diferencias Clave
+- **No más `this`**: Usa las variables directamente
+- **`.value`**: Necesario para acceder/modificar refs en JavaScript
+- **Template refs**: Usa `ref<HTMLElement>()` con TypeScript
+- **Watchers**: `watch(source, callback)` en lugar de `watch: {}`
+- **Emits**: `emit('event-name', data)` en lugar de `$emit`
+
+### Estructura del Template
+El template permanece casi igual, solo cambia:
+- `ref="messageInput"` sigue igual
+- Reemplaza `{{ message | capitalize | addPrefix }}` con computed o funciones
+- Los event handlers `@click="method"` siguen igual
+
+## Resultado Esperado
+
+Al final tendrás un componente Vue 3 moderno que:
+- ✅ Usa TypeScript con tipos seguros
+- ✅ Aprovecha la Composition API
+- ✅ Tiene mejor rendimiento sin filters
+- ✅ Usa v-bind en CSS para estilos dinámicos
+- ✅ Mantiene toda la funcionalidad original
+
+¡Recuerda probar todas las funcionalidades después de la migración!
