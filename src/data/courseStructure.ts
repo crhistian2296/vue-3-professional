@@ -21,6 +21,13 @@ export const courseStructure: CourseStructure = {
               mdxPath:
                 '/src/content/intro-y-evolucion/principales-diferencias/composition-vs-options/index.mdx',
             },
+            {
+              id: 'reactividad-con-ref',
+              title: 'Reactividad con ref()',
+              description: 'Aprende a crear y actualizar refs en Vue 3',
+              mdxPath:
+                '/src/content/intro-y-evolucion/principales-diferencias/reactividad-con-ref/index.mdx',
+            },
           ],
         },
       ],

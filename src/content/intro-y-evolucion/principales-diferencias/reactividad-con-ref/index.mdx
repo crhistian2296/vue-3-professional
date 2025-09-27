@@ -1,0 +1,76 @@
+Convierte este componente de perfil de usuario de Vue 2 (Options API) a Vue 3 usando `ref()` para crear variables reactivas.
+
+## Código Original (Vue 2)
+
+```vue
+<template>
+  <div>
+    <h2>{{ title }}</h2>
+    <p>Nombre: {{ name }}</p>
+    <p>Edad: {{ age }}</p>
+    <p>Email: {{ email }}</p>
+    <button @click="updateName">Cambiar Nombre</button>
+    <button @click="incrementAge">Incrementar Edad</button>
+    <button @click="updateEmail">Cambiar Email</button>
+    <button @click="reset">Resetear</button>
+    <p v-if="isAdult">Es mayor de edad</p>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      title: 'Perfil de Usuario',
+      name: 'Juan',
+      age: 25,
+      email: 'juan@example.com'
+    }
+  },
+  methods: {
+    updateName() {
+      this.name = 'María'
+    },
+    incrementAge() {
+      this.age++
+    },
+    updateEmail() {
+      this.email = 'maria@example.com'
+    },
+    reset() {
+      this.name = 'Juan'
+      this.age = 25
+      this.email = 'juan@example.com'
+    }
+  },
+  computed: {
+    isAdult() {
+      return this.age >= 18
+    }
+  }
+}
+</script>
+```
+
+## Tareas
+
+1. **Convierte `data()` a `ref()`**: Usa `ref()` para crear variables reactivas para cada propiedad
+2. **Convierte `methods` a funciones**: Declara las funciones directamente usando `const`
+3. **Convierte `computed` a `computed()`**: Usa la función `computed()` importada de Vue
+4. **Usa `<script setup>`**: Simplifica la sintaxis del componente
+5. **Maneja `.value`**: Recuerda usar `.value` para acceder y modificar refs en JavaScript
+
+## Conceptos Clave
+
+- **`ref()`**: Para crear valores reactivos (primitivos y objetos)
+- **`.value`**: Acceso a valores de ref en JavaScript (no necesario en template)
+- **Reactividad**: Los refs mantienen la reactividad automáticamente
+- **`<script setup>`**: Sintaxis simplificada de Vue 3
+
+## Pistas
+
+- Importa `ref` y `computed` desde 'vue'
+- Cada propiedad en `data()` debe convertirse en un `ref()`
+- Usa `.value` para leer y escribir valores de ref en las funciones
+- En el template no necesitas `.value`, Vue lo maneja automáticamente
+- Las funciones se declaran como `const functionName = () => {}`

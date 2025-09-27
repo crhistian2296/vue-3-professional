@@ -1,0 +1,74 @@
+```vue
+<template>
+  <div>
+    <h2>{{ title }}</h2>
+    <p>Nombre: {{ name }}</p>
+    <p>Edad: {{ age }}</p>
+    <p>Email: {{ email }}</p>
+    <button @click="updateName">Cambiar Nombre</button>
+    <button @click="incrementAge">Incrementar Edad</button>
+    <button @click="updateEmail">Cambiar Email</button>
+    <button @click="reset">Resetear</button>
+    <p v-if="isAdult">Es mayor de edad</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+
+const title = ref('Perfil de Usuario')
+const name = ref('Juan')
+const age = ref(25)
+const email = ref('juan@example.com')
+
+const updateName = () => {
+  name.value = 'María'
+}
+
+const incrementAge = () => {
+  age.value++
+}
+
+const updateEmail = () => {
+  email.value = 'maria@example.com'
+}
+
+const reset = () => {
+  name.value = 'Juan'
+  age.value = 25
+  email.value = 'juan@example.com'
+}
+
+const isAdult = computed(() => age.value >= 18)
+</script>
+```
+
+## Explicación de la solución
+
+### Conversión de `data()` a `ref()`
+- Cada propiedad reactiva se convierte en un `ref()`
+- `ref()` crea una referencia reactiva que mantiene la reactividad
+- Los valores primitivos (string, number, boolean) deben usar `ref()`
+
+### Manejo de `.value`
+- En JavaScript, necesitas `.value` para acceder y modificar refs
+- En el template, Vue maneja automáticamente `.value`
+- Ejemplo: `name.value = 'María'` en JS, pero `{{ name }}` en template
+
+### Funciones vs Methods
+- Los métodos se convierten en funciones constantes
+- No necesitas `this` porque las variables están en el scope
+- Sintaxis: `const functionName = () => { ... }`
+
+### Computed Properties
+- `computed()` funciona igual que antes
+- Debe importarse explícitamente desde 'vue'
+- Automáticamente rastrea dependencias reactivas
+
+## Beneficios de usar `ref()`
+
+- **Reactividad granular**: Cada ref es independientemente reactivo
+- **Mejor rendimiento**: Solo se actualizan las partes que cambian
+- **TypeScript**: Mejor inferencia de tipos automática
+- **Composabilidad**: Fácil de extraer a composables reutilizables
+- **Tree-shaking**: Solo importas lo que necesitas
