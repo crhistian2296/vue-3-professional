@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import ContentLayout from '../components/ContentLayout.vue';
 import { courseStructure } from '../data/courseStructure.ts';
 import MdxRenderer from '../components/MdxRenderer.vue';
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '../components/ui';
 import { useRouter } from 'vue-router';
 
 interface Props {
@@ -37,7 +37,7 @@ onMounted(async () => {
 });
 
 const navigateToExercise = (exerciseId: string) => {
-  router.push(`/modules/${props.moduleId}/${exerciseId}`);
+  router.push(`/modules/${props.moduleId}/${section.value!.id}/${exerciseId}`);
 };
 </script>
 
