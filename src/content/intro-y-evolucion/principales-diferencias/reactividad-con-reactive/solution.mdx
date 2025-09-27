@@ -1,0 +1,141 @@
+```vue
+<template>
+  <div>
+    <h2>{{ title }}</h2>
+    <p>Nombre: {{ user.name }}</p>
+    <p>Edad: {{ user.age }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Ciudad: {{ user.address.city }}</p>
+    <p>País: {{ user.address.country }}</p>
+    <button @click="updateName">Cambiar Nombre</button>
+    <button @click="incrementAge">Incrementar Edad</button>
+    <button @click="updateEmail">Cambiar Email</button>
+    <button @click="updateAddress">Cambiar Dirección</button>
+    <button @click="reset">Resetear</button>
+    <p v-if="isAdult">Es mayor de edad</p>
+    <p>Total de campos: {{ totalFields }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { reactive, computed } from 'vue'
+
+interface Address {
+  city: string
+  country: string
+}
+
+interface User {
+  name: string
+  age: number
+  email: string
+  address: Address
+}
+
+const title = 'Perfil de Usuario Completo con Reactive'
+
+const user = reactive<User>({
+  name: 'Juan',
+  age: 25,
+  email: 'juan@example.com',
+  address: {
+    city: 'Madrid',
+    country: 'España'
+  }
+})
+
+const updateName = () => {
+  user.name = 'María'
+}
+
+const incrementAge = () => {
+  user.age++
+}
+
+const updateEmail = () => {
+  user.email = 'maria@example.com'
+}
+
+const updateAddress = () => {
+  user.address.city = 'Barcelona'
+  user.address.country = 'España'
+}
+
+const reset = () => {
+  user.name = 'Juan'
+  user.age = 25
+  user.email = 'juan@example.com'
+  user.address.city = 'Madrid'
+  user.address.country = 'España'
+}
+
+const isAdult = computed(() => user.age >= 18)
+
+const totalFields = computed(() =>
+  Object.keys(user).length + Object.keys(user.address).length
+)
+</script>
+```
+
+## Explicación de la solución
+
+### Conversión de `data()` a `reactive()`
+- `reactive()` convierte un objeto JavaScript en un proxy reactivo
+- Todas las propiedades, incluyendo las anidadas, se vuelven reactivas automáticamente
+- No necesitas `.value` para acceder a las propiedades como con `ref()`
+
+### Reactividad Profunda (Deep Reactivity)
+- `user.address.city` es automáticamente reactiva
+- Los cambios en propiedades anidadas disparan actualizaciones de la UI
+- Vue rastrea todos los niveles de anidación del objeto
+
+### Sintaxis Simplificada
+- Acceso directo: `user.name` en lugar de `this.user.name`
+- Sin `this` keyword necesario
+- Código más limpio y legible
+
+### TypeScript Integration
+- Interfaces definen la estructura de los objetos
+- Mejor autocompletado y detección de errores
+- Tipado estricto para propiedades anidadas
+
+## Diferencias clave con `ref()`
+
+### `reactive()` vs `ref()` para objetos
+
+```javascript
+// ❌ ref() para objetos requiere .value
+const userRef = ref({ name: 'Juan', age: 25 })
+userRef.value.name = 'María' // Necesita .value
+
+// ✅ reactive() acceso directo
+const userReactive = reactive({ name: 'Juan', age: 25 })
+userReactive.name = 'María' // Acceso directo
+```
+
+### Cuándo usar cada uno
+
+- **`reactive()`**:
+  - ✅ Objetos complejos y formularios
+  - ✅ Estructuras de datos anidadas
+  - ✅ APIs que devuelven objetos
+  - ❌ Valores primitivos
+
+- **`ref()`**:
+  - ✅ Valores primitivos (string, number, boolean)
+  - ✅ Cuando necesitas reasignar todo el objeto
+  - ✅ Para crear referencias reactivas a cualquier valor
+
+## Beneficios de usar `reactive()`
+
+- **Sintaxis Natural**: Accedes a propiedades como objetos JavaScript normales
+- **Reactividad Profunda**: Automática para todos los niveles de anidación
+- **Mejor para Formularios**: Ideal para estructuras de datos complejas
+- **TypeScript Friendly**: Funciona perfectamente con interfaces y tipos
+- **Rendimiento**: Optimizado para objetos grandes con muchas propiedades
+
+## Limitaciones de `reactive()`
+
+- **Solo para objetos**: No funciona con primitivos
+- **No se puede reasignar**: No puedes hacer `user = newUser`
+- **Destructuring**: Pierde reactividad al hacer destructuring directo

@@ -1,0 +1,117 @@
+Refactoriza este carrito de compras para usar `computed()` en lugar de sincronización manual de estado.
+
+## 🚨 Problema Actual
+
+El componente actual tiene un **anti-patrón**: sincroniza manualmente las estadísticas del carrito llamando `updateCartStatistics()` después de cada operación. Esto es propenso a errores y difícil de mantener.
+
+## Código Actual (Con Problemas)
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const items = ref([...])
+
+// ❌ PROBLEMA: Estado sincronizado manualmente
+const totalItems = ref(4)
+const uniqueItemsCount = ref(3)
+const totalPrice = ref(1124)
+const averagePrice = ref(374.67)
+const hasExpensiveItems = ref(true)
+const cartStatus = ref('Carrito con productos')
+
+// ❌ PROBLEMA: Función que debe llamarse en cada operación
+const updateCartStatistics = () => {
+  totalItems.value = items.value.reduce((sum, item) => sum + item.quantity, 0)
+  uniqueItemsCount.value = items.value.length
+  totalPrice.value = items.value.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  // ... más cálculos manuales
+}
+
+const incrementQuantity = (id: number) => {
+  // ... lógica
+  updateCartStatistics() // ❌ ¡Fácil de olvidar!
+}
+
+const addItem = () => {
+  // ... lógica
+  updateCartStatistics() // ❌ ¡Repetitivo y propenso a errores!
+}
+</script>
+```
+
+## 🎯 Tu Tarea
+
+Convierte todas las estadísticas del carrito de **refs manuales** a **computed properties** que se actualicen automáticamente:
+
+### Estadísticas a convertir:
+
+1. **`totalItems`**: Total de productos en el carrito (suma de cantidades)
+2. **`uniqueItemsCount`**: Número de artículos únicos
+3. **`totalPrice`**: Precio total del carrito
+4. **`averagePrice`**: Precio promedio por tipo de producto
+5. **`hasExpensiveItems`**: Si hay productos > €50
+6. **`cartStatus`**: Estado del carrito basado en contenido y precio
+
+### Pasos a seguir:
+
+1. **Importa `computed`** desde 'vue'
+2. **Convierte cada `ref()` a `computed()`** con la lógica apropiada
+3. **Elimina la función `updateCartStatistics()`** completamente
+4. **Remueve todas las llamadas** a `updateCartStatistics()`
+5. **Verifica que todo funcione** automáticamente
+
+## ✨ Beneficios de `computed()`
+
+- **Automático**: Se actualiza solo cuando cambian las dependencias
+- **Eficiente**: Solo recalcula cuando es necesario (cache inteligente)
+- **Sin errores**: No puedes olvidar actualizar el estado
+- **Declarativo**: El código expresa *qué* quieres, no *cómo* actualizarlo
+- **Limpio**: Eliminas código repetitivo de sincronización
+
+## 🔍 Conceptos Clave
+
+### Computed vs Ref para Estado Derivado
+
+```js
+// ❌ Manual: Propenso a errores
+const total = ref(0)
+const updateTotal = () => {
+  total.value = items.value.reduce((sum, item) => sum + item.price, 0)
+}
+
+// ✅ Computed: Automático y confiable
+const total = computed(() => {
+  return items.value.reduce((sum, item) => sum + item.price, 0)
+})
+```
+
+### Dependencias Reactivas
+
+Los computed properties rastrea automáticamente sus dependencias:
+
+```js
+const cartStatus = computed(() => {
+  // Vue rastrea que depende de items.value y totalPrice.value
+  if (items.value.length === 0) return 'Carrito vacío'
+  if (totalPrice.value > 500) return 'Carrito premium'
+  return 'Carrito con productos'
+})
+```
+
+## 💡 Pistas
+
+- Cada computed debe retornar un valor calculado basado en `items.value`
+- Usa métodos de array como `reduce()`, `length`, `some()`
+- Para el precio promedio: `totalPrice / uniqueItemsCount` (cuidado con división por cero)
+- Para estado del carrito: usa condicionales basadas en longitud y precio total
+- Los computed properties se usan igual que refs en el template
+
+## 🚀 Resultado Esperado
+
+Después de la refactorización:
+- ✅ Sin función `updateCartStatistics()`
+- ✅ Sin llamadas manuales de actualización
+- ✅ Todas las estadísticas como `computed()`
+- ✅ Actualización automática al cambiar items
+- ✅ Código más limpio y mantenible

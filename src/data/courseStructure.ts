@@ -28,6 +28,20 @@ export const courseStructure: CourseStructure = {
               mdxPath:
                 '/src/content/intro-y-evolucion/principales-diferencias/reactividad-con-ref/index.mdx',
             },
+            {
+              id: 'reactividad-con-reactive',
+              title: 'Reactividad con reactive()',
+              description: 'Convierte objetos complejos usando reactive() API',
+              mdxPath:
+                '/src/content/intro-y-evolucion/principales-diferencias/reactividad-con-reactive/index.mdx',
+            },
+            {
+              id: 'computed-properties',
+              title: 'Computed Properties',
+              description: 'Refactoriza sincronización manual a estado derivado automático',
+              mdxPath:
+                '/src/content/intro-y-evolucion/principales-diferencias/computed-properties/index.mdx',
+            },
           ],
         },
       ],
