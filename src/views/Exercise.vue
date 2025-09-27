@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, shallowRef } from 'vue';
-import { Eye, EyeOff, Play, Check, Square } from 'lucide-vue-next';
-import { Button, Card, CardContent } from '../components/ui';
+import {computed, onMounted, ref, shallowRef} from 'vue';
+import {Check, Eye, EyeOff, Play, Square} from 'lucide-vue-next';
+import {Button, Card, CardContent} from '../components/ui';
 import ContentLayout from '../components/ContentLayout.vue';
-import { useExercisesStore } from '../stores/exercises.ts';
-import { courseStructure } from '../data/courseStructure.ts';
-import CodeBlock from '../components/CodeBlock.vue';
+import {useExercisesStore} from '../stores/exercises.ts';
+import {courseStructure} from '../data/courseStructure.ts';
 import MdxRenderer from '../components/MdxRenderer.vue';
 
 interface Props {
@@ -21,7 +20,6 @@ const ExerciseContent = ref<string>('');
 const SolutionContent = ref<string>('');
 const ExerciseComponent = shallowRef<string>('');
 const showSolution = ref(false);
-const componentCode = ref('');
 
 const module = computed(() => {
   return courseStructure.modules.find((m) => m.id === props.moduleId)!;
@@ -72,10 +70,6 @@ onMounted(async () => {
     // Load exercise component
     const componentModule = await import(url.value);
     ExerciseComponent.value = componentModule.default;
-
-    // Get component source code
-    const response = await import(`${url.value}?raw`);
-    componentCode.value = await response.default;
   } catch (error) {
     console.error('Error loading exercise:', error);
   }
@@ -150,13 +144,6 @@ onMounted(async () => {
                   Cargando componente...
                 </div>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent class="p-6">
-              <h3 class="text-lg font-semibold mb-4">💻 Código del Componente</h3>
-              <CodeBlock :code="componentCode" language="vue" />
             </CardContent>
           </Card>
         </div>

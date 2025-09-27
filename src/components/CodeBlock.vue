@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import 'highlight.js/styles/atom-one-dark.css';
 
 interface Props {
   code: string;
@@ -10,12 +9,14 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   language: 'javascript',
 });
+
+
 </script>
 
 <template>
   <div class="relative">
-    <p
-      :class="['rounded-lg overflow-x-auto', props.class]"
-    >{{code}}</p>
+    <div :class="['rounded-lg overflow-x-auto', props.class]">
+      <highlightjs autodetect :code="code"/>
+    </div>
   </div>
 </template>
