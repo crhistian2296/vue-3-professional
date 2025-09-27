@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref, shallowRef } from 'vue';
-import { Card, CardContent, Tabs, TabsList, TabsTrigger } from './ui';
+import {onMounted, ref, shallowRef} from 'vue';
+import {Card, CardContent, Tabs, TabsList, TabsTrigger} from './ui';
 import CodeBlock from './CodeBlock.vue';
 
 interface Props {
@@ -27,8 +27,6 @@ const componentRawModules = import.meta.glob('/src/content/**/*.vue', {
 
 // Helper function to convert component path to glob path
 const getGlobPath = (componentPath: string) => {
-  // Convert 'intro-y-evolucion/principales-diferencias/Vue2Example.vue'
-  // to '/src/content/intro-y-evolucion/principales-diferencias/Vue2Example.vue'
   return `/src/content/${componentPath}`;
 };
 
@@ -40,17 +38,11 @@ onMounted(async () => {
     if (componentModules[leftGlobPath]) {
       const leftModule = await componentModules[leftGlobPath]() as any;
       LeftComponent.value = leftModule.default;
-    } else {
-      console.error('Left component not found:', leftGlobPath);
-      console.log('Available components:', Object.keys(componentModules));
-      console.log('Looking for:', props.leftComponent);
     }
 
     if (componentRawModules[leftGlobPath]) {
       const leftRaw = await componentRawModules[leftGlobPath]() as any;
       leftCode.value = leftRaw.default;
-    } else {
-      console.error('Left component raw not found:', leftGlobPath);
     }
   } catch (error) {
     console.error('Error loading left component:', error);

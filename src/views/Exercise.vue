@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import {computed, onMounted, ref, shallowRef} from 'vue';
 import { Eye, EyeOff, Play } from 'lucide-vue-next';
 import { Button, Card, CardContent, Checkbox } from '../components/ui';
 import ContentLayout from '../components/ContentLayout.vue';
@@ -18,7 +18,7 @@ const props = defineProps<Props>();
 const exercisesStore = useExercisesStore();
 
 const ExerciseContent = ref<string>('');
-const ExerciseComponent = ref<string>('');
+const ExerciseComponent = shallowRef<string>('');
 const showSolution = ref(false);
 const componentCode = ref('');
 
@@ -33,8 +33,6 @@ const section = computed(() => {
 const exercise = computed(() => {
   return section.value?.exercises.find((e) => e.id === props.exerciseId)!;
 });
-
-console.log({exerciseId: props.exerciseId, exercise: exercise.value})
 
 const isCompleted = computed(() => exercisesStore.isExerciseCompleted(props.exerciseId));
 
@@ -59,9 +57,6 @@ onMounted(async () => {
     ExerciseContent.value = mdxModule.default;
 
     // Load exercise component
-
-    console.log()
-
     const componentModule = await import(url.value);
     ExerciseComponent.value = componentModule.default;
 
@@ -83,8 +78,8 @@ onMounted(async () => {
             <Play class="w-5 h-5 text-orange-600" />
           </div>
           <div>
-            <h1 class="text-2xl font-bold text-foreground">{{ exercise?.title }}</h1>
-            <p class="text-muted-foreground">{{ exercise?.description }}</p>
+            <h1 class="text-2xl font-bold text-foreground">{{ exercise.title }}</h1>
+            <p class="text-muted-foreground">{{ exercise.description }}</p>
           </div>
         </div>
 
@@ -92,7 +87,7 @@ onMounted(async () => {
         <div class="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
           <div class="flex items-center space-x-3">
             <Checkbox
-              :checked="isCompleted"
+              :checked="true"
               @update:checked="toggleCompletion"
             />
             <span :class="['font-medium', isCompleted ? 'text-green-700' : 'text-muted-foreground']">
