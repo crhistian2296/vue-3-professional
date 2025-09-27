@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {onMounted, ref, shallowRef} from 'vue';
-import {Card, CardContent, Tabs, TabsList, TabsTrigger} from './ui';
+import { onMounted, ref, shallowRef } from 'vue';
+import { Card, CardContent, Tabs, TabsList, TabsTrigger } from './ui';
 import CodeBlock from './CodeBlock.vue';
 
 interface Props {
@@ -36,12 +36,12 @@ onMounted(async () => {
     const leftGlobPath = getGlobPath(props.leftComponent);
 
     if (componentModules[leftGlobPath]) {
-      const leftModule = await componentModules[leftGlobPath]() as any;
+      const leftModule = (await componentModules[leftGlobPath]()) as any;
       LeftComponent.value = leftModule.default;
     }
 
     if (componentRawModules[leftGlobPath]) {
-      const leftRaw = await componentRawModules[leftGlobPath]() as any;
+      const leftRaw = (await componentRawModules[leftGlobPath]()) as any;
       leftCode.value = leftRaw.default;
     }
   } catch (error) {
@@ -52,7 +52,7 @@ onMounted(async () => {
     const rightGlobPath = getGlobPath(props.rightComponent);
 
     if (componentModules[rightGlobPath]) {
-      const rightModule = await componentModules[rightGlobPath]() as any;
+      const rightModule = (await componentModules[rightGlobPath]()) as any;
       RightComponent.value = rightModule.default;
     } else {
       console.error('Right component not found:', rightGlobPath);
@@ -61,7 +61,7 @@ onMounted(async () => {
     }
 
     if (componentRawModules[rightGlobPath]) {
-      const rightRaw = await componentRawModules[rightGlobPath]() as any;
+      const rightRaw = (await componentRawModules[rightGlobPath]()) as any;
       rightCode.value = rightRaw.default;
     } else {
       console.error('Right component raw not found:', rightGlobPath);

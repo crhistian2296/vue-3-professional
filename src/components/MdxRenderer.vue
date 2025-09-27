@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {computed} from 'vue';
-import {MDXProvider} from '@mdx-js/vue';
+import { computed } from 'vue';
+import { MDXProvider } from '@mdx-js/vue';
 import CodeBlock from './CodeBlock.vue';
 
 interface Props {
@@ -24,10 +24,12 @@ const components = computed(() => ({
 </script>
 
 <template>
-  <MDXProvider :components="components">
-    <component :is="content" v-if="content" />
-    <div v-else class="text-muted-foreground">
-      Cargando contenido...
-    </div>
-  </MDXProvider>
+  <article class="prose prose-sm max-w-none">
+    <MDXProvider :components="components">
+      <component :is="content" v-if="content"/>
+      <div v-else class="text-muted-foreground">
+        Cargando contenido...
+      </div>
+    </MDXProvider>
+  </article>
 </template>

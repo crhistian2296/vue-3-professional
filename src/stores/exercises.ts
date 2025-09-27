@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { z } from 'zod';
-import {courseStructure} from "../data/courseStructure.ts";
+import { courseStructure } from '../data/courseStructure.ts';
 
 const ExerciseSchema = z.object({
   id: z.string(),

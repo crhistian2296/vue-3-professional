@@ -87,7 +87,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
                 </span>
               </div>
               <Progress
-                :value="exercisesStore.progressPercentage"
+                :model-value="exercisesStore.progressPercentage"
                 class="h-2"
               />
               <div class="text-sm font-bold text-green-600">

@@ -33,14 +33,12 @@ const navigateToSection = (sectionId: string) => {
   <ContentLayout>
       <div v-if="module" class="space-y-8">
         <!-- Module Header -->
-        <div class="text-center space-y-4">
+        <div class="space-y-4">
           <h1 class="text-4xl font-bold text-foreground">{{ module.title }}</h1>
-          <p class="text-xl text-muted-foreground max-w-3xl mx-auto">{{ module.description }}</p>
+          <p class="text-xl text-muted-foreground">{{ module.description }}</p>
         </div>
 
-        <article class="prose prose-lg max-w-none">
-          <MdxRenderer :content="moduleContent" />
-        </article>
+        <MdxRenderer :content="moduleContent" />
 
         <!-- Sections Grid -->
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

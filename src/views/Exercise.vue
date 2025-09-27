@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, shallowRef} from 'vue';
-import { Eye, EyeOff, Play } from 'lucide-vue-next';
-import { Button, Card, CardContent, Checkbox } from '../components/ui';
+import { computed, onMounted, ref, shallowRef } from 'vue';
+import { Eye, EyeOff, Play, Check, Square } from 'lucide-vue-next';
+import { Button, Card, CardContent } from '../components/ui';
 import ContentLayout from '../components/ContentLayout.vue';
 import { useExercisesStore } from '../stores/exercises.ts';
 import { courseStructure } from '../data/courseStructure.ts';
@@ -18,6 +18,7 @@ const props = defineProps<Props>();
 const exercisesStore = useExercisesStore();
 
 const ExerciseContent = ref<string>('');
+const SolutionContent = ref<string>('');
 const ExerciseComponent = shallowRef<string>('');
 const showSolution = ref(false);
 const componentCode = ref('');
@@ -44,8 +45,16 @@ const toggleSolution = () => {
   showSolution.value = !showSolution.value;
 };
 
+const baseUrl = computed(() => {
+  return `../content/${module.value.id}/${section.value.id}/${exercise.value.id}`;
+});
+
 const url = computed(() => {
-  return `../content/${module.value.id}/${section.value.id}/${exercise.value.id}/Exercise.vue`
+  return `${baseUrl.value}/Exercise.vue`;
+});
+
+const solutionUrl = computed(() => {
+  return `${baseUrl.value}/solution.mdx`;
 });
 
 onMounted(async () => {
@@ -55,6 +64,10 @@ onMounted(async () => {
     // Load MDX content
     const mdxModule = await import(/* @vite-ignore */ exercise.value.mdxPath);
     ExerciseContent.value = mdxModule.default;
+
+    // Load MDX Solution
+    const mdxSolutionModule = await import(/* @vite-ignore */ solutionUrl.value);
+    SolutionContent.value = mdxSolutionModule.default;
 
     // Load exercise component
     const componentModule = await import(url.value);
@@ -86,12 +99,17 @@ onMounted(async () => {
         <!-- Completion Status -->
         <div class="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
           <div class="flex items-center space-x-3">
-            <Checkbox
-              :checked="true"
-              @update:checked="toggleCompletion"
-            />
+            <Button
+              @click="toggleCompletion"
+              :variant="isCompleted ? 'default' : 'outline'"
+              size="sm"
+              class="w-8 h-8 p-0"
+            >
+              <Check v-if="isCompleted" class="w-4 h-4" />
+              <Square v-else class="w-4 h-4" />
+            </Button>
             <span :class="['font-medium', isCompleted ? 'text-green-700' : 'text-muted-foreground']">
-              {{ isCompleted ? '✅ Completado' : 'Marcar como completado' }}
+              {{ isCompleted ? 'Completado' : 'Marcar como completado' }}
             </span>
           </div>
 
@@ -115,9 +133,7 @@ onMounted(async () => {
           <Card>
             <CardContent class="p-6">
               <h3 class="text-lg font-semibold mb-4">📝 Instrucciones</h3>
-              <article class="prose prose-sm max-w-none">
                 <MdxRenderer :content="ExerciseContent" />
-              </article>
             </CardContent>
           </Card>
 
@@ -164,7 +180,7 @@ onMounted(async () => {
               Esta es la implementación completa del ejercicio. Estudia el código y compáralo con tu solución.
             </p>
           </div>
-          <CodeBlock :code="componentCode" language="vue" />
+          <MdxRenderer :content="SolutionContent" />
         </div>
         </div>
       </div>
