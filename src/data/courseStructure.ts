@@ -42,6 +42,13 @@ export const courseStructure: CourseStructure = {
               mdxPath:
                 '/src/content/intro-y-evolucion/principales-diferencias/computed-properties/index.mdx',
             },
+            {
+              id: 'ciclo-de-vida',
+              title: 'Ciclo de Vida',
+              description: 'Aprende los hooks de ciclo de vida: onMounted, onUnmounted y onUpdated',
+              mdxPath:
+                '/src/content/intro-y-evolucion/principales-diferencias/ciclo-de-vida/index.mdx',
+            },
           ],
         },
       ],

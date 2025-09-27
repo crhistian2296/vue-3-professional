@@ -1,0 +1,56 @@
+```vue
+<template>
+  <div>
+    <h2>{{ title }}</h2>
+    <p>Contador: {{ counter }}</p>
+    <button @click="increment">Incrementar</button>
+    <p>Abre la consola para ver los mensajes del ciclo de vida</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, onUpdated, onUnmounted } from 'vue'
+
+const title = ref('Ciclo de Vida - Vue 3')
+const counter = ref(0)
+
+const increment = () => {
+  counter.value++
+}
+
+onMounted(() => {
+  console.log('✅ onMounted: Componente montado')
+})
+
+onUpdated(() => {
+  console.log('🔄 onUpdated: Componente actualizado')
+})
+
+onUnmounted(() => {
+  console.log('🧹 onUnmounted: Limpiando antes de desmontar')
+})
+</script>
+```
+
+## Explicación de la solución
+
+### Cambios principales
+
+1. **`data()` → `ref()`**: Variables reactivas con `ref()`
+2. **`mounted` → `onMounted()`**: Hook de montaje
+3. **`updated` → `onUpdated()`**: Hook de actualización
+4. **`beforeUnmount` → `onUnmounted()`**: Hook de limpieza
+5. **`methods` → funciones**: Funciones directas en el setup
+
+### Hooks de ciclo de vida
+
+- **`onMounted()`**: Se ejecuta cuando el componente está montado en el DOM
+- **`onUpdated()`**: Se ejecuta después de cada actualización reactiva
+- **`onUnmounted()`**: Se ejecuta antes de desmontar el componente
+
+### Beneficios
+
+- Código más simple y directo
+- Mejor tree-shaking
+- Soporte completo de TypeScript
+- Hooks reutilizables en composables
