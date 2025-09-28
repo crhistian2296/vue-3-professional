@@ -62,13 +62,25 @@ export const courseStructure: CourseStructure = {
       ],
     },
     {
-      id: '2',
-      title: 'Composition API y SFC',
+      id: 'gestion-rutas-estado',
+      title: 'Gestión de rutas y estado',
       description:
-        'Domina la Composition API y las nuevas características de los Single File Components.',
-      mdxPath: '/src/content/module2/module2.mdx',
-      sections: [],
-      locked: true,
+        'Aprende a manejar el routing con Vue Router 4 y la gestión de estado global con Pinia.',
+      mdxPath: '/src/content/gestion-rutas-estado/index.mdx',
+      sections: [
+        {
+          id: 'gestion-rutas',
+          title: 'Gestion de rutas con Vue Router 4',
+          mdxPath: '/src/content/gestion-rutas-estado/gestion-rutas/index.mdx',
+          exercises: [],
+        },
+        {
+          id: 'gestion-estado',
+          title: 'Gestión de estado con Pinia',
+          mdxPath: '/src/content/gestion-rutas-estado/gestion-estado/index.mdx',
+          exercises: [],
+        },
+      ],
     },
   ],
 };

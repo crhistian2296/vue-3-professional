@@ -55,7 +55,7 @@ const navigateToExercise = (exerciseId: string) => {
       <Card
           v-for="exercise in section.exercises"
           :key="exercise.id"
-          class="cursor-pointer hover:shadow-lg transition-shadow"
+          class="cursor-pointer hover:shadow-lg transition-shadow justify-between"
           @click="navigateToExercise(exercise.id)"
       >
         <CardHeader>

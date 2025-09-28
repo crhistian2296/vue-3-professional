@@ -1,0 +1,344 @@
+# Gestión de estado con Pinia
+
+Pinia es la librería de gestión de estado oficial para Vue 3, diseñada desde cero para aprovechar la Composition API y ofrecer una experiencia de desarrollo superior.
+
+## ¿Qué es Pinia?
+
+Pinia es el sucesor de Vuex que ofrece:
+- ✅ **API intuitiva**: Sintaxis simple y natural
+- ✅ **TypeScript nativo**: Soporte completo sin configuración extra
+- ✅ **Composition API**: Integración perfecta con Vue 3
+- ✅ **DevTools**: Debugging y time-travel incluidos
+- ✅ **Modular**: Stores independientes y reutilizables
+- ✅ **Tree-shaking**: Solo importa lo que usas
+
+## ¿Por qué Pinia en lugar de Vuex?
+
+| Vuex 4 | Pinia |
+|--------|-------|
+| Mutations + Actions | Solo Actions |
+| `this.$store.dispatch()` | `store.action()` |
+| Módulos complejos | Stores simples |
+| TypeScript complejo | TypeScript automático |
+| Sintaxis verbosa | API minimalista |
+
+## Instalación y configuración
+
+```bash
+npm install pinia
+```
+
+```javascript
+// main.js
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+
+const app = createApp(App)
+const pinia = createPinia()
+
+app.use(pinia)
+app.mount('#app')
+```
+
+## Definiendo un Store
+
+### Sintaxis básica con defineStore
+
+```javascript
+// stores/counter.js
+import { defineStore } from 'pinia'
+
+export const useCounterStore = defineStore('counter', {
+  // Estado
+  state: () => ({
+    count: 0,
+    name: 'Contador'
+  }),
+
+  // Getters (computed)
+  getters: {
+    doubleCount: (state) => state.count * 2,
+
+    // Getter con parámetros
+    getCountPlusValue: (state) => {
+      return (value) => state.count + value
+    }
+  },
+
+  // Actions (methods)
+  actions: {
+    increment() {
+      this.count++
+    },
+
+    async fetchData() {
+      const response = await fetch('/api/data')
+      this.data = await response.json()
+    },
+
+    // Acción con parámetros
+    incrementBy(value) {
+      this.count += value
+    }
+  }
+})
+```
+
+### Sintaxis con Composition API
+
+```javascript
+// stores/counter.js
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
+export const useCounterStore = defineStore('counter', () => {
+  // State
+  const count = ref(0)
+  const name = ref('Contador')
+
+  // Getters
+  const doubleCount = computed(() => count.value * 2)
+
+  // Actions
+  const increment = () => {
+    count.value++
+  }
+
+  const incrementBy = (value) => {
+    count.value += value
+  }
+
+  // Retornar lo que queremos exponer
+  return {
+    count,
+    name,
+    doubleCount,
+    increment,
+    incrementBy
+  }
+})
+```
+
+## Usando el Store en componentes
+
+### Composición API
+
+```vue
+<template>
+  <div>
+    <p>Contador: {{ counter.count }}</p>
+    <p>Doble: {{ counter.doubleCount }}</p>
+    <button @click="counter.increment()">+1</button>
+    <button @click="counter.incrementBy(5)">+5</button>
+  </div>
+</template>
+
+<script setup>
+import { useCounterStore } from '@/stores/counter'
+
+// Usar el store
+const counter = useCounterStore()
+
+// También puedes destructurar (con storeToRefs para mantener reactividad)
+import { storeToRefs } from 'pinia'
+const { count, doubleCount } = storeToRefs(counter)
+const { increment, incrementBy } = counter
+</script>
+```
+
+### Options API
+
+```vue
+<template>
+  <div>
+    <p>Contador: {{ counterStore.count }}</p>
+    <button @click="counterStore.increment()">+1</button>
+  </div>
+</template>
+
+<script>
+import { useCounterStore } from '@/stores/counter'
+
+export default {
+  setup() {
+    const counterStore = useCounterStore()
+    return { counterStore }
+  }
+}
+</script>
+```
+
+## Ejemplo complejo: Store de autenticación
+
+```javascript
+// stores/auth.js
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import { authAPI } from '@/api/auth'
+
+export const useAuthStore = defineStore('auth', () => {
+  // State
+  const user = ref(null)
+  const token = ref(localStorage.getItem('token'))
+  const isLoading = ref(false)
+
+  // Getters
+  const isAuthenticated = computed(() => !!token.value)
+  const userName = computed(() => user.value?.name || 'Invitado')
+
+  // Actions
+  const login = async (credentials) => {
+    isLoading.value = true
+    try {
+      const response = await authAPI.login(credentials)
+      token.value = response.token
+      user.value = response.user
+      localStorage.setItem('token', response.token)
+      return { success: true }
+    } catch (error) {
+      return { success: false, error: error.message }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const logout = () => {
+    user.value = null
+    token.value = null
+    localStorage.removeItem('token')
+  }
+
+  const fetchProfile = async () => {
+    if (!isAuthenticated.value) return
+
+    try {
+      const profile = await authAPI.getProfile()
+      user.value = profile
+    } catch (error) {
+      console.error('Error fetching profile:', error)
+    }
+  }
+
+  return {
+    // State
+    user,
+    token,
+    isLoading,
+
+    // Getters
+    isAuthenticated,
+    userName,
+
+    // Actions
+    login,
+    logout,
+    fetchProfile
+  }
+})
+```
+
+## Persistencia de estado
+
+```javascript
+// stores/settings.js
+import { defineStore } from 'pinia'
+import { ref, watch } from 'vue'
+
+export const useSettingsStore = defineStore('settings', () => {
+  const theme = ref(localStorage.getItem('theme') || 'light')
+  const language = ref(localStorage.getItem('language') || 'es')
+
+  // Persistir cambios automáticamente
+  watch(theme, (newTheme) => {
+    localStorage.setItem('theme', newTheme)
+  })
+
+  watch(language, (newLanguage) => {
+    localStorage.setItem('language', newLanguage)
+  })
+
+  const toggleTheme = () => {
+    theme.value = theme.value === 'light' ? 'dark' : 'light'
+  }
+
+  return {
+    theme,
+    language,
+    toggleTheme
+  }
+})
+```
+
+## Comunicación entre Stores
+
+```javascript
+// stores/cart.js
+import { defineStore } from 'pinia'
+import { useAuthStore } from './auth'
+
+export const useCartStore = defineStore('cart', () => {
+  const authStore = useAuthStore()
+  const items = ref([])
+
+  const addItem = (product) => {
+    if (!authStore.isAuthenticated) {
+      throw new Error('Debes estar autenticado')
+    }
+    items.value.push(product)
+  }
+
+  return {
+    items,
+    addItem
+  }
+})
+```
+
+## Testing con Pinia
+
+```javascript
+// tests/counter.test.js
+import { createPinia, setActivePinia } from 'pinia'
+import { useCounterStore } from '@/stores/counter'
+
+describe('Counter Store', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
+
+  it('increments counter', () => {
+    const counter = useCounterStore()
+    expect(counter.count).toBe(0)
+
+    counter.increment()
+    expect(counter.count).toBe(1)
+  })
+
+  it('calculates double count', () => {
+    const counter = useCounterStore()
+    counter.count = 5
+    expect(counter.doubleCount).toBe(10)
+  })
+})
+```
+
+## DevTools Integration
+
+Pinia incluye soporte completo para Vue DevTools:
+- 🔍 **Inspección de estado**: Ve el estado actual de todos los stores
+- 🕰️ **Time travel**: Navega entre diferentes estados
+- 🎯 **Actions tracking**: Observa qué acciones se ejecutan
+- 📝 **Mutations**: Ve todos los cambios de estado en tiempo real
+
+## Próximos pasos
+
+En los ejercicios de esta sección aprenderás:
+- Configurar Pinia en una aplicación Vue
+- Crear stores con diferentes patrones
+- Implementar autenticación con Pinia
+- Persistir estado en localStorage
+- Comunicar stores entre sí
+- Testear stores con Vitest
+
+¡Comencemos a construir aplicaciones con estado global robusto!
