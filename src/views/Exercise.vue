@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, shallowRef} from 'vue';
-import {Check, Eye, EyeOff, Play, Square} from 'lucide-vue-next';
-import {Button, Card, CardContent} from '../components/ui';
+import { computed, onMounted, ref, shallowRef, watch } from 'vue';
+import { Check, Eye, EyeOff, Play, Square } from 'lucide-vue-next';
+import { Button, Card, CardContent } from '../components/ui';
 import ContentLayout from '../components/ContentLayout.vue';
-import {useExercisesStore} from '../stores/exercises.ts';
-import {courseStructure} from '../data/courseStructure.ts';
+import { useExercisesStore } from '../stores/exercises.ts';
+import { courseStructure } from '../data/courseStructure.ts';
 import MdxRenderer from '../components/MdxRenderer.vue';
 
 interface Props {
@@ -55,10 +55,16 @@ const solutionUrl = computed(() => {
   return `${baseUrl.value}/solution.mdx`;
 });
 
-onMounted(async () => {
+const loadContent = async () => {
   if (!exercise.value) return;
 
   try {
+    // Reset content first
+    ExerciseContent.value = '';
+    SolutionContent.value = '';
+    ExerciseComponent.value = '';
+    showSolution.value = false;
+
     // Load MDX content
     const mdxModule = await import(/* @vite-ignore */ exercise.value.mdxPath);
     ExerciseContent.value = mdxModule.default;
@@ -73,7 +79,13 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error loading exercise:', error);
   }
-});
+};
+
+// Load content on mount
+onMounted(loadContent);
+
+// Watch for route parameter changes and reload content
+watch([() => props.moduleId, () => props.sectionId, () => props.exerciseId], loadContent);
 </script>
 
 <template>

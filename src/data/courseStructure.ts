@@ -52,7 +52,8 @@ export const courseStructure: CourseStructure = {
             {
               id: 'conceptos-combinados',
               title: 'Conceptos Combinados',
-              description: 'Migración completa: filters, template refs, watchers, emits y v-bind CSS',
+              description:
+                'Migración completa: filters, template refs, watchers, emits y v-bind CSS',
               mdxPath:
                 '/src/content/intro-y-evolucion/principales-diferencias/conceptos-combinados/index.mdx',
             },

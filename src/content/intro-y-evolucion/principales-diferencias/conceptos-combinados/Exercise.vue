@@ -71,8 +71,8 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Formateador de Mensajes - Vue 2'
-    }
+      default: 'Formateador de Mensajes - Vue 2',
+    },
   },
 
   data() {
@@ -81,7 +81,7 @@ export default {
       isDarkMode: false,
       fontSize: 'medium',
       lastSentMessage: '',
-      charCountColor: '#333'
+      charCountColor: '#333',
     };
   },
 
@@ -90,7 +90,7 @@ export default {
     containerClass() {
       return {
         'dark-mode': this.isDarkMode,
-        'light-mode': !this.isDarkMode
+        'light-mode': !this.isDarkMode,
       };
     },
 
@@ -98,14 +98,14 @@ export default {
     containerStyle() {
       return {
         fontSize: this.fontSizeValue,
-        transition: 'all 0.3s ease'
+        transition: 'all 0.3s ease',
       };
     },
 
     messageClass() {
       return {
         'has-content': this.message.length > 0,
-        'long-message': this.message.length > 20
+        'long-message': this.message.length > 20,
       };
     },
 
@@ -113,14 +113,14 @@ export default {
       const sizes = {
         small: '14px',
         medium: '16px',
-        large: '18px'
+        large: '18px',
       };
       return sizes[this.fontSize];
     },
 
     textColor() {
       return this.isDarkMode ? '#fff' : this.charCountColor;
-    }
+    },
   },
 
   watch: {
@@ -146,7 +146,7 @@ export default {
     // Watcher for font size
     fontSize(newSize) {
       console.log('📝 Font size changed to:', newSize);
-    }
+    },
   },
 
   filters: {
@@ -160,7 +160,7 @@ export default {
     addPrefix(value) {
       if (!value) return '';
       return `📝 ${value}`;
-    }
+    },
   },
 
   methods: {
@@ -184,7 +184,7 @@ export default {
         this.$emit('message-sent', {
           original: this.message,
           formatted: formattedMessage,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         });
 
         console.log('📤 Message sent:', formattedMessage);
@@ -192,8 +192,8 @@ export default {
         // Clear message after sending
         this.message = '';
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
