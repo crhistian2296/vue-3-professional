@@ -78,7 +78,15 @@ export const courseStructure: CourseStructure = {
           id: 'gestion-estado',
           title: 'Gestión de estado con Pinia',
           mdxPath: '/src/content/gestion-rutas-estado/gestion-estado/index.mdx',
-          exercises: [],
+          exercises: [
+            {
+              id: 'definiendo-store',
+              title: 'Definiendo Store con Setup Function',
+              description: 'Convierte un store de Options API a Setup Function con TypeScript',
+              mdxPath:
+                '/src/content/gestion-rutas-estado/gestion-estado/definiendo-store/index.mdx',
+            },
+          ],
         },
       ],
     },

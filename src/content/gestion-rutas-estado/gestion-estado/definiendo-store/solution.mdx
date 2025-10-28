@@ -1,0 +1,128 @@
+## Store básico con Setup Function (TypeScript)
+
+```typescript
+// stores/todos.ts
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import type { Ref } from 'vue'
+
+// Definir la interface Todo
+interface Todo {
+  id: number
+  text: string
+  completed: boolean
+}
+
+export const useTodosStore = defineStore('todos', () => {
+  // Estado reactivo con ref()
+  const todos: Ref<Todo[]> = ref([])
+
+  // Action para añadir todos
+  function addTodo(text: string) {
+    const newTodo: Todo = {
+      id: Date.now(),
+      text: text.trim(),
+      completed: false
+    }
+    if (newTodo.text) {
+      todos.value.push(newTodo)
+    }
+  }
+
+  // Retornar lo que queremos exponer
+  return {
+    todos,
+    addTodo
+  }
+})
+```
+
+## Componente con `<script setup>` (TypeScript)
+
+```vue
+<template>
+  <div class="max-w-2xl mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-6">Lista de Tareas</h1>
+
+    <!-- Formulario básico -->
+    <form @submit.prevent="handleAddTodo" class="mb-6">
+      <div class="flex gap-2">
+        <input
+          v-model="newTodoText"
+          placeholder="¿Qué necesitas hacer?"
+          class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Añadir
+        </button>
+      </div>
+    </form>
+
+    <!-- Lista básica de todos -->
+    <ul class="space-y-2">
+      <li
+        v-for="todo in todosStore.todos"
+        :key="todo.id"
+        class="flex items-center p-3 bg-white border border-gray-200 rounded-md"
+      >
+        <span class="flex-1">{{ todo.text }}</span>
+      </li>
+    </ul>
+
+    <!-- Mensaje si no hay todos -->
+    <p v-if="todosStore.todos.length === 0" class="text-gray-500 text-center mt-4">
+      No hay tareas aún. ¡Añade tu primera tarea!
+    </p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useTodosStore } from '@/stores/todos'
+
+const todosStore = useTodosStore()
+const newTodoText = ref('')
+
+const handleAddTodo = () => {
+  if (newTodoText.value.trim()) {
+    todosStore.addTodo(newTodoText.value)
+    newTodoText.value = ''
+  }
+}
+</script>
+```
+
+## Explicación de la solución
+
+### El Store básico
+
+1. **Setup Function**: Usamos una función que retorna estado y acciones
+2. **TypeScript**: Definimos la interface `Todo` para tipado completo
+3. **ref()**: Estado reactivo con `ref()` para el array de todos
+4. **Función simple**: Solo `addTodo` para empezar con lo básico
+
+### El Componente
+
+1. **`<script setup lang="ts">`**: Sintaxis moderna con TypeScript
+2. **Store como composable**: `useTodosStore()` se usa directamente
+3. **Estado local**: `newTodoText` con `ref()` para el input
+4. **Template simple**: Solo formulario y lista, sin funciones avanzadas
+
+### Beneficios del Store
+
+- **Estado centralizado**: Los todos están en el store, no en el componente
+- **Reutilizable**: Otros componentes pueden usar el mismo store
+- **TypeScript**: Autocompletado y validación de tipos
+- **Reactivo**: Los cambios se reflejan automáticamente en la UI
+
+### Base para futuros ejercicios
+
+Este store básico será la fundación para añadir progresivamente:
+- Marcar todos como completados
+- Eliminar todos
+- Filtrar todos por estado
+- Estadísticas y contadores
+- Persistencia local

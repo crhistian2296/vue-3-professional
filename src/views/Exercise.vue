@@ -74,7 +74,7 @@ const loadContent = async () => {
     SolutionContent.value = mdxSolutionModule.default;
 
     // Load exercise component
-    const componentModule = await import(url.value);
+    const componentModule = await import(/* @vite-ignore */ url.value);
     ExerciseComponent.value = componentModule.default;
   } catch (error) {
     console.error('Error loading exercise:', error);

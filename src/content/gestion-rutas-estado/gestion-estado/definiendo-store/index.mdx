@@ -1,0 +1,39 @@
+En este ejercicio aprenderás a crear tu primer **store de Pinia** usando la **Setup Function** con **TypeScript**. Este será el primer ejercicio de una serie progresiva donde construiremos una aplicación de tareas.
+
+## Objetivo
+
+Crea un store de Pinia desde cero para gestionar una lista de tareas básica, moviendo el estado local del componente al store.
+
+## Conceptos clave
+
+### ¿Qué es un Store?
+
+Un store es un contenedor centralizado para el estado de tu aplicación. En lugar de tener el estado disperso en múltiples componentes, lo concentras en un lugar.
+
+### Setup Function en Pinia
+
+La Setup Function es la forma moderna y recomendada de definir stores en Pinia. Usas `ref()` y `computed()` directamente, como si fuera un composable.
+
+### Beneficios del estado centralizado
+
+- **Compartir estado**: Entre múltiples componentes
+- **Persistencia**: El estado se mantiene durante la navegación
+- **DevTools**: Mejor debugging y seguimiento de cambios
+- **TypeScript**: Tipado completo y autocompletado
+
+## Tareas
+
+1. **Crea un store básico** usando `defineStore` con Setup Function
+2. **Define la interface `Todo`** con id, text y completed
+3. **Mueve el estado** del componente al store usando `ref()`
+4. **Crea la función `addTodo`** en el store
+5. **Convierte el componente** a `<script setup>` con TypeScript
+6. **Conecta el componente** al store usando el composable
+
+## Pistas
+
+- Importa `defineStore` desde 'pinia'
+- Importa `ref` desde 'vue'
+- Usa `interface Todo` para tipar los todos
+- El store debe retornar `{ todos, addTodo }`
+- En el componente, usa `const todosStore = useTodosStore()`
