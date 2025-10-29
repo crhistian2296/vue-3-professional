@@ -30,7 +30,6 @@
 //   routes: [
 //     { path: '/', name: 'home', component: Home },
 //     { path: '/about', name: 'about', component: About },
-//     // En v3 la catch‑all era '*'
 //     { path: '*', name: 'not-found', component: () => import('./pages/NotFound.vue') },
 //   ],
 // })
@@ -40,29 +39,20 @@
 //   render: (h) => h(App),
 // }).$mount('#app')
 
-// ==========================
-// Implementación real (v4)
-// Mini‑app con router embebido
-// ==========================
-import {createMemoryHistory, createRouter} from 'vue-router'
-import {About, Home, NotFound, useSandBoxRouter} from './components.ts'
-import {ref} from "vue";
+// import {About, Home, NotFound, useSandBoxRouter} from './components.ts'
+// import {ref} from "vue";
 
 
-// 2) Rutas del sandbox (v4)
-const routes = [
-  { path: '/', name: 'home', component: Home },
-  { path: '/about', name: 'about', component: About },
-  { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
-]
+// 2) Define las Rutas
+// const routes = []
 
-// 3) Router de memoria para no tocar el URL del navegador
-const router = createRouter({
-  history: createMemoryHistory(),
-  routes,
-})
+// 3) Usa el Router de memoria para no tocar el URL del navegador
+/*const router = createRouter({
+  ...
+})*/
 
-const mountEl = ref<HTMLElement | null>(null)
-useSandBoxRouter(router, mountEl)
+// Requerido para que funcione el ejercicio
+// const mountEl = ref<HTMLElement | null>(null)
+// useSandBoxRouter(router, mountEl)
 </script>
 
