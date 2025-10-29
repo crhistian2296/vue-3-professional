@@ -72,7 +72,15 @@ export const courseStructure: CourseStructure = {
           id: 'gestion-rutas',
           title: 'Gestion de rutas con Vue Router 4',
           mdxPath: '/src/content/gestion-rutas-estado/gestion-rutas/index.mdx',
-          exercises: [],
+          exercises: [
+              {
+                  id: 'definiendo-router',
+                  title: 'Migrar de Vue Router 3 a Vue Router 4',
+                  description: 'Migra de Vue Router 3 a Vue Router 4 usando sus nuevos APIs',
+                  mdxPath:
+                      '/src/content/gestion-rutas-estado/gestion-rutas/definiendo-router/index.mdx',
+              },
+          ],
         },
         {
           id: 'gestion-estado',
