@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -16,15 +16,23 @@
     "lineWidth": 100
   },
   "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
+    "domains": {
+      "vue": "recommended"
+    },
+    "enabled": true
   },
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
       "trailingCommas": "es5"
+    }
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   }
 }
