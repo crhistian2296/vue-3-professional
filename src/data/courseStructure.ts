@@ -98,5 +98,13 @@ export const courseStructure: CourseStructure = {
         },
       ],
     },
+    {
+      id: 'buenas-practicas-y-herramientas',
+      title: 'Buenas prácticas y herramientas',
+      description:
+        'Patrones recomendados, tooling y flujos de trabajo para proyectos Vue 3 profesionales.',
+      mdxPath: '/src/content/buenas-practicas-y-herramientas/index.mdx',
+      sections: [],
+    },
   ],
 };
