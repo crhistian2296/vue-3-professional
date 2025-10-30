@@ -16,51 +16,91 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      title: 'Perfil de Usuario Completo',
-      user: {
+<script setup lang="ts">
+import { computed, reactive } from 'vue';
+
+const title = 'Crhistian';
+const user = reactive({ 
         name: 'Juan',
         age: 25,
         email: 'juan@example.com',
         address: {
           city: 'Madrid',
           country: 'España',
-        },
-      },
-    };
-  },
-  methods: {
-    updateName() {
-      this.user.name = 'María';
-    },
-    incrementAge() {
-      this.user.age++;
-    },
-    updateEmail() {
-      this.user.email = 'maria@example.com';
-    },
-    updateAddress() {
-      this.user.address.city = 'Barcelona';
-      this.user.address.country = 'España';
-    },
-    reset() {
-      this.user.name = 'Juan';
-      this.user.age = 25;
-      this.user.email = 'juan@example.com';
-      this.user.address.city = 'Madrid';
-      this.user.address.country = 'España';
-    },
-  },
-  computed: {
-    isAdult() {
-      return this.user.age >= 18;
-    },
-    totalFields() {
-      return Object.keys(this.user).length + Object.keys(this.user.address).length;
-    },
-  },
+        }
+      });
+
+const updateName = () => {
+  user.name = 'Garci';
 };
+const incrementAge = () => {
+  user.age++;
+};
+
+const updateEmail = () => {
+  user.email = 'garci@example.com';
+};
+
+const reset = () => {
+  user.name = 'Crhistian';
+  user.age = 29;
+  user.email = 'crh@example.com';
+};
+const isAdult = computed(() => user.age >= 18);
+
+const updateAddress= () => {
+  user.address.city = 'Quito';
+  user.address.country = 'Ecuador';
+}
+
+const totalFields = () => {
+  return Object.keys(user).length + Object.keys(user.address).length;
+}
+
+// export default {
+//   data() {
+//     return {
+//       title: 'Perfil de Usuario Completo',
+//       user: {
+//         name: 'Juan',
+//         age: 25,
+//         email: 'juan@example.com',
+//         address: {
+//           city: 'Madrid',
+//           country: 'España',
+//         },
+//       },
+//     };
+//   },
+//   methods: {
+//     updateName() {
+//       this.user.name = 'María';
+//     },
+//     incrementAge() {
+//       this.user.age++;
+//     },
+//     updateEmail() {
+//       this.user.email = 'maria@example.com';
+//     },
+//     updateAddress() {
+//       this.user.address.city = 'Barcelona';
+//       this.user.address.country = 'España';
+//     },
+//     reset() {
+//       this.user.name = 'Juan';
+//       this.user.age = 25;
+//       this.user.email = 'juan@example.com';
+//       this.user.address.city = 'Madrid';
+//       this.user.address.country = 'España';
+//     },
+//   },
+//   computed: {
+//     isAdult() {
+//       return this.user.age >= 18;
+//     },
+//     totalFields() {
+//       return Object.keys(this.user).length + Object.keys(this.user.address).length;
+//     },
+//   },
+// };
 </script>
