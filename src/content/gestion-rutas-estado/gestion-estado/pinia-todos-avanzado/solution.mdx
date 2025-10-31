@@ -1,16 +1,10 @@
 ```ts
 // todos.store.ts
 import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 
 export interface Todo { id: number; text: string; completed: boolean }
 export interface State { todos: Todo[] }
-
-function getDefaultState(): State {
-  return { todos: [] }
-}
-
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
 
 export const useTodosStore = defineStore('todos-advanced', () => {
   const todos = ref<Todo[]>([])
