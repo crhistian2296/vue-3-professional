@@ -57,6 +57,13 @@ export const courseStructure: CourseStructure = {
               mdxPath:
                 '/src/content/intro-y-evolucion/principales-diferencias/conceptos-combinados/index.mdx',
             },
+            {
+              id: 'composables',
+              title: 'Extrayendo lógica a Composables',
+              description: 'Refactoriza un componente para extraer la lógica a un composable (useCounter)',
+              mdxPath:
+                '/src/content/intro-y-evolucion/principales-diferencias/composables/index.mdx',
+            },
           ],
         },
       ],

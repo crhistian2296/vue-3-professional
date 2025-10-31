@@ -75,7 +75,7 @@ const mdxComponents = {
   <article class="prose prose-sm max-w-none">
     <MDXProvider :components="mdxComponents">
       <component
-          :is="props.content as any"
+          :is="props.content"
           v-if="props.content"
           :components="mdxComponents"
       />
