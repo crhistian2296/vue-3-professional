@@ -6,24 +6,12 @@ import ContentLayout from '../components/ContentLayout.vue';
 import { useExercisesStore } from '../stores/exercises.ts';
 import { courseStructure } from '../data/courseStructure.ts';
 import MdxRenderer from '../components/MdxRenderer.vue';
-import {useCounter} from "@/content/intro-y-evolucion/principales-diferencias/conceptos-combinados/use-counter.ts";
 
 interface Props {
   moduleId: string;
   sectionId: string;
   exerciseId: string;
 }
-
-const counter1 = useCounter(10);
-const counter2 = useCounter();
-
-onMounted(() => {
-  counter1.increment()
-})
-
-onUpdated(() => {
-  counter2.increment()
-})
 
 const props = defineProps<Props>();
 const exercisesStore = useExercisesStore();
