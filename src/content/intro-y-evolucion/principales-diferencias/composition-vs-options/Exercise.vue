@@ -14,20 +14,20 @@ export default {
     return {
       title: 'Contador Vue 2',
       counter: 0,
-    };
+    }
   },
   computed: {
     isEven() {
-      return this.counter % 2 === 0;
+      return this.counter % 2 === 0
     },
   },
   methods: {
     increment() {
-      this.counter++;
+      this.counter++
     },
     reset() {
-      this.counter = 0;
+      this.counter = 0
     },
   },
-};
+}
 </script>

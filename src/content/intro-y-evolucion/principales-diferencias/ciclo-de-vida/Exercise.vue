@@ -7,13 +7,13 @@
 <script>
 export default {
   mounted() {
-    console.log('✅ mounted: Componente montado');
+    console.log('✅ mounted: Componente montado')
   },
   updated() {
-    console.log('🔄 updated: Componente actualizado');
+    console.log('🔄 updated: Componente actualizado')
   },
   beforeUnmount() {
-    console.log('🧹 beforeUnmount: Limpiando antes de desmontar');
+    console.log('🧹 beforeUnmount: Limpiando antes de desmontar')
   },
-};
+}
 </script>

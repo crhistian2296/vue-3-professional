@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
-import { useExercisesStore } from '../stores/exercises';
-import { courseStructure } from '../data/courseStructure';
+import { useRoute, useRouter } from 'vue-router'
+import { useExercisesStore } from '../stores/exercises'
+import { courseStructure } from '../data/courseStructure'
 import {
   Sidebar,
   SidebarContent,
@@ -16,39 +16,39 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from './ui/sidebar';
-import { Card, CardContent, Progress } from './ui';
-import { BookOpen, CheckCircle, Circle, GraduationCap, Home, Play } from 'lucide-vue-next';
+} from './ui/sidebar'
+import { Card, CardContent, Progress } from './ui'
+import { BookOpen, CheckCircle, Circle, GraduationCap, Home, Play } from 'lucide-vue-next'
 
-const route = useRoute();
-const router = useRouter();
-const exercisesStore = useExercisesStore();
+const route = useRoute()
+const router = useRouter()
+const exercisesStore = useExercisesStore()
 
 const isCurrentRoute = (moduleId: string, sectionId?: string, exerciseId?: string) => {
   if (exerciseId && sectionId) {
-    return route.path === `/modules/${moduleId}/section-${sectionId}/exercise-${exerciseId}`;
+    return route.path === `/modules/${moduleId}/section-${sectionId}/exercise-${exerciseId}`
   }
   if (sectionId) {
-    return route.path === `/modules/${moduleId}/section-${sectionId}`;
+    return route.path === `/modules/${moduleId}/section-${sectionId}`
   }
-  return route.path === `/modules/${moduleId}`;
-};
+  return route.path === `/modules/${moduleId}`
+}
 
 const goToHome = () => {
-  router.push('/');
-};
+  router.push('/')
+}
 
 const goToModule = (moduleId: string) => {
-  router.push(`/modules/${moduleId}`);
-};
+  router.push(`/modules/${moduleId}`)
+}
 
 const goToSection = (moduleId: string, sectionId: string) => {
-  router.push(`/modules/${moduleId}/${sectionId}`);
-};
+  router.push(`/modules/${moduleId}/${sectionId}`)
+}
 
 const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) => {
-  router.push(`/modules/${moduleId}/${sectionId}/${exerciseId}`);
-};
+  router.push(`/modules/${moduleId}/${sectionId}/${exerciseId}`)
+}
 </script>
 
 <template>
@@ -63,11 +63,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
 
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton
-            :is-active="route.path === '/'"
-            class="w-full"
-            @click="goToHome"
-          >
+          <SidebarMenuButton :is-active="route.path === '/'" class="w-full" @click="goToHome">
             <Home class="w-4 h-4" />
             <span>Inicio</span>
           </SidebarMenuButton>
@@ -86,13 +82,8 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
                   {{ exercisesStore.completedCount }} / {{ exercisesStore.totalExercises }}
                 </span>
               </div>
-              <Progress
-                :model-value="exercisesStore.progressPercentage"
-                class="h-2"
-              />
-              <div class="text-sm font-bold text-green-600">
-                {{ exercisesStore.progressPercentage }}%
-              </div>
+              <Progress :model-value="exercisesStore.progressPercentage" class="h-2" />
+              <div class="text-sm font-bold text-green-600">{{ exercisesStore.progressPercentage }}%</div>
             </div>
           </div>
         </CardContent>
@@ -140,10 +131,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
                           v-if="exercisesStore.isExerciseCompleted(exercise.id)"
                           class="w-3 h-3 text-green-600"
                         />
-                        <Play
-                          v-else
-                          class="w-3 h-3 text-orange-500"
-                        />
+                        <Play v-else class="w-3 h-3 text-orange-500" />
                         <span class="text-xs">{{ exercise.title }}</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
@@ -157,9 +145,7 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
     </SidebarContent>
 
     <SidebarFooter>
-      <div class="text-xs text-muted-foreground text-center p-2">
-        Vue 3 Professional Course
-      </div>
+      <div class="text-xs text-muted-foreground text-center p-2">Vue 3 Professional Course</div>
     </SidebarFooter>
   </Sidebar>
 </template>

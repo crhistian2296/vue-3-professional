@@ -81,9 +81,9 @@ Para Vue 3, usa `vue-tsc` para validar tipos sin depender del bundler.
     "types": ["node", "vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
-  }
+      "@/*": ["src/*"],
+    },
+  },
 }
 ```
 
@@ -148,7 +148,7 @@ npx lefthook install
 pre-commit:
   commands:
     check:
-      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,vue,jsx,tsx,json,jsonc}"
+      glob: '*.{js,ts,cjs,mjs,d.cts,d.mts,vue,jsx,tsx,json,jsonc}'
       run: npx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
 ```
@@ -180,8 +180,8 @@ Ejemplo:
   "engines": { "node": ">=20 <21" },
   "packageManager": "npm@10",
   "overrides": {
-    "minimatch": "9.0.5"
-  }
+    "minimatch": "9.0.5",
+  },
 }
 ```
 
@@ -212,9 +212,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

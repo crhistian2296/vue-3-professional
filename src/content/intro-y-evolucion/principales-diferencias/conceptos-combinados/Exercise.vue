@@ -5,13 +5,7 @@
     <!-- Input with template ref -->
     <div class="input-section">
       <label>Escribe tu mensaje:</label>
-      <input
-        ref="messageInput"
-        v-model="message"
-        type="text"
-        placeholder="Escribe algo..."
-        class="input-field"
-      />
+      <input ref="messageInput" v-model="message" type="text" placeholder="Escribe algo..." class="input-field" />
       <button @click="focusInput">Enfocar Input</button>
     </div>
 
@@ -19,21 +13,16 @@
     <div class="output-section">
       <h3>Mensaje formateado:</h3>
       <p class="formatted-message" :class="messageClass">
-          <!-- eslint-disable-next-line vue/no-deprecated-filter -->
+        <!-- eslint-disable-next-line vue/no-deprecated-filter -->
         {{ message | capitalize | addPrefix }}
       </p>
-      <p class="char-count" :style="{ color: textColor }">
-        Caracteres: {{ message.length }}
-      </p>
+      <p class="char-count" :style="{ color: textColor }">Caracteres: {{ message.length }}</p>
     </div>
 
     <!-- Theme controls -->
     <div class="controls">
       <label>
-        <input
-          v-model="isDarkMode"
-          type="checkbox"
-        />
+        <input v-model="isDarkMode" type="checkbox" />
         Modo oscuro
       </label>
 
@@ -49,18 +38,14 @@
 
     <!-- Action button -->
     <div class="actions">
-      <button
-        :disabled="!message.trim()"
-        class="send-button"
-        @click="sendMessage"
-      >
-        Enviar Mensaje
-      </button>
+      <button :disabled="!message.trim()" class="send-button" @click="sendMessage">Enviar Mensaje</button>
     </div>
 
     <!-- Status display -->
     <div v-if="lastSentMessage" class="status">
-      <p>Último mensaje enviado: <strong>{{ lastSentMessage }}</strong></p>
+      <p>
+        Último mensaje enviado: <strong>{{ lastSentMessage }}</strong>
+      </p>
     </div>
   </div>
 </template>
@@ -71,13 +56,13 @@ export default {
   filters: {
     // Filter to capitalize first letter
     capitalize(value) {
-      if (!value) return '';
-      return value.charAt(0).toUpperCase() + value.slice(1);
+      if (!value) return ''
+      return value.charAt(0).toUpperCase() + value.slice(1)
     },
     // Filter to add prefix
     addPrefix(value) {
-      if (!value) return '';
-      return `📝 ${value}`;
+      if (!value) return ''
+      return `📝 ${value}`
     },
   },
   props: {
@@ -93,7 +78,7 @@ export default {
       fontSize: 'medium',
       lastSentMessage: '',
       charCountColor: '#333',
-    };
+    }
   },
   computed: {
     // Manual class binding
@@ -101,71 +86,69 @@ export default {
       return {
         'dark-mode': this.isDarkMode,
         'light-mode': !this.isDarkMode,
-      };
+      }
     },
     // Manual style binding
     containerStyle() {
       return {
         fontSize: this.fontSizeValue,
         transition: 'all 0.3s ease',
-      };
+      }
     },
     messageClass() {
       return {
         'has-content': this.message.length > 0,
         'long-message': this.message.length > 20,
-      };
+      }
     },
     fontSizeValue() {
       const sizes = {
         small: '14px',
         medium: '16px',
         large: '18px',
-      };
-      return sizes[this.fontSize];
+      }
+      return sizes[this.fontSize]
     },
     textColor() {
-      return this.isDarkMode ? '#fff' : this.charCountColor;
+      return this.isDarkMode ? '#fff' : this.charCountColor
     },
   },
   watch: {
     // Watcher for message changes
     message(newMessage) {
-      console.log('💬 Message changed:', newMessage);
+      console.log('💬 Message changed:', newMessage)
 
       // Update character count color based on length
       if (newMessage.length > 50) {
-        this.charCountColor = '#e74c3c';
+        this.charCountColor = '#e74c3c'
       } else if (newMessage.length > 20) {
-        this.charCountColor = '#f39c12';
+        this.charCountColor = '#f39c12'
       } else {
-        this.charCountColor = '#27ae60';
+        this.charCountColor = '#27ae60'
       }
     },
     // Watcher for theme changes
     isDarkMode(newValue) {
-      console.log('🌓 Theme changed to:', newValue ? 'dark' : 'light');
+      console.log('🌓 Theme changed to:', newValue ? 'dark' : 'light')
     },
     // Watcher for font size
     fontSize(newSize) {
-      console.log('📝 Font size changed to:', newSize);
+      console.log('📝 Font size changed to:', newSize)
     },
   },
   methods: {
     // Template ref usage
     focusInput() {
-      this.$refs.messageInput.focus();
-      console.log('🎯 Input focused using template ref');
+      this.$refs.messageInput.focus()
+      console.log('🎯 Input focused using template ref')
     },
     // Method that emits event
     sendMessage() {
       if (this.message.trim()) {
-        const formattedMessage = this.$options.filters.addPrefix(
-          this.$options.filters.capitalize(this.message)
-        );
+        const formattedMessage = this.$options.filters.addPrefix(this.$options.filters.capitalize(this.message))
 
         // Update last sent message
-        this.lastSentMessage = formattedMessage;
+        this.lastSentMessage = formattedMessage
 
         // Emit event to parent
         // eslint-disable-next-line vue/require-explicit-emits
@@ -173,16 +156,16 @@ export default {
           original: this.message,
           formatted: formattedMessage,
           timestamp: new Date().toISOString(),
-        });
+        })
 
-        console.log('📤 Message sent:', formattedMessage);
+        console.log('📤 Message sent:', formattedMessage)
 
         // Clear message after sending
-        this.message = '';
+        this.message = ''
       }
     },
   },
-};
+}
 </script>
 
 <style scoped>

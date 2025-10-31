@@ -20,28 +20,28 @@ export default {
       name: 'Juan',
       age: 25,
       email: 'juan@example.com',
-    };
+    }
   },
   computed: {
     isAdult() {
-      return this.age >= 18;
+      return this.age >= 18
     },
   },
   methods: {
     updateName() {
-      this.name = 'María';
+      this.name = 'María'
     },
     incrementAge() {
-      this.age++;
+      this.age++
     },
     updateEmail() {
-      this.email = 'maria@example.com';
+      this.email = 'maria@example.com'
     },
     reset() {
-      this.name = 'Juan';
-      this.age = 25;
-      this.email = 'juan@example.com';
+      this.name = 'Juan'
+      this.age = 25
+      this.email = 'juan@example.com'
     },
   },
-};
+}
 </script>

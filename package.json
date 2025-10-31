@@ -8,6 +8,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "vue-tsc -b",
+    "test": "npm run test:unit && npm run test:it && npm run test:e2e",
+    "test:unit": "vitest",
+    "test:it": "",
+    "test:e2e": "",
+    "test:e2e:open": "",
     "lint": "npx eslint",
     "lint:fix": "npx eslint --fix",
     "format": "prettier --write --ignore-path .gitignore ."
@@ -47,6 +52,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.46.2",
     "vite": "7.1.12",
+    "vitest": "4.0.6",
     "vue-tsc": "3.1.2"
   }
 }

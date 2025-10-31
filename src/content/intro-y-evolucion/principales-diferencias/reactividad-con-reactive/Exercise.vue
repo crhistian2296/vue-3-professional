@@ -30,37 +30,37 @@ export default {
           country: 'España',
         },
       },
-    };
+    }
   },
   computed: {
     isAdult() {
-      return this.user.age >= 18;
+      return this.user.age >= 18
     },
     totalFields() {
-      return Object.keys(this.user).length + Object.keys(this.user.address).length;
+      return Object.keys(this.user).length + Object.keys(this.user.address).length
     },
   },
   methods: {
     updateName() {
-      this.user.name = 'María';
+      this.user.name = 'María'
     },
     incrementAge() {
-      this.user.age++;
+      this.user.age++
     },
     updateEmail() {
-      this.user.email = 'maria@example.com';
+      this.user.email = 'maria@example.com'
     },
     updateAddress() {
-      this.user.address.city = 'Barcelona';
-      this.user.address.country = 'España';
+      this.user.address.city = 'Barcelona'
+      this.user.address.country = 'España'
     },
     reset() {
-      this.user.name = 'Juan';
-      this.user.age = 25;
-      this.user.email = 'juan@example.com';
-      this.user.address.city = 'Madrid';
-      this.user.address.country = 'España';
+      this.user.name = 'Juan'
+      this.user.age = 25
+      this.user.email = 'juan@example.com'
+      this.user.address.city = 'Madrid'
+      this.user.address.country = 'España'
     },
   },
-};
+}
 </script>

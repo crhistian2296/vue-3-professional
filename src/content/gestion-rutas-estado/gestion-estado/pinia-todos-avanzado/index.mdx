@@ -13,8 +13,14 @@ Usa como base el ejercicio de todos existente.
 1. Crea un store de Pinia llamado `useTodosStore` (por ejemplo, en `./todos.store.ts`).
    - Estado inicial sugerido:
      ```ts
-     interface Todo { id: number; text: string; completed: boolean }
-     interface State { todos: Todo[] }
+     interface Todo {
+       id: number
+       text: string
+       completed: boolean
+     }
+     interface State {
+       todos: Todo[]
+     }
      ```
    - Acciones mínimas: `addTodo(text: string)`, `toggleTodo(id: number)`, `reset()`.
    - Getters:

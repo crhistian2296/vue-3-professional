@@ -9,24 +9,14 @@
           v-model="newTodoText"
           placeholder="¿Qué necesitas hacer?"
           class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-        <button
-          type="submit"
-          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        >
-          Añadir
-        </button>
+        />
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Añadir</button>
       </div>
     </form>
 
     <!-- Acciones extra -->
     <div class="flex items-center gap-3">
-      <button
-        class="px-3 py-2 rounded border hover:bg-muted"
-        @click="reset()"
-      >
-        Reset
-      </button>
+      <button class="px-3 py-2 rounded border hover:bg-muted" @click="reset()">Reset</button>
       <span class="text-sm text-muted-foreground">Completadas: {{ completedCount }}</span>
     </div>
 
@@ -37,7 +27,7 @@
         type="text"
         placeholder="Buscar por nombre"
         class="w-56 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
+      />
     </div>
 
     <!-- Lista de todos -->
@@ -47,25 +37,25 @@
         :key="todo.id"
         class="flex items-center p-3 bg-white border border-gray-200 rounded-md gap-3"
       >
-        <input type="checkbox" v-model="todo.completed" class="size-4" />
+        <input v-model="todo.completed" type="checkbox" class="size-4" />
         <span :class="['flex-1', todo.completed ? 'line-through text-muted-foreground' : '']">{{ todo.text }}</span>
-        <button class="text-xs px-2 py-1 rounded border" @click="toggle(todo.id)">
-          Toggle
-        </button>
+        <button class="text-xs px-2 py-1 rounded border" @click="toggle(todo.id)">Toggle</button>
       </li>
     </ul>
 
     <!-- Mensaje si no hay todos -->
-    <p v-if="todos.length === 0" class="text-gray-500 text-center mt-4">
-      No hay tareas aún. ¡Añade tu primera tarea!
-    </p>
+    <p v-if="todos.length === 0" class="text-gray-500 text-center mt-4">No hay tareas aún. ¡Añade tu primera tarea!</p>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-interface Todo { id: number; text: string; completed: boolean }
+interface Todo {
+  id: number
+  text: string
+  completed: boolean
+}
 
 const todos = ref<Todo[]>([])
 const newTodoText = ref('')
