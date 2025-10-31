@@ -73,15 +73,15 @@ const openVueDocs = () => {
         <!-- Action Buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
           <Button
-            @click="goToModules"
             class="px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1"
+            @click="goToModules"
           >
             <Play class="w-5 h-5 mr-3" />
             Ir a los módulos
           </Button>
           <Button
-            @click="openVueDocs"
             class="px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-200 transform hover:-translate-y-1"
+            @click="openVueDocs"
           >
             <ExternalLink class="w-5 h-5 mr-3" />
             Docs de Vue
@@ -136,11 +136,13 @@ const openVueDocs = () => {
             <CardContent class="p-6">
               <div class="flex items-start space-x-4">
                 <div class="flex-shrink-0">
-                  <div :class="[
+                  <div
+:class="[
                     'w-12 h-12 rounded-full flex items-center justify-center',
                     module.locked ? 'bg-gray-100' : 'bg-green-100'
                   ]">
-                    <GraduationCap :class="[
+                    <GraduationCap
+:class="[
                       'w-6 h-6',
                       module.locked ? 'text-gray-500' : 'text-green-600'
                     ]" />
@@ -300,9 +302,9 @@ const openVueDocs = () => {
             <!-- CTA -->
             <div class="pt-6">
               <Button
-                @click="openWebsite"
                 variant="outline"
                 class="w-full sm:w-auto"
+                @click="openWebsite"
               >
                 <ExternalLink class="w-4 h-4 mr-2" />
                 Visita cesalberca.com

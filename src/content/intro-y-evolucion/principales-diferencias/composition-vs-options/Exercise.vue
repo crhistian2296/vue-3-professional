@@ -16,17 +16,17 @@ export default {
       counter: 0,
     };
   },
+  computed: {
+    isEven() {
+      return this.counter % 2 === 0;
+    },
+  },
   methods: {
     increment() {
       this.counter++;
     },
     reset() {
       this.counter = 0;
-    },
-  },
-  computed: {
-    isEven() {
-      return this.counter % 2 === 0;
     },
   },
 };

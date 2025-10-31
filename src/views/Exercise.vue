@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { type Component, computed, onMounted, ref, shallowRef, watch } from 'vue';
+import {type Component, computed, onMounted, onUpdated, ref, shallowRef, watch} from 'vue';
 import { Check, Eye, EyeOff, Play, Square } from 'lucide-vue-next';
 import { Button, Card, CardContent } from '../components/ui';
 import ContentLayout from '../components/ContentLayout.vue';
 import { useExercisesStore } from '../stores/exercises.ts';
 import { courseStructure } from '../data/courseStructure.ts';
 import MdxRenderer from '../components/MdxRenderer.vue';
+import {useCounter} from "@/content/intro-y-evolucion/principales-diferencias/conceptos-combinados/use-counter.ts";
 
 interface Props {
   moduleId: string;
   sectionId: string;
   exerciseId: string;
 }
+
+const counter1 = useCounter(10);
+const counter2 = useCounter();
+
+onMounted(() => {
+  counter1.increment()
+})
+
+onUpdated(() => {
+  counter2.increment()
+})
 
 const props = defineProps<Props>();
 const exercisesStore = useExercisesStore();
@@ -112,10 +124,10 @@ watch([() => props.moduleId, () => props.sectionId, () => props.exerciseId], loa
         <div class="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
           <div class="flex items-center space-x-3">
             <Button
-              @click="toggleCompletion"
               :variant="isCompleted ? 'default' : 'outline'"
               size="sm"
               class="w-8 h-8 p-0"
+              @click="toggleCompletion"
             >
               <Check v-if="isCompleted" class="w-4 h-4" />
               <Square v-else class="w-4 h-4" />
@@ -127,9 +139,9 @@ watch([() => props.moduleId, () => props.sectionId, () => props.exerciseId], loa
 
           <Button
             v-if="isCompleted"
-            @click="toggleSolution"
             variant="outline"
             size="sm"
+            @click="toggleSolution"
           >
             <Eye v-if="!showSolution" class="w-4 h-4 mr-2" />
             <EyeOff v-else class="w-4 h-4 mr-2" />
@@ -173,7 +185,7 @@ watch([() => props.moduleId, () => props.sectionId, () => props.exerciseId], loa
         <div class="p-6">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-bold text-green-800">✅ Solución: {{ exercise?.title }}</h3>
-            <button @click="showSolution = false" class="text-muted-foreground hover:text-foreground">
+            <button class="text-muted-foreground hover:text-foreground" @click="showSolution = false">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>

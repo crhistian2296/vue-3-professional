@@ -85,7 +85,7 @@ const fontSize = ref<'small' | 'medium' | 'large'>('medium')
 const lastSentMessage = ref('')
 const charCountColor = ref('#333')
 
-// Template ref for DOM access
+// Template ref for DOM access - templateRef
 const messageInput = ref<HTMLInputElement>()
 
 // Helper functions (replacing filters)
@@ -128,7 +128,7 @@ const formattedMessage = computed(() => {
   return addPrefix(capitalize(message.value))
 })
 
-// Watchers
+// Watchers - Aunque mejor computed
 watch(message, (newMessage) => {
   console.log('💬 Message changed:', newMessage)
 

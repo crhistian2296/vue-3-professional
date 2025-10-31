@@ -11,10 +11,10 @@
           <span class="text-gray-500"> - €{{ item.price }}</span>
         </div>
         <div class="flex items-center space-x-2">
-          <button @click="decrementQuantity(item.id)" class="px-2 py-1 bg-red-500 text-white rounded text-sm">-</button>
+          <button class="px-2 py-1 bg-red-500 text-white rounded text-sm" @click="decrementQuantity(item.id)">-</button>
           <span class="mx-2">{{ item.quantity }}</span>
-          <button @click="incrementQuantity(item.id)" class="px-2 py-1 bg-green-500 text-white rounded text-sm">+</button>
-          <button @click="removeItem(item.id)" class="px-2 py-1 bg-gray-500 text-white rounded text-sm ml-2">Eliminar</button>
+          <button class="px-2 py-1 bg-green-500 text-white rounded text-sm" @click="incrementQuantity(item.id)">+</button>
+          <button class="px-2 py-1 bg-gray-500 text-white rounded text-sm ml-2" @click="removeItem(item.id)">Eliminar</button>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
           placeholder="Precio"
           class="w-20 px-2 py-1 border rounded"
         />
-        <button @click="addItem" class="px-3 py-1 bg-blue-500 text-white rounded">+</button>
+        <button class="px-3 py-1 bg-blue-500 text-white rounded" @click="addItem">+</button>
       </div>
     </div>
 

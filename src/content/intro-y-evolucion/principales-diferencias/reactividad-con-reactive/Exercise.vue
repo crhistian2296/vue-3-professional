@@ -32,6 +32,14 @@ export default {
       },
     };
   },
+  computed: {
+    isAdult() {
+      return this.user.age >= 18;
+    },
+    totalFields() {
+      return Object.keys(this.user).length + Object.keys(this.user.address).length;
+    },
+  },
   methods: {
     updateName() {
       this.user.name = 'María';
@@ -52,14 +60,6 @@ export default {
       this.user.email = 'juan@example.com';
       this.user.address.city = 'Madrid';
       this.user.address.country = 'España';
-    },
-  },
-  computed: {
-    isAdult() {
-      return this.user.age >= 18;
-    },
-    totalFields() {
-      return Object.keys(this.user).length + Object.keys(this.user.address).length;
     },
   },
 };

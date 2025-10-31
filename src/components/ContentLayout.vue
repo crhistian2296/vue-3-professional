@@ -66,7 +66,8 @@ const breadcrumbs = computed(() => {
 </script>
 
 <template>
-  <div :class="[
+  <div
+:class="[
     'bg-card rounded-lg shadow-sm border',
     props.fullWidth ? 'w-full' : 'max-w-4xl mx-auto',
     'min-h-[calc(100vh-4rem)]'
@@ -83,16 +84,16 @@ const breadcrumbs = computed(() => {
               @click.prevent="$router.push(crumb.path)"
             >
               <component
-                v-if="crumb.icon && index === 0"
                 :is="crumb.icon"
+                v-if="crumb.icon && index === 0"
                 class="w-4 h-4 mr-2"
               />
               {{ crumb.name }}
             </BreadcrumbLink>
             <BreadcrumbPage v-else class="flex items-center">
               <component
-                v-if="crumb.icon && index === 0"
                 :is="crumb.icon"
+                v-if="crumb.icon && index === 0"
                 class="w-4 h-4 mr-2"
               />
               {{ crumb.name }}

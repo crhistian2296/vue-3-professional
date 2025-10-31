@@ -64,9 +64,9 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton
-            @click="goToHome"
             :is-active="route.path === '/'"
             class="w-full"
+            @click="goToHome"
           >
             <Home class="w-4 h-4" />
             <span>Inicio</span>
@@ -106,9 +106,9 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
           <SidebarMenu>
             <SidebarMenuItem v-for="module in courseStructure.modules" :key="module.id">
               <SidebarMenuButton
-                @click="goToModule(module.id)"
                 :is-active="isCurrentRoute(module.id)"
                 :disabled="module.locked"
+                @click="goToModule(module.id)"
               >
                 <BookOpen class="w-4 h-4" />
                 <span>{{ module.title }}</span>
@@ -121,8 +121,8 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
               <SidebarMenuSub v-if="!module.locked && module.sections.length > 0">
                 <SidebarMenuSubItem v-for="section in module.sections" :key="section.id">
                   <SidebarMenuSubButton
-                    @click="goToSection(module.id, section.id)"
                     :is-active="isCurrentRoute(module.id, section.id)"
+                    @click="goToSection(module.id, section.id)"
                   >
                     <Circle class="w-3 h-3" />
                     <span>{{ section.title }}</span>
@@ -132,9 +132,9 @@ const goToExercise = (moduleId: string, sectionId: string, exerciseId: string) =
                   <SidebarMenuSub v-if="section.exercises.length > 0" class="ml-4">
                     <SidebarMenuSubItem v-for="exercise in section.exercises" :key="exercise.id">
                       <SidebarMenuSubButton
-                        @click="goToExercise(module.id, section.id, exercise.id)"
                         :is-active="isCurrentRoute(module.id, section.id, exercise.id)"
                         size="sm"
+                        @click="goToExercise(module.id, section.id, exercise.id)"
                       >
                         <CheckCircle
                           v-if="exercisesStore.isExerciseCompleted(exercise.id)"

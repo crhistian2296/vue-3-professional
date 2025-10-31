@@ -71,8 +71,8 @@ const navigateToSection = (sectionId: string) => {
         <h1 class="text-2xl font-bold text-gray-900 mb-4">Módulo no encontrado</h1>
         <p class="text-gray-600 mb-6">El módulo no pudo ser encontrado.</p>
         <button
-            @click="router.push('/')"
             class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
+            @click="router.push('/')"
         >
           Volver al inicio
         </button>

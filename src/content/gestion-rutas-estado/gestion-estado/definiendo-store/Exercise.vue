@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold mb-6">Lista de Tareas</h1>
 
     <!-- Formulario básico -->
-    <form @submit.prevent="addTodo" class="mb-6">
+    <form class="mb-6" @submit.prevent="addTodo">
       <div class="flex gap-2">
         <input
           v-model="newTodoText"

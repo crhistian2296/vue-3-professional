@@ -3,12 +3,12 @@ import { ref, computed } from 'vue';
 import { z } from 'zod';
 import { courseStructure } from '../data/courseStructure.ts';
 
-const ExerciseSchema = z.object({
+export const ExerciseSchema = z.object({
   id: z.string(),
   completed: z.boolean(),
 });
 
-const ExercisesStateSchema = z.object({
+export const ExercisesStateSchema = z.object({
   completedExercises: z.array(z.string()),
 });
 

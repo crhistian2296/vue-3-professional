@@ -22,6 +22,11 @@ export default {
       email: 'juan@example.com',
     };
   },
+  computed: {
+    isAdult() {
+      return this.age >= 18;
+    },
+  },
   methods: {
     updateName() {
       this.name = 'María';
@@ -36,11 +41,6 @@ export default {
       this.name = 'Juan';
       this.age = 25;
       this.email = 'juan@example.com';
-    },
-  },
-  computed: {
-    isAdult() {
-      return this.age >= 18;
     },
   },
 };
