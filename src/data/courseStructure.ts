@@ -90,16 +90,23 @@ export const courseStructure: CourseStructure = {
           ],
         },
         {
-          id: 'gestion-estado',
-          title: 'Gestión de estado con Pinia',
-          mdxPath: '/src/content/gestion-rutas-estado/gestion-estado/index.mdx',
-          exercises: [
+            id: 'gestion-estado',
+            title: 'Gestión de estado con Pinia',
+            mdxPath: '/src/content/gestion-rutas-estado/gestion-estado/index.mdx',
+            exercises: [
             {
               id: 'definiendo-store',
               title: 'Definiendo Store con Setup Function',
               description: 'Convierte un store de Options API a Setup Function con TypeScript',
               mdxPath:
                 '/src/content/gestion-rutas-estado/gestion-estado/definiendo-store/index.mdx',
+            },
+            {
+              id: 'pinia-todos-avanzado',
+              title: 'Pinia: storeToRefs, reset y getter con parámetro',
+              description: 'Refactoriza la lista de tareas para usar storeToRefs, reset del estado y un getter con parámetro',
+              mdxPath:
+                '/src/content/gestion-rutas-estado/gestion-estado/pinia-todos-avanzado/index.mdx',
             },
           ],
         },
