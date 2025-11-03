@@ -1,0 +1,53 @@
+# 🧪 TypeScript con Vue 3
+
+En esta sección verás patrones y trucos frecuentes para tipar correctamente componentes y composición en Vue 3.
+
+## Conceptos rápidos
+
+- Usa `<script setup lang="ts">` para activar TypeScript en componentes.
+- Prefiere `defineProps<T>()` y `defineEmits<T>()` con generics para tipado estático.
+- El helper `ref<T>()` te permite declarar el tipo de la ref cuando no es inferible.
+- Para props con valores por defecto puedes:
+  - Desestructurar con defaults: `const { msg = 'hello' } = defineProps<Props>()`.
+  - O usar `withDefaults(defineProps<Props>(), { msg: 'hello' })`.
+
+## Ejemplos útiles
+
+```ts
+// resulting type: Ref<string | number>
+const year = ref<string | number>('2020')
+
+year.value = 2020 // ok!
+```
+
+```vue
+<script setup lang="ts">
+const props = defineProps<{
+  foo: string
+  bar?: number
+}>()
+</script>
+```
+
+```ts
+interface Props {
+  msg?: string
+  labels?: string[]
+}
+
+const { msg = 'hello', labels = ['one', 'two'] } = defineProps<Props>()
+```
+
+```vue
+<script setup lang="ts">
+const emit = defineEmits<{
+  change: [id: number]
+  update: [value: string]
+}>()
+</script>
+```
+
+## Ejercicio recomendado
+
+- Tipar props y emits en un componente sencillo, pasando de definición en tiempo de ejecución a genéricos de TypeScript.
+- Abre el ejercicio «Tipando props y emits» y sigue las instrucciones.
