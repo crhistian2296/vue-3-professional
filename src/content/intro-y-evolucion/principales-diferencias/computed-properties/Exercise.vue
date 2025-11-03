@@ -53,6 +53,7 @@
       <p><strong>Total de productos:</strong> {{ totalItems }}</p>
       <p><strong>Total de artículos únicos:</strong> {{ uniqueItemsCount }}</p>
       <p><strong>Precio total:</strong> €{{ totalPrice.toFixed(2) }}</p>
+      <p><strong>Precio con descuento:</strong> €{{ discount }}</p>
       <p><strong>Precio promedio:</strong> €{{ averagePrice.toFixed(2) }}</p>
       <p v-if="hasExpensiveItems" class="text-orange-600"><strong>⚠️ Tienes productos caros (+€50)</strong></p>
       <p><strong>Estado del carrito:</strong> {{ cartStatus }}</p>
