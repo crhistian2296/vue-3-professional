@@ -36,7 +36,7 @@ function pretty(value: unknown) {
 async function loadTodo() {
   const res = await fetch(`https://jsonplaceholder.typicode.com/todos/1`)
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  return (await res.json()) as Todo
+  todo.value = (await res.json()) as Todo
 }
 
 onMounted(loadTodo)

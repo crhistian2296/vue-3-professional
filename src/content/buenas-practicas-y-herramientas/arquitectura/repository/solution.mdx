@@ -7,7 +7,7 @@ Vamos a extraer la obtención de datos a una **capa de repositorio**, y haremos 
 ### 1) Modelos: Dominio vs DTO
 
 ```ts
-// domain/todo.ts
+// todo.ts
 export interface Todo {
   userId: number
   id: number
@@ -15,7 +15,7 @@ export interface Todo {
   completed: boolean
 }
 
-// infrastructure/todo.dto.ts
+// todo.dto.ts
 export interface TodoDto {
   userId: number
   id: number
@@ -29,17 +29,17 @@ Para `jsonplaceholder` el DTO coincide con el dominio, pero mantenerlos separado
 ### 2) Contratos genéricos y HttpClient
 
 ```ts
-// core/repositories/findable-all.ts
+// findable-all.ts
 export interface FindableAll<Result> {
   findAll(): Promise<Result[]>
 }
 
-// core/http-client/http-client.ts
+// http-client.ts
 export interface HttpClient {
   get<T>(path: string): Promise<T>
 }
 
-// infrastructure/http-client/fetch-http-client.ts
+// fetch-http-client.ts
 export class FetchHttpClient implements HttpClient {
   constructor(private readonly baseUrl: string) {}
 
@@ -55,31 +55,12 @@ export class FetchHttpClient implements HttpClient {
 ### 3) Repositorio de Todos (contrato + implementación API)
 
 ```ts
-// domain/todo.repository.ts
-export interface FindableAll<Result> {
-  findAll(): Promise<Result[]>
-}
-
+// todo.repository.ts
 export interface TodoRepository extends FindableAll<Todo> {}
 ```
 
 ```ts
-// infrastructure/todo-api.repository.ts
-export interface HttpClient {
-  get<T>(path: string): Promise<T>
-}
-
-export interface TodoDto {
-  userId: number
-  id: number
-  title: string
-  completed: boolean
-}
-
-export interface TodoRepository {
-  findAll(): Promise<Todo[]>
-}
-
+// todo-api.repository.ts
 export class TodoApiRepository implements TodoRepository {
   constructor(private readonly httpClient: HttpClient) {}
 
@@ -94,7 +75,7 @@ export class TodoApiRepository implements TodoRepository {
 ### 4) Caso de Uso (Query) que depende del repositorio
 
 ```ts
-// core/use-cases/use-case.ts
+// use-case.ts
 export interface UseCase<In, Out> {
   handle(input?: In): Promise<Out>
 }
@@ -102,7 +83,7 @@ export type Query<Out, In = void> = UseCase<In, Out>
 ```
 
 ```ts
-// application/get-todos.qry.ts
+// get-todos.qry.ts
 export interface Query<Out, In = void> {
   handle(input?: In): Promise<Out>
 }
@@ -119,26 +100,7 @@ export class GetTodosQry implements Query<Todo[]> {
 ### 5) Contenedor mínimo (composición de dependencias)
 
 ```ts
-// core/container.ts
-export class TodoApiRepository implements TodoRepository {
-  constructor(private readonly httpClient: HttpClient) {}
-  async findAll(): Promise<Todo[]> {
-    const dtos = await this.httpClient.get<TodoDto[]>('todos?_limit=5')
-    return dtos.map(dto => ({ ...dto }))
-  }
-}
-
-export interface Query<Out, In = void> {
-  handle(input?: In): Promise<Out>
-}
-
-export class GetTodosQry implements Query<Todo[]> {
-  constructor(private readonly todoRepository: TodoRepository) {}
-  async handle(): Promise<Todo[]> {
-    return this.todoRepository.findAll()
-  }
-}
-
+// container.ts
 export const httpClient = new FetchHttpClient('https://jsonplaceholder.typicode.com')
 export const todoRepository = new TodoApiRepository(httpClient)
 export const getTodosQry = new GetTodosQry(todoRepository)

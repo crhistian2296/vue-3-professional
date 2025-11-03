@@ -17,7 +17,7 @@ La idea es partir de un componente "monolítico" (con UI + fetch + mapeos) y ref
 
 ## Reglas de dependencia (de afuera hacia adentro)
 
-- delivery → application → domain
+- delivery/infrastructure → application → domain
 - infrastructure → domain (pero domain NO importa infrastructure)
 - application NO importa infrastructure (recibe contratos por constructor)
 
@@ -25,24 +25,12 @@ La idea es partir de un componente "monolítico" (con UI + fetch + mapeos) y ref
 
 1. Abre y prueba el componente `Exercise.vue` que hace la llamada directamente en el componente.
 2. Crea la carpeta de capas (por ejemplo dentro de este ejercicio):
-   - `domain/` con `todo.ts` (entidad) y `todo.repository.ts` (contrato `findAll(): Promise<Todo[]>`).
-   - `application/` con `get-todos.qry.ts` (caso de uso que depende del repositorio).
-   - `infrastructure/` con `http-client.ts` (interfaz + `FetchHttpClient`) y `todo-api.repository.ts` (implementación del contrato).
-   - `delivery/` con un componente que invoca el caso de uso (puedes refactorizar `Exercise.vue` o crear uno nuevo y usarlo en la vista previa).
-3. Define los modelos `Todo` (dominio) y, si lo necesitas, `TodoDto` (infraestructura). Para jsonplaceholder, `TodoDto` puede ser igual al de dominio.
-4. Implementa `TodoApiRepository` usando tu `HttpClient` y mapea de DTO → dominio cuando sea necesario.
-5. Implementa `GetTodosQry` que recibe el `TodoRepository` en el constructor y expone `handle(): Promise<Todo[]>`.
-6. En `delivery`, usa un pequeño contenedor para componer dependencias: `httpClient` → `todoRepository` → `getTodosQry` y llámalo desde el componente.
-7. Opcional: añade estados de carga/errores en delivery.
+   - `domain/` con lo relacionado con dominio
+   - `application/` con lo relacionado con application.
+   - `infrastructure/` con lo relacionado con infrastructure.
+   - `delivery/` con lo relacionado con delivery.
 
 ## Pistas
 
-- Inspírate en el ejercicio de Repository: aquí el foco es la separación por capas y las dependencias correctas.
-- El dominio NO debe importar nada de infraestructura ni de Vue.
-- `GetTodosQry` se puede tipar como `Query<Todo[], void>` si defines ese tipo, pero no es obligatorio.
-
-## Componente de partida
-
-```vue file=./Exercise.vue
-
-```
+- El dominio NO debe importar nada de infraestructura ni de Delivery.
+- Application NO debe importar nada de infraestructura ni de Delivery.

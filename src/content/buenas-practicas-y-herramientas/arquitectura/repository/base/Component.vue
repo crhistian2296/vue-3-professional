@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useCaseService, getTodoQry } from './core/container'
+import { useCaseService, getTodoQry } from './container.ts'
 
 interface TodoDto {
   userId: number

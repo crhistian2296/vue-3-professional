@@ -17,14 +17,14 @@
       </div>
 
       <div class="mt-3">
-        <pre class="text-sm whitespace-pre-wrap">{{ pretty(todos) }}</pre>
+        <pre class="text-sm whitespace-pre-wrap">{{ pretty }}</pre>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 interface Todo {
   userId: number
@@ -35,9 +35,7 @@ interface Todo {
 
 const todos = ref<Todo[]>([])
 
-function pretty(value: unknown) {
-  return JSON.stringify(value, null, 2)
-}
+const pretty = computed(() => JSON.stringify(todos.value, null, 2))
 
 async function loadTodos() {
   const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
