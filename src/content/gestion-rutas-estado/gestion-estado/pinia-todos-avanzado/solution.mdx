@@ -1,52 +1,52 @@
 ```ts
 // todos.store.ts
-import {defineStore} from 'pinia'
-import {ref, computed} from 'vue'
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 
 export interface Todo {
-    id: number
-    text: string
-    completed: boolean
+  id: number
+  text: string
+  completed: boolean
 }
 
 export interface State {
-    todos: Todo[]
+  todos: Todo[]
 }
 
 export const useTodosStore = defineStore('todos-advanced', () => {
-    const todos = ref<Todo[]>([])
+  const todos = ref<Todo[]>([])
 
-    const completedCount = computed(() => todos.value.filter(t => t.completed).length)
+  const completedCount = computed(() => todos.value.filter(t => t.completed).length)
 
-    const getTodosByName = computed(() => (name: string) => {
-        const q = name.trim().toLowerCase()
-        if (!q) return todos.value
-        return todos.value.filter(t => t.text.toLowerCase().includes(q))
-    })
+  const getTodosByName = computed(() => (name: string) => {
+    const q = name.trim().toLowerCase()
+    if (!q) return todos.value
+    return todos.value.filter(t => t.text.toLowerCase().includes(q))
+  })
 
-    const addTodo = (text: string) => {
-        const trimmed = text.trim()
-        if (!trimmed) return
-        todos.value.push({id: Date.now(), text: trimmed, completed: false})
-    }
+  const addTodo = (text: string) => {
+    const trimmed = text.trim()
+    if (!trimmed) return
+    todos.value.push({ id: Date.now(), text: trimmed, completed: false })
+  }
 
-    const toggleTodo = (id: number) => {
-        const t = todos.value.find(t => t.id === id)
-        if (t) t.completed = !t.completed
-    }
+  const toggleTodo = (id: number) => {
+    const t = todos.value.find(t => t.id === id)
+    if (t) t.completed = !t.completed
+  }
 
-    const reset = () => {
-        todos.value = []
-    }
+  const reset = () => {
+    todos.value = []
+  }
 
-    return {
-        todos,
-        completedCount,
-        getTodosByName,
-        addTodo,
-        toggleTodo,
-        reset,
-    }
+  return {
+    todos,
+    completedCount,
+    getTodosByName,
+    addTodo,
+    toggleTodo,
+    reset,
+  }
 })
 ```
 
@@ -59,9 +59,9 @@ export const useTodosStore = defineStore('todos-advanced', () => {
     <form class="mb-2" @submit.prevent="handleAdd">
       <div class="flex gap-2">
         <input
-            v-model="newTodoText"
-            placeholder="¿Qué necesitas hacer?"
-            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          v-model="newTodoText"
+          placeholder="¿Qué necesitas hacer?"
+          class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Añadir</button>
       </div>
@@ -76,19 +76,19 @@ export const useTodosStore = defineStore('todos-advanced', () => {
     <!-- Buscador por nombre -->
     <div class="mt-2 flex items-center gap-2">
       <input
-          v-model="searchText"
-          type="text"
-          placeholder="Buscar por nombre"
-          class="w-56 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        v-model="searchText"
+        type="text"
+        placeholder="Buscar por nombre"
+        class="w-56 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
 
     <!-- Lista de todos -->
     <ul class="space-y-2">
       <li
-          v-for="todo in getTodosByName(searchText)"
-          :key="todo.id"
-          class="flex items-center p-3 bg-white border border-gray-200 rounded-md gap-3"
+        v-for="todo in getTodosByName(searchText)"
+        :key="todo.id"
+        class="flex items-center p-3 bg-white border border-gray-200 rounded-md gap-3"
       >
         <input type="checkbox" v-model="todo.completed" class="size-4" />
         <span :class="['flex-1', todo.completed ? 'line-through text-muted-foreground' : '']">{{ todo.text }}</span>
@@ -117,7 +117,6 @@ function handleAdd() {
   store.addTodo(text) // ✅ acción del store
   newTodoText.value = ''
 }
-
 </script>
 ```
 

@@ -1,0 +1,48 @@
+En este ejercicio vas a organizar el código del ejemplo de repositorio en cuatro capas: **delivery**, **domain**, **application** e **infrastructure**.
+
+La idea es partir de un componente "monolítico" (con UI + fetch + mapeos) y refactorizarlo separando responsabilidades, de manera que el dominio quede aislado de detalles técnicos.
+
+## Objetivo
+
+- Empezar con un componente que hace `fetch` directo a `https://jsonplaceholder.typicode.com/todos?_limit=5`.
+- Refactorizar distribuyendo el código en capas: delivery, domain, application, infrastructure.
+- Consumir los datos desde la capa de delivery a través de un caso de uso (application), que depende de un repositorio (domain) y éste de una implementación (infrastructure).
+
+## Capas y responsabilidades
+
+- Delivery (UI): componentes Vue. Orquestan casos de uso. No contienen lógica de negocio ni detalles de acceso a datos.
+- Domain: modelos y contratos. No depende de `fetch`, ni de HTTP, ni de librerías de infraestructura.
+- Application: casos de uso (Queries/Commands) que operan con contratos del dominio. No debe conocer la infraestructura.
+- Infrastructure: implementaciones concretas (HTTP, memoria, BBDD). Depende de detalles técnicos y mapea DTO ⇄ Domain.
+
+## Reglas de dependencia (de afuera hacia adentro)
+
+- delivery → application → domain
+- infrastructure → domain (pero domain NO importa infrastructure)
+- application NO importa infrastructure (recibe contratos por constructor)
+
+## Tareas
+
+1. Abre y prueba el componente `Exercise.vue` que hace la llamada directamente en el componente.
+2. Crea la carpeta de capas (por ejemplo dentro de este ejercicio):
+   - `domain/` con `todo.ts` (entidad) y `todo.repository.ts` (contrato `findAll(): Promise<Todo[]>`).
+   - `application/` con `get-todos.qry.ts` (caso de uso que depende del repositorio).
+   - `infrastructure/` con `http-client.ts` (interfaz + `FetchHttpClient`) y `todo-api.repository.ts` (implementación del contrato).
+   - `delivery/` con un componente que invoca el caso de uso (puedes refactorizar `Exercise.vue` o crear uno nuevo y usarlo en la vista previa).
+3. Define los modelos `Todo` (dominio) y, si lo necesitas, `TodoDto` (infraestructura). Para jsonplaceholder, `TodoDto` puede ser igual al de dominio.
+4. Implementa `TodoApiRepository` usando tu `HttpClient` y mapea de DTO → dominio cuando sea necesario.
+5. Implementa `GetTodosQry` que recibe el `TodoRepository` en el constructor y expone `handle(): Promise<Todo[]>`.
+6. En `delivery`, usa un pequeño contenedor para componer dependencias: `httpClient` → `todoRepository` → `getTodosQry` y llámalo desde el componente.
+7. Opcional: añade estados de carga/errores en delivery.
+
+## Pistas
+
+- Inspírate en el ejercicio de Repository: aquí el foco es la separación por capas y las dependencias correctas.
+- El dominio NO debe importar nada de infraestructura ni de Vue.
+- `GetTodosQry` se puede tipar como `Query<Todo[], void>` si defines ese tipo, pero no es obligatorio.
+
+## Componente de partida
+
+```vue file=./Exercise.vue
+
+```

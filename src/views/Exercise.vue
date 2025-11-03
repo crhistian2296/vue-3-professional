@@ -121,7 +121,10 @@ watch([() => props.moduleId, () => props.sectionId, () => props.exerciseId], loa
             <Check v-if="isCompleted" class="w-4 h-4" />
             <Square v-else class="w-4 h-4" />
           </Button>
-          <span data-testid="exercise-status" :class="['font-medium', isCompleted ? 'text-green-700' : 'text-muted-foreground']">
+          <span
+            data-testid="exercise-status"
+            :class="['font-medium', isCompleted ? 'text-green-700' : 'text-muted-foreground']"
+          >
             {{ isCompleted ? 'Completado' : 'Marcar como completado' }}
           </span>
         </div>
