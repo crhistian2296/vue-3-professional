@@ -8,32 +8,27 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
-
-const title: string = 'Contador Vue 3 by me';
-const counter = ref<number>(0);
-const setLocalStorage = (key: string, value: number): void => {
-  localStorage.setItem(key, JSON.stringify(value));
-};
-
-const isEven = computed(() => counter.value % 2 === 0);
-
-onMounted(() => {
-  const storedValue = localStorage.getItem('counter');
-  if (storedValue !== null) {
-    counter.value = Number.parseInt(storedValue);
-  }
-});
-
-function increment(): void {
-  counter.value++;
-  setLocalStorage('counter', counter.value);
-}
-
-function reset(): void {
-  counter.value = 0;
-  setLocalStorage('counter', counter.value);
+<script>
+export default {
+  data() {
+    return {
+      title: 'Contador Vue 2',
+      counter: 0,
+    }
+  },
+  computed: {
+    isEven() {
+      return this.counter % 2 === 0
+    },
+  },
+  methods: {
+    increment() {
+      this.counter++
+    },
+    reset() {
+      this.counter = 0
+    },
+  },
 }
 </script>
 

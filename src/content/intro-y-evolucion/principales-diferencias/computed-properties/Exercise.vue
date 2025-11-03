@@ -11,10 +11,14 @@
           <span class="text-gray-500"> - €{{ item.price }}</span>
         </div>
         <div class="flex items-center space-x-2">
-          <button @click="decrementQuantity(item.id)" class="px-2 py-1 text-sm text-white bg-red-500 rounded">-</button>
+          <button class="px-2 py-1 text-sm text-white bg-red-500 rounded" @click="decrementQuantity(item.id)">-</button>
           <span class="mx-2">{{ item.quantity }}</span>
-          <button @click="incrementQuantity(item.id)" class="px-2 py-1 text-sm text-white bg-green-500 rounded">+</button>
-          <button @click="removeItem(item.id)" class="px-2 py-1 ml-2 text-sm text-white bg-gray-500 rounded">Eliminar</button>
+          <button class="px-2 py-1 text-sm text-white bg-green-500 rounded" @click="incrementQuantity(item.id)">
+            +
+          </button>
+          <button class="px-2 py-1 ml-2 text-sm text-white bg-gray-500 rounded" @click="removeItem(item.id)">
+            Eliminar
+          </button>
         </div>
       </div>
     </div>
@@ -23,27 +27,9 @@
     <div class="p-4 mb-6 rounded bg-blue-50">
       <h3 class="mb-2 font-semibold">Agregar producto:</h3>
       <div class="flex space-x-2">
-        <input
-          v-model="newItemName"
-          placeholder="Nombre"
-          class="flex-1 px-2 py-1 border rounded"
-        />
-        <input
-          v-model="newItemPrice"
-          type="number"
-          placeholder="Precio"
-          class="w-20 px-2 py-1 border rounded"
-        />
-        <button @click="addItem" class="px-3 py-1 text-white bg-blue-500 rounded">+</button>
-      </div>
-    </div>
-
-    <!-- Apply discount -->
-    <div class="p-4 mb-6 rounded bg-blue-50">
-      <h3 class="mb-2 font-semibold">Aplicar descuento:</h3>
-      <div class="flex items-center justify-between space-x-2">
-        <button @click="toggleDiscount" class="px-3 py-1 text-white bg-blue-500 rounded">+</button>
-        <p v-if="!hasDiscount" class="">{{discount}}</p>
+        <input v-model="newItemName" placeholder="Nombre" class="flex-1 px-2 py-1 border rounded" />
+        <input v-model="newItemPrice" type="number" placeholder="Precio" class="w-20 px-2 py-1 border rounded" />
+        <button class="px-3 py-1 text-white bg-blue-500 rounded" @click="addItem">+</button>
       </div>
     </div>
 
@@ -62,94 +48,88 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue'
 
 // Reactive data
-const title = ref('Carrito de Compras - Sincronización Manual');
+const title = ref('Carrito de Compras - Sincronización Manual')
 const items = ref([
   { id: 1, name: 'Laptop', price: 999, quantity: 1 },
   { id: 2, name: 'Mouse', price: 25, quantity: 2 },
   { id: 3, name: 'Teclado', price: 75, quantity: 1 },
-]);
+])
 
-const newItemName = ref('');
-const newItemPrice = ref(0);
-const hasDiscount = ref(false);
+const newItemName = ref('')
+const newItemPrice = ref(0)
 
 // PROBLEMA: Estado sincronizado manualmente (anti-patrón)
 // Estas variables se actualizan manualmente en cada operación
-const totalItems = computed(() => items.value.reduce((sum, item) => sum + item.quantity, 0)); // 1 + 2 + 1
-const uniqueItemsCount = computed( () => items.value.reduce((sum, item) => item.quantity > 0 ? sum + 1 : sum, 0)); // 3
-const totalPrice = computed(() => items.value.reduce((sum, item) => sum + item.price * item.quantity,0)); // 999 + (25*2) + 75
-const averagePrice = computed(() => uniqueItemsCount.value > 0 ? totalPrice.value / totalItems.value : 0); // 1124 / 3
-const hasExpensiveItems = computed(() => items.value.find((item) => item.price > 50 && item.quantity > 0)); // Laptop > 50
-const cartStatus = computed(() => items.value.length === 0 ? 'Carrito vacío' : totalPrice.value > 500 ? 'Carrito premium' : 'Carrito con productos');
-const discount = computed(() => (totalPrice.value * 0.75).toFixed(2));
+const totalItems = ref(4) // 1 + 2 + 1
+const uniqueItemsCount = ref(3)
+const totalPrice = ref(1124) // 999 + (25*2) + 75
+const averagePrice = ref(374.67) // 1124 / 3
+const hasExpensiveItems = ref(true) // Laptop > 50
+const cartStatus = ref('Carrito con productos')
 
 // Helper function to recalculate all statistics (called after each operation)
-// const updateCartStatistics = () => {
-//   // Recalcular total de productos
-//   totalItems.value = items.value.reduce((sum, item) => sum + item.quantity, 0);
+const updateCartStatistics = () => {
+  // Recalcular total de productos
+  totalItems.value = items.value.reduce((sum, item) => sum + item.quantity, 0)
 
-//   // Recalcular productos únicos
-//   uniqueItemsCount.value = items.value.length;
+  // Recalcular productos únicos
+  uniqueItemsCount.value = items.value.length
 
-//   // Recalcular precio total
-//   totalPrice.value = items.value.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // Recalcular precio total
+  totalPrice.value = items.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-//   // Recalcular precio promedio
-//   averagePrice.value = uniqueItemsCount.value > 0 ? totalPrice.value / uniqueItemsCount.value : 0;
+  // Recalcular precio promedio
+  averagePrice.value = uniqueItemsCount.value > 0 ? totalPrice.value / uniqueItemsCount.value : 0
 
-//   // Verificar productos caros
-//   hasExpensiveItems.value = items.value.some((item) => item.price > 50);
+  // Verificar productos caros
+  hasExpensiveItems.value = items.value.some(item => item.price > 50)
 
-//   // Estado del carrito
-//   if (items.value.length === 0) {
-//     cartStatus.value = 'Carrito vacío';
-//   } else if (totalPrice.value > 500) {
-//     cartStatus.value = 'Carrito premium';
-//   } else {
-//     cartStatus.value = 'Carrito con productos';
-//   }
-// };
+  // Estado del carrito
+  if (items.value.length === 0) {
+    cartStatus.value = 'Carrito vacío'
+  } else if (totalPrice.value > 500) {
+    cartStatus.value = 'Carrito premium'
+  } else {
+    cartStatus.value = 'Carrito con productos'
+  }
+}
 
 const incrementQuantity = (id: number) => {
-  const item = items.value.find((item) => item.id === id);
+  const item = items.value.find(item => item.id === id)
   if (item) {
-    item.quantity++;
-    // updateCartStatistics(); // ¡Sincronización manual requerida!
+    item.quantity++
+    updateCartStatistics() // ¡Sincronización manual requerida!
   }
-};
+}
 
 const decrementQuantity = (id: number) => {
-  const item = items.value.find((item) => item.id === id);
-  if (item && item.quantity > 0) {
-    item.quantity--;
-    // updateCartStatistics(); // ¡Sincronización manual requerida!
+  const item = items.value.find(item => item.id === id)
+  if (item && item.quantity > 1) {
+    item.quantity--
+    updateCartStatistics() // ¡Sincronización manual requerida!
   }
-};
+}
 
 const removeItem = (id: number) => {
-  items.value = items.value.filter((item) => item.id !== id);
-  // updateCartStatistics(); // ¡Sincronización manual requerida!
-};
+  items.value = items.value.filter(item => item.id !== id)
+  updateCartStatistics() // ¡Sincronización manual requerida!
+}
 
 const addItem = () => {
   if (newItemName.value && newItemPrice.value > 0) {
-    const newId = Math.max(...items.value.map((item) => item.id)) + 1;
+    const newId = Math.max(...items.value.map(item => item.id)) + 1
     items.value.push({
       id: newId,
       name: newItemName.value,
       price: newItemPrice.value,
       quantity: 1,
-    });
-    newItemName.value = '';
-    newItemPrice.value = 0;
-    // updateCartStatistics(); // ¡Sincronización manual requerida!
+    })
+    newItemName.value = ''
+    newItemPrice.value = 0
+    updateCartStatistics() // ¡Sincronización manual requerida!
   }
-};
-
-const toggleDiscount = () => {
-  hasDiscount.value = !hasDiscount.value;
 }
 </script>
