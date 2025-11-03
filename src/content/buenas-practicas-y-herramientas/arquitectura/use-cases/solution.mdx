@@ -1,6 +1,6 @@
 ## Refactor: Del componente al Caso de Uso (Use Case)
 
-A continuación verás cómo mover la lógica de `fetch` fuera del componente y encapsularla en un **Use Case**. Lo ejecutaremos a través de un **UseCaseService**. Para el ejercicio, usaremos una infraestructura mínima ya copiada en esta carpeta (`./core/use-cases`), y puedes tomar como referencia adicional `arquitectura/core` si quieres profundizar.
+A continuación verás cómo mover la lógica de `fetch` fuera del componente y encapsularla en un **Use Case**. Lo ejecutaremos a través de un **UseCaseService**. Para el ejercicio, usaremos una infraestructura mínima ya copiada en esta carpeta (`./core/use-cases`).
 
 ### 1) Definir el Query `GetTodoQry`
 
@@ -19,25 +19,25 @@ export interface UseCase<In, Out> {
 export type Query<Out, In = void> = UseCase<In, Out>
 
 // DTO esperado desde jsonplaceholder
-export interface TodoDto {
+export interface Todo {
   userId: number
   id: number
   title: string
   completed: boolean
 }
 
-export class GetTodoQry implements Query<TodoDto, { id: number }> {
-  async handle(input?: { id: number }): Promise<TodoDto> {
+export class GetTodoQry implements Query<Todo, { id: number }> {
+  async handle(input?: { id: number }): Promise<Todo> {
     const id = input?.id ?? 1
     const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    return res.json() as Promise<TodoDto>
+    return res.json() as Promise<Todo>
   }
 }
 ```
 
 Puntos clave:
-- La clase `GetTodoQry` implementa `Query<TodoDto, { id: number }>` y expone el método `handle`.
+- La clase `GetTodoQry` implementa `Query<Todo, { id: number }>` y expone el método `handle`.
 - Dentro de `handle` hacemos la llamada al API (antes estaba en el componente).
 
 ### 2) Importar y usar el `UseCaseService` local (mínimo)
@@ -45,20 +45,10 @@ Puntos clave:
 Para el ejercicio hemos copiado una versión mínima del servicio y middlewares dentro de esta carpeta. Úsalo así:
 
 ```ts
-// ./core/use-cases/* (infra mínima incluida en el ejercicio)
 import { UseCaseService } from './core/use-cases/use-case-service'
-import { EmptyMiddleware } from './core/use-cases/middlewares/empty.middleware'
-import { LoggerMiddleware } from './core/use-cases/middlewares/logger.middleware'
 
-const middlewares = [
-  new LoggerMiddleware(),
-  new EmptyMiddleware(),
-]
-
-export const useCaseService = new UseCaseService(middlewares)
+export const useCaseService = new UseCaseService()
 ```
-
-Si lo prefieres, puedes empezar solo con `EmptyMiddleware` y añadir el logger más adelante. También puedes consultar la versión completa en `arquitectura/core` para profundizar.
 
 ### 3) Componer un pequeño contenedor
 
@@ -66,15 +56,12 @@ Creamos una instancia reutilizable del `UseCaseService` y del `GetTodoQry`.
 
 ```ts
 // core/container.ts
-import { UseCaseService } from './use-cases/use-case-service'
-import { EmptyMiddleware } from './use-cases/middlewares/empty.middleware'
-import { LoggerMiddleware } from './use-cases/middlewares/logger.middleware'
-import { GetTodoQry } from '../application/get-todo.qry'
+import { UseCaseService } from './use-cases/use-case-service.ts'
+import { GetTodoQry } from '../application/get-todo.qry.ts'
 
-const middlewares = [new LoggerMiddleware(), new EmptyMiddleware()]
-
-export const useCaseService = new UseCaseService(middlewares)
+export const useCaseService = new UseCaseService()
 export const getTodoQry = new GetTodoQry()
+
 ```
 
 ### 4) Refactor del componente para usar el caso de uso
@@ -105,14 +92,14 @@ Ahora el componente ya no hace `fetch` directo. En su lugar, ejecuta el caso de 
 import { onMounted, ref } from 'vue'
 import { useCaseService, getTodoQry } from './core/container'
 
-interface TodoDto {
+interface Todo {
   userId: number
   id: number
   title: string
   completed: boolean
 }
 
-const todo = ref<TodoDto | null>(null)
+const todo = ref<Todo | null>(null)
 
 function pretty(value: unknown) {
   return JSON.stringify(value, null, 2)
@@ -134,9 +121,3 @@ Observa que el componente quedó mucho más liviano: no conoce los detalles del 
 - Permite añadir fácilmente middlewares transversales (logs, métricas, errores, timeout).
 - Facilita el testeo del caso de uso sin montar componentes.
 - Mejora la legibilidad y el mantenimiento de la UI.
-
-### 6) Variantes y siguientes pasos
-
-- Sustituir el `fetch` interno por un `HttpClient` inyectado (ver `core/core/http-client/http-client.ts`).
-- Añadir middlewares reales como en `core/core/use-cases/middlewares` y componerlos en el `UseCaseService`.
-- Manejar ids dinámicos (por ejemplo, mediante inputs de usuario o parámetros de ruta).

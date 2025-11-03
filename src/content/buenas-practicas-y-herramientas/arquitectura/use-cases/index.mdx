@@ -1,4 +1,4 @@
-En este ejercicio verás cómo refactorizar una llamada HTTP que está hecha directamente desde un componente para pasar a ejecutarla a través de un **Caso de Uso (Use Case)**, orquestado por un **UseCaseService**. Usaremos como referencia la carpeta `arquitectura/core`, donde ya existe una infraestructura de casos de uso, middlewares y un contenedor simple.
+En este ejercicio verás cómo refactorizar una llamada HTTP que está hecha directamente desde un componente para pasar a ejecutarla a través de un **Caso de Uso (Use Case)**, orquestado por un **UseCaseService**.
 
 ## Objetivo
 
@@ -8,28 +8,16 @@ En este ejercicio verás cómo refactorizar una llamada HTTP que está hecha dir
 ## Conceptos clave
 
 - Use Case (Caso de Uso): Encapsula un único propósito de aplicación. Evita lógica de dominio en los componentes.
-- UseCaseService: Orquesta la ejecución y aplica middlewares (logging, errores, métricas, etc.).
+- UseCaseService: Orquesta la ejecución.
 - Query vs Command: Consultas que leen datos (Query) vs acciones que modifican estado (Command).
 
 ## Tareas
 
 1. Abre y prueba el componente de ejemplo `Exercise.vue` que hace la llamada directamente en el componente.
 2. Crea un caso de uso `GetTodoQry` que obtenga un TODO por id desde `jsonplaceholder`.
-3. Expón una pequeña fábrica o contenedor que cree un `UseCaseService` con middlewares mínimos.
+3. Expón una pequeña fábrica o contenedor que cree un `UseCaseService`.
 4. Refactoriza el componente para invocar el `GetTodoQry` a través del `UseCaseService`.
-5. Maneja los estados de `loading`, `error` y el dato `todo` como ahora, pero ya no con `fetch` directo.
 
 ## Pistas
 
-- Ya tienes una infraestructura mínima copiada dentro de esta carpeta: `./core/use-cases` (servicio, middlewares y tipos básicos). Úsala para el ejercicio.
-- Si quieres profundizar, inspírate en `src/content/buenas-practicas-y-herramientas/arquitectura/core/core/use-cases` para ver una versión más completa.
 - Un `Query<Out, In>` es solo un `UseCase<In, Out>` que retorna datos sin efectos colaterales.
-
-## Componente de partida
-
-El componente inicial ya está creado para ti:
-
-```vue file=./Exercise.vue
-```
-
-Cuando termines, compáralo con la solución propuesta para ver la organización y los beneficios del patrón.
