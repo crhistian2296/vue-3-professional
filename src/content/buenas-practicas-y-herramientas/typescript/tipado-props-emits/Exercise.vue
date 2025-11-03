@@ -7,8 +7,8 @@
         Punto de partida sin tipos estáticos en <code>defineProps</code> y <code>defineEmits</code>. Añade TypeScript.
       </p>
       <ul class="list-disc pl-5 text-sm text-muted-foreground">
-        <li>Tipa las props con generics de <code>defineProps&lt;T&gt;()</code>.</li>
-        <li>Tipa los eventos con <code>defineEmits&lt;T&gt;()</code> usando tuplas.</li>
+        <li>Tipa las props con generics de <code>defineProps&lt;T&gt;()</code> en el componente hijo <code>Component.vue</code>.</li>
+        <li>Tipa los eventos con <code>defineEmits&lt;T&gt;()</code> usando tuplas en <code>Component.vue</code>.</li>
         <li>Marca opcionales y añade defaults donde aplique.</li>
       </ul>
     </div>
@@ -16,35 +16,41 @@
     <div class="border rounded-md p-4 bg-white space-y-4">
       <h2 class="font-semibold">Vista previa</h2>
 
-      <div class="flex gap-2 items-center">
-        <span class="text-sm text-muted-foreground">Foo:</span>
-        <span class="px-2 py-1 bg-gray-100 rounded">{{ props.foo }}</span>
-        <span class="text-sm text-muted-foreground ml-4">Bar:</span>
-        <span class="px-2 py-1 bg-gray-100 rounded">{{ props.bar ?? '—' }}</span>
-      </div>
+      <div class="space-y-3">
+        <div class="flex gap-2 items-center">
+          <label class="text-sm text-muted-foreground">Prop foo</label>
+          <input v-model="foo" class="px-2 py-1 border rounded" placeholder="texto" />
+          <label class="text-sm text-muted-foreground ml-4">Prop bar</label>
+          <input v-model.number="bar" type="number" class="px-2 py-1 border rounded w-24" placeholder="número" />
+        </div>
 
-      <div class="flex gap-2">
-        <button class="px-3 py-1.5 text-sm rounded bg-blue-600 text-white hover:bg-blue-700" @click="emit('change', 1)">
-          Emit change(1)
-        </button>
-        <button class="px-3 py-1.5 text-sm rounded bg-emerald-600 text-white hover:bg-emerald-700" @click="emit('update', input)">
-          Emit update(input)
-        </button>
-        <input v-model="input" class="px-2 py-1 border rounded" placeholder="nuevo valor" />
+        <Component :foo="foo" :bar="bar" @change="onChange" @update="onUpdate" />
+
+        <div class="text-sm text-muted-foreground">
+          <div><strong>Último change(id):</strong> {{ lastChangeId ?? '—' }}</div>
+          <div><strong>Último update(value):</strong> {{ lastUpdateValue ?? '—' }}</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import Component from './Component.vue'
 
-const props = defineProps({
-  foo: { type: String, required: true },
-  bar: Number,
-})
+// El wrapper no recibe props ni emite eventos; sirve para pasar props al hijo y observar sus emits.
+const foo = ref('hello')
+const bar = ref<number | null>(42)
 
-const emit = defineEmits(['change', 'update'])
+const lastChangeId = ref<number | null>(null)
+const lastUpdateValue = ref<string | null>(null)
 
-const input = ref('2020')
+function onChange(id: number) {
+  lastChangeId.value = id
+}
+
+function onUpdate(value: string) {
+  lastUpdateValue.value = value
+}
 </script>
