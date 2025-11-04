@@ -1,0 +1,27 @@
+En este ejercicio practicarás cómo tipar correctamente `props` y `emits` en componentes con `<script setup lang="ts">`.
+
+## Objetivo
+
+- Pasar de una definición de props/emits en tiempo de ejecución a una definición estática con TypeScript.
+- Tipa las props usando `defineProps<T>()` y los eventos usando `defineEmits<T>()` con tuplas.
+
+## Conceptos clave
+
+- `ref<T>()` para valores con tipos unión o no inferibles.
+- `defineProps<T>()` con propiedades requeridas y opcionales.
+- Defaults de props mediante desestructuración o `withDefaults`.
+- `defineEmits<T>()` con tuplas por evento: `{ change: [id: number] }`.
+
+## Tareas
+
+1. Abre el componente base y ejecútalo.
+2. Cambia `<script setup>` a `<script setup lang="ts">`.
+3. Sustituye la definición en tiempo de ejecución por generics:
+   - Props: `{ foo: string; bar?: number }`.
+   - Emits: `{ change: [id: number]; update: [value: string] }`.
+4. (Opcional) Usa valores por defecto para props con desestructuración o `withDefaults`.
+
+## Pistas
+
+- Con tuplas en `defineEmits`, cada elemento de la tupla representa los argumentos del evento.
+- Los eventos se invocan como `emit('change', 123)`.

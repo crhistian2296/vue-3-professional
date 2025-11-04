@@ -140,6 +140,20 @@ export const courseStructure: CourseStructure = {
             },
           ],
         },
+        {
+          id: 'typescript',
+          title: 'TypeScript con Vue 3',
+          mdxPath: '/src/content/buenas-practicas-y-herramientas/typescript/index.mdx',
+          exercises: [
+            {
+              id: 'tipado-props-emits',
+              title: 'Tipando props y emits',
+              description: 'Añade tipos a props y eventos usando <script setup lang=\'ts\'>, defineProps y defineEmits.',
+              mdxPath:
+                '/src/content/buenas-practicas-y-herramientas/typescript/tipado-props-emits/index.mdx',
+            },
+          ],
+        },
       ],
     },
   ],

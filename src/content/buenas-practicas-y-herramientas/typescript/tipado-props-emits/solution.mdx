@@ -1,0 +1,123 @@
+## Solución: tipando props y emits en `<script setup lang="ts">`
+
+A continuación tienes formas comunes y correctas de tipar `ref`, `props` y `emits` en Vue 3 con TypeScript, y la solución final aplicada al archivo `Component.vue` del ejercicio.
+
+### 1) `ref` con tipos unión
+
+```ts
+// resulting type: Ref<string | number>
+import { ref, type Ref } from 'vue'
+
+const year: Ref<string | number> = ref<string | number>('2020')
+
+year.value = 2020 // ok!
+```
+
+### 2) Props usando genéricos inline
+
+```vue
+<script setup lang="ts">
+const props = defineProps<{
+  foo: string
+  bar?: number
+}>()
+</script>
+```
+
+### 3) Props con interfaz + valores por defecto (desestructuración)
+
+```ts
+interface Props {
+  msg?: string
+  labels?: string[]
+}
+
+const { msg = 'hello', labels = ['one', 'two'] } = defineProps<Props>()
+```
+
+Alternativa con `withDefaults`:
+
+```ts
+interface Props {
+  msg?: string
+  labels?: string[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  msg: 'hello',
+  labels: () => ['one', 'two'],
+})
+```
+
+### 4) Emits tipados con tuplas
+
+```vue
+<script setup lang="ts">
+const emit = defineEmits<{
+  change: [id: number]
+  update: [value: string]
+}>()
+</script>
+```
+
+---
+
+## Component.vue (solución final)
+
+Este es el contenido final recomendado para `src/content/buenas-practicas-y-herramientas/typescript/tipado-props-emits/Component.vue`, ya tipado. Observa que ahora usamos generics en `defineProps` y `defineEmits`, y al emitir `update` pasamos un `string` (no la `Ref`).
+
+```vue
+<template>
+  <div class="space-y-4">
+    <div class="flex gap-2 items-center">
+      <span class="text-sm text-muted-foreground">Foo:</span>
+      <span class="px-2 py-1 bg-gray-100 rounded">{{ props.foo }}</span>
+      <span class="text-sm text-muted-foreground ml-4">Bar:</span>
+      <span class="px-2 py-1 bg-gray-100 rounded">{{ props.bar ?? '—' }}</span>
+    </div>
+
+    <div class="flex gap-2 items-center">
+      <button class="px-3 py-1.5 text-sm rounded bg-blue-600 text-white hover:bg-blue-700" @click="emit('change', 1)">
+        Emit change(1)
+      </button>
+      <button class="px-3 py-1.5 text-sm rounded bg-emerald-600 text-white hover:bg-emerald-700" @click="emit('update', input.value)">
+        Emit update(input)
+      </button>
+      <input v-model="input" class="px-2 py-1 border rounded" placeholder="nuevo valor" />
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+// 1) Props tipadas con generics, manteniendo la variable `props`
+const props = defineProps<{
+  foo: string
+  bar?: number
+}>()
+
+// 2) Emits tipados con tuplas
+const emit = defineEmits<{
+  change: [id: number]
+  update: [value: string]
+}>()
+
+// 3) Ref con tipo inferido (string)
+const input = ref('2020')
+</script>
+```
+
+Si prefieres desestructurar las props, también es válido:
+
+```vue
+<script setup lang="ts">
+const { foo, bar } = defineProps<{ foo: string; bar?: number }>()
+</script>
+```
+
+Puntos clave:
+
+- `defineProps<T>()` y `defineEmits<T>()` activan chequeo estático y autocompletado.
+- Para defaults de props puedes desestructurar con valores o usar `withDefaults`.
+- En `emit('update', input)` se espera un `string`; por eso, si usas una ref llamada `input`, emite `emit('update', input.value)`.
